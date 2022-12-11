@@ -1,4 +1,5 @@
+source .env
 <!-- Copy the current folder to /vagrant directory in the server -->
-scp -r "${PWD}" root@<your-ip-address>:/vagrant
+scp -r "${PWD}" root@${IP_ADDRESS}:/vagrant
 <!-- Run setup script in the server -->
-ssh root@<your-ip-address> 'bash -s' < ./init.sh
+ssh root@${IP_ADDRESS} 'bash -s' < ./init.sh
