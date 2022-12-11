@@ -1,0 +1,4 @@
+<!-- Copy the current folder to /vagrant directory in the server -->
+scp -r "${PWD}" root@<your-ip-address>:/vagrant
+<!-- Run setup script in the server -->
+ssh root@<your-ip-address> 'bash -s' < ./config/staticapp/setup.sh

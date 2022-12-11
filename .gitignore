@@ -1,0 +1,5 @@
+.vagrant
+data
+*.log
+.env
+apps
