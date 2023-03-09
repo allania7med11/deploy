@@ -1,0 +1,22 @@
+server {
+        listen 80;
+        listen [::]:80;
+        
+        location /static/ {
+                autoindex on;
+                alias /var/www/structure_back_static/;
+        }
+        
+        location ~ ^/(admin|api)/ {
+                proxy_set_header        Host $host;
+                proxy_set_header        X-Real-IP $remote_addr;
+                proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header        X-Forwarded-Proto $scheme;
+                proxy_pass http://localhost:8000;
+        }
+        
+        root /var/www/structure_front;
+        location / {
+                try_files $uri $uri/ /index.html;
+        }
+}

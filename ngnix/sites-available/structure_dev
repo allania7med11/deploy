@@ -1,0 +1,33 @@
+upstream mysite {
+    server localhost:8000;
+}
+upstream myclient {
+    server localhost:3000;
+}
+server {
+    listen 2000;
+    location / {
+        auth_request /auth;
+        auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+        add_header Set-Cookie $saved_set_cookie;
+        proxy_pass http://myclient;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+    }
+    location ~ /(admin|accounts|api|static|graph)/ {
+        proxy_pass http://mysite;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+    }
+    location = /auth {
+        internal;
+
+        proxy_pass http://mysite/myclient/auth/;
+
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_set_header X-Original-URI $request_uri;
+    }
+}
