@@ -1,2 +1,5 @@
+# in config/structure_back/db folder
+sudo -u postgres psql -f load.sql
+# in structure_back folder
 docker build -t structure_back  .
 sudo docker run -d  --network=host --env-file .env --restart unless-stopped structure_back
