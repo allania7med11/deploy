@@ -1,5 +1,16 @@
 # in config/structure_back/db folder
+# load the initial database
 sudo -u postgres psql -f load.sql
 # in structure_back folder
+# build structure_back image
 docker build -t structure_back  .
+# run structure_back container
 sudo docker run -d  --network=host --env-file .env --restart unless-stopped structure_back
+# use the container to generate structure_back_static and copy it to /var/www/
+sudo cp -r structure_back_static /var/www/structure_back_static
+# copy ngnix structure config
+sudo cp structure /etc/nginx/sites-available
+sudo ln -s /etc/nginx/sites-available/structure /etc/nginx/sites-enabled/
+#  eestart nginx
+sudo nginx -t
+sudo systemctl restart nginx
