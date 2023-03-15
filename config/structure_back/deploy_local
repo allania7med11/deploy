@@ -7,7 +7,7 @@ docker build -t structure_back  .
 # run structure_back container
 sudo docker run -d  --network=host --env-file .env --restart unless-stopped structure_back
 # use the container to generate structure_back_static and copy it to /var/www/
-sudo cp -r structure_back_static /var/www/structure_back_static
+sudo cp -r structure_back_static /var/www/
 # copy ngnix structure config
 sudo cp structure /etc/nginx/sites-available
 sudo ln -s /etc/nginx/sites-available/structure /etc/nginx/sites-enabled/

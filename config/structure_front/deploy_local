@@ -1,0 +1,2 @@
+# use the container to generate structure_front and copy it to /var/www/
+sudo cp -r structure_front /var/www/

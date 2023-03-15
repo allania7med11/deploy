@@ -8,6 +8,6 @@ sudo cp -r shop_back_static /var/www/shop_back_static
 # copy ngnix shop config
 sudo cp shop /etc/nginx/sites-available
 sudo ln -s /etc/nginx/sites-available/shop /etc/nginx/sites-enabled/
-#  eestart nginx
+#  restart nginx
 sudo nginx -t
 sudo systemctl restart nginx
