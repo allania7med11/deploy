@@ -1,0 +1,13 @@
+# load the initial database
+scp -r structure_db user@remotehost:/var/db/
+sudo -u postgres psql -f load.sql
+# copy structure_back_static folder to server
+scp -r structure_back_static user@remotehost:/var/www/
+# save structure_back image as tar
+docker save structure_back > structure_back.tar
+# copy structure_back that has structure_back.tar with env file to the server
+scp -r structure_back user@remotehost:/var/docker/
+# load the image in the server
+docker load < structure_back.tar
+# run structure_back container with the env file
+docker run -d  --network=host --env-file .env --restart unless-stopped structure_back

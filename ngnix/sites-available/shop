@@ -1,7 +1,7 @@
 server {
         listen 80;
         listen [::]:80;
-        server_name testingapp.live www.testingapp.live;
+        server_name shop.effectivewebapp.com;
         
         location /static/ {
                 autoindex on;
