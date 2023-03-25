@@ -1,3 +1,6 @@
+# in config/shop_back/db folder
+# load the initial database
+sudo -u postgres psql -f load.sql
 # in shop_back folder
 # build shop_back image
 docker build -t shop_back  .
