@@ -3,4 +3,4 @@ data
 *.log
 .env
 apps
-*.sql
+backups
