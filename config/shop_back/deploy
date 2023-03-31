@@ -1,0 +1,13 @@
+# load the initial database
+scp -r shop_db user@remotehost:/var/db/
+sudo -u postgres psql -f load.sql
+# copy shop_back_static folder to server
+scp -r shop_back_static user@remotehost:/var/www/
+# save shop_back image as tar
+docker save shop_back > shop_back.tar
+# copy shop_back that has shop_back.tar with env file to the server
+scp -r shop_back user@remotehost:/var/docker/
+# load the image in the server
+docker load < shop_back.tar
+# run shop_back container with the env file
+docker run -d  --network=host --env-file .env --restart unless-stopped shop_back

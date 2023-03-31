@@ -1,5 +1,5 @@
 server {
-        listen 2000;
+        listen 2010;
         
         location /back_static/ {
                 autoindex on;
@@ -11,7 +11,7 @@ server {
                 proxy_set_header X-Forwarded-Proto $scheme;
                 proxy_set_header Host $http_host;
                 proxy_redirect off;
-                proxy_pass http://localhost:2010;
+                proxy_pass http://localhost:2011;
         }
         
         location / {

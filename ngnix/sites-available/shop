@@ -1,9 +1,7 @@
 server {
-        listen 80;
-        listen [::]:80;
-        server_name shop.effectivewebapp.com;
+        listen 2200;
         
-        location /static/ {
+        location /back_static/ {
                 autoindex on;
                 alias /var/www/shop_back_static/;
         }
@@ -13,9 +11,9 @@ server {
                 proxy_set_header        X-Real-IP $remote_addr;
                 proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header        X-Forwarded-Proto $scheme;
-                proxy_pass http://localhost:8000;
+                proxy_pass http://localhost:2210;
         }
-
+        
         location / {
                 autoindex on;
                 alias /var/www/shop_front/;
