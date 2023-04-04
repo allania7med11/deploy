@@ -1,0 +1,7 @@
+server {
+        listen 1000;
+        location / {
+                autoindex on;
+                alias /var/www/portfolio/;
+        }
+}

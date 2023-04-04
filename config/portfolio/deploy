@@ -1,0 +1,1 @@
+scp -r portfolio user@remotehost:/var/www/
