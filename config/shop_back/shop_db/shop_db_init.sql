@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.7 (Ubuntu 14.7-0ubuntu0.22.04.1)
--- Dumped by pg_dump version 14.7 (Ubuntu 14.7-0ubuntu0.22.04.1)
+-- Dumped from database version 14.9 (Ubuntu 14.9-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.9 (Ubuntu 14.9-0ubuntu0.22.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -400,7 +400,9 @@ ALTER TABLE public.django_session OWNER TO postgres;
 CREATE TABLE public.products_category (
     id bigint NOT NULL,
     name character varying(250) NOT NULL,
-    slug character varying(100) NOT NULL
+    slug character varying(100) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
 );
 
 
@@ -509,7 +511,9 @@ CREATE TABLE public.products_product (
     category_id bigint,
     discount_id bigint,
     slug character varying(100),
-    description text
+    description text,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
 );
 
 
@@ -707,7 +711,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$320000$hQP9hSQEPlYQwHlhJrJvBF$KvmR48AaTAv1MFfhs4uzG1THfHFbs5T75AIBUYXUFjk=	2023-03-25 03:57:30.859501+00	t	allania7med11			allania7med11@gmail.com	t	t	2022-12-04 14:03:30.921562+00
+1	pbkdf2_sha256$320000$hQP9hSQEPlYQwHlhJrJvBF$KvmR48AaTAv1MFfhs4uzG1THfHFbs5T75AIBUYXUFjk=	2023-10-13 05:25:14.163075+00	t	allania7med11			allania7med11@gmail.com	t	t	2022-12-04 14:03:30.921562+00
 \.
 
 
@@ -766,6 +770,9 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 24	2023-03-25 05:15:18.987296+00	113	SAMSUNG Galaxy S23 Ultra Cell Phone	1	[{"added": {}}, {"added": {"name": "file", "object": "File object (452)"}}, {"added": {"name": "file", "object": "File object (453)"}}, {"added": {"name": "file", "object": "File object (454)"}}, {"added": {"name": "file", "object": "File object (455)"}}, {"added": {"name": "file", "object": "File object (456)"}}, {"added": {"name": "file", "object": "File object (457)"}}]	9	1
 25	2023-03-25 05:23:19.380161+00	105	ONEPLUS 10T | Moonstone Black | 5G	2	[{"changed": {"fields": ["Discount", "Description"]}}]	9	1
 26	2023-03-25 05:24:26.700799+00	106	Apple iPhone 12	2	[{"changed": {"fields": ["Discount", "Description"]}}]	9	1
+27	2023-03-31 02:32:46.10747+00	113	SAMSUNG Galaxy S23 Ultra Cell Phone	2	[]	9	1
+28	2023-03-31 02:33:38.089075+00	2	SAMSUNG Galaxy S22+ Cell Phone	2	[]	9	1
+29	2023-03-31 02:34:17.572146+00	113	SAMSUNG Galaxy S23 Ultra Cell Phone	2	[]	9	1
 \.
 
 
@@ -816,6 +823,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 21	products	0002_product_description	2023-02-06 22:53:26.679337+00
 22	products	0003_merge_20230206_2022	2023-02-06 22:53:26.6832+00
 23	core	0001_initial	2023-02-15 15:27:31.618691+00
+24	products	0004_category_created_at_category_updated_at_and_more	2023-03-31 01:52:56.905032+00
+25	products	0005_alter_product_options	2023-03-31 01:52:56.920506+00
 \.
 
 
@@ -830,7 +839,8 @@ s2hkpnd0qdz1he8kh5zglkoua64shjad	.eJxVjMsOwiAQRf-FtSHDY6C6dN9vIMNApWogKe3K-O_apA
 bab40bk5h11aalz3xbjx67wn0ascaf8b	.eJxVjEEOwiAQRe_C2hBgmEJduu8ZyABTqRqalHZlvLtt0oVu_3vvv0WgbS1ha7yEKYur0OLyu0VKT64HyA-q91mmua7LFOWhyJM2OcyZX7fT_Tso1Mpec0RkrbBTRhOCMXlvPWdnRpt6kwxoAAs-RSDleotKRwSHMDqXO_bi8wXMnzcA:1p4TNE:v-owQRcMaBEfmdd-IaYp6ukgXriI17LMOD8uJ3CCN9I	2022-12-25 20:56:36.886931+00
 ajkdick5ieod0l5wc5uhsuz8vh9azlb0	.eJxVjEEOwiAQRe_C2hBgmEJduu8ZyABTqRqalHZlvLtt0oVu_3vvv0WgbS1ha7yEKYur0OLyu0VKT64HyA-q91mmua7LFOWhyJM2OcyZX7fT_Tso1Mpec0RkrbBTRhOCMXlvPWdnRpt6kwxoAAs-RSDleotKRwSHMDqXO_bi8wXMnzcA:1pPANi:PAmwxyr6fH7g3QveXiY3szSgMVfVHA3W2hiMl-CMUvU	2023-02-20 22:54:38.483287+00
 mg1epautyc2xu5uoi1pbg4cbe28piqlk	.eJxVjEEOwiAQRe_C2hBgmEJduu8ZyABTqRqalHZlvLtt0oVu_3vvv0WgbS1ha7yEKYur0OLyu0VKT64HyA-q91mmua7LFOWhyJM2OcyZX7fT_Tso1Mpec0RkrbBTRhOCMXlvPWdnRpt6kwxoAAs-RSDleotKRwSHMDqXO_bi8wXMnzcA:1pSKCC:zwEAxGb9vxw4fOlDDti_zm87unz9cbfBRZhuGTTJ804	2023-03-01 15:59:48.256661+00
-ukkucp93azedkeuqh60h4s1d8pp5fxwn	.eJxVjEEOwiAQRe_C2hBgmEJduu8ZyABTqRqalHZlvLtt0oVu_3vvv0WgbS1ha7yEKYur0OLyu0VKT64HyA-q91mmua7LFOWhyJM2OcyZX7fT_Tso1Mpec0RkrbBTRhOCMXlvPWdnRpt6kwxoAAs-RSDleotKRwSHMDqXO_bi8wXMnzcA:1pfv22:oo9yKygv6V8yRVWA4iCGILsmwahtqlxvlN0l_IZZqzU	2023-04-08 03:57:30.86336+00
+if3bc1cfdo66a0os9ow4cyipl4nmkfy1	.eJxVjEEOwiAQRe_C2hBgmEJduu8ZyABTqRqalHZlvLtt0oVu_3vvv0WgbS1ha7yEKYur0OLyu0VKT64HyA-q91mmua7LFOWhyJM2OcyZX7fT_Tso1Mpec0RkrbBTRhOCMXlvPWdnRpt6kwxoAAs-RSDleotKRwSHMDqXO_bi8wXMnzcA:1pi46O:PwF0qlcF6djZxWy3S0kVCVprEPaZUSO_3FciWd17EpU	2023-04-14 02:02:52.559599+00
+k3hxuywh79m1rweok95auaxn4ntx71yc	.eJxVjEEOwiAQRe_C2hBgmEJduu8ZyABTqRqalHZlvLtt0oVu_3vvv0WgbS1ha7yEKYur0OLyu0VKT64HyA-q91mmua7LFOWhyJM2OcyZX7fT_Tso1Mpec0RkrbBTRhOCMXlvPWdnRpt6kwxoAAs-RSDleotKRwSHMDqXO_bi8wXMnzcA:1qrAfi:0yo_jaJVAKLyA_hOz1AR2alh8pM530bWKkY3oWoFAi8	2023-10-27 05:25:14.170065+00
 \.
 
 
@@ -838,27 +848,27 @@ ukkucp93azedkeuqh60h4s1d8pp5fxwn	.eJxVjEEOwiAQRe_C2hBgmEJduu8ZyABTqRqalHZlvLtt0o
 -- Data for Name: products_category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.products_category (id, name, slug) FROM stdin;
-1	mobiles	mobiles
-2	laptops	laptops
-5	Fragrances	fragrances
-6	Skincare	skincare
-7	Groceries	groceries
-8	Home-decoration	home-decoration
-9	Furniture	furniture
-10	Tops	tops
-11	Womens-dresses	womens-dresses
-12	Womens-shoes	womens-shoes
-13	Mens-shirts	mens-shirts
-14	Mens-shoes	mens-shoes
-15	Mens-watches	mens-watches
-16	Womens-watches	womens-watches
-17	Womens-bags	womens-bags
-18	Womens-jewellery	womens-jewellery
-19	Sunglasses	sunglasses
-20	Automotive	automotive
-21	Motorcycle	motorcycle
-22	Lighting	lighting
+COPY public.products_category (id, name, slug, created_at, updated_at) FROM stdin;
+1	mobiles	mobiles	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+2	laptops	laptops	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+5	Fragrances	fragrances	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+6	Skincare	skincare	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+7	Groceries	groceries	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+8	Home-decoration	home-decoration	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+9	Furniture	furniture	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+10	Tops	tops	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+11	Womens-dresses	womens-dresses	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+12	Womens-shoes	womens-shoes	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+13	Mens-shirts	mens-shirts	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+14	Mens-shoes	mens-shoes	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+15	Mens-watches	mens-watches	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+16	Womens-watches	womens-watches	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+17	Womens-bags	womens-bags	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+18	Womens-jewellery	womens-jewellery	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+19	Sunglasses	sunglasses	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+20	Automotive	automotive	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+21	Motorcycle	motorcycle	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
+22	Lighting	lighting	2023-03-31 01:52:56.878518+00	2023-03-31 01:52:56.890543+00
 \.
 
 
@@ -1442,119 +1452,119 @@ COPY public.products_file (id, name, file, product_id) FROM stdin;
 -- Data for Name: products_product; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.products_product (id, name, price_currency, price, category_id, discount_id, slug, description) FROM stdin;
-10	MacBook Pro	USD	1749.0000	2	9	macbook-pro	{"delta": "", "html": "MacBook Pro 2021 with mini-LED display may launch between September, November"}
-11	Samsung Galaxy Book	USD	1499.0000	2	10	samsung-galaxy-book	{"delta": "", "html": "Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched"}
-12	Microsoft Surface Laptop 4	USD	1499.0000	2	11	microsoft-surface-laptop-4	{"delta": "", "html": "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen."}
-13	Infinix INBOOK	USD	1099.0000	2	12	infinix-inbook	{"delta": "", "html": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey \\u2013 1 Year Warranty"}
-14	HP Pavilion 15-DK1056WM	USD	1099.0000	2	13	hp-pavilion-15-dk1056wm	{"delta": "", "html": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10"}
-15	perfume Oil	USD	13.0000	5	14	perfume-oil	{"delta": "", "html": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil"}
-16	Brown Perfume	USD	40.0000	5	15	brown-perfume	{"delta": "", "html": "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml"}
-17	Fog Scent Xpressio Perfume	USD	13.0000	5	16	fog-scent-xpressio-perfume	{"delta": "", "html": "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men"}
-18	Non-Alcoholic Concentrated Perfume Oil	USD	120.0000	5	17	non-alcoholic-concentrated-perfume-oil	{"delta": "", "html": "Original Al Munakh\\u00ae by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil"}
-19	Eau De Perfume Spray	USD	30.0000	5	18	eau-de-perfume-spray	{"delta": "", "html": "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality"}
-20	Hyaluronic Acid Serum	USD	19.0000	6	19	hyaluronic-acid-serum	{"delta": "", "html": "L'Or\\u00c3\\u00a9al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid"}
-21	Tree Oil 30ml	USD	12.0000	6	20	tree-oil-30ml	{"delta": "", "html": "Tea tree oil contains a number of compounds, including terpinen-4-ol, that have been shown to kill certain bacteria,"}
-22	Oil Free Moisturizer 100ml	USD	40.0000	6	21	oil-free-moisturizer-100ml	{"delta": "", "html": "Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen."}
-23	Skin Beauty Serum.	USD	46.0000	6	22	skin-beauty-serum	{"delta": "", "html": "Product name: rorec collagen hyaluronic acid white face serum riceNet weight: 15 m"}
-24	Freckle Treatment Cream- 15gm	USD	70.0000	6	23	freckle-treatment-cream-15gm	{"delta": "", "html": "Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects."}
-25	- Daal Masoor 500 grams	USD	20.0000	7	24	daal-masoor-500-grams	{"delta": "", "html": "Fine quality Branded Product Keep in a cool and dry place"}
-26	Elbow Macaroni - 400 gm	USD	14.0000	7	25	elbow-macaroni-400-gm	{"delta": "", "html": "Product details of Bake Parlor Big Elbow Macaroni - 400 gm"}
-27	Orange Essence Food Flavou	USD	14.0000	7	26	orange-essence-food-flavou	{"delta": "", "html": "Specifications of Orange Essence Food Flavour For Cakes and Baking Food Item"}
-28	cereals muesli fruit nuts	USD	46.0000	7	27	cereals-muesli-fruit-nuts	{"delta": "", "html": "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji"}
-29	Gulab Powder 50 Gram	USD	70.0000	7	28	gulab-powder-50-gram	{"delta": "", "html": "Dry Rose Flower Powder Gulab Powder 50 Gram \\u2022 Treats Wounds"}
-30	Plant Hanger For Home	USD	41.0000	8	29	plant-hanger-for-home	{"delta": "", "html": "Boho Decor Plant Hanger For Home Wall Decoration Macrame Wall Hanging Shelf"}
-31	Flying Wooden Bird	USD	51.0000	8	25	flying-wooden-bird	{"delta": "", "html": "Package Include 6 Birds with Adhesive Tape Shape: 3D Shaped Wooden Birds Material: Wooden MDF, Laminated 3.5mm"}
-32	3D Embellishment Art Lamp	USD	20.0000	8	30	3d-embellishment-art-lamp	{"delta": "", "html": "3D led lamp sticker Wall sticker 3d wall art light on/off button  cell operated (included)"}
-33	Handcraft Chinese style	USD	60.0000	8	31	handcraft-chinese-style	{"delta": "", "html": "Handcraft Chinese style art luxury palace hotel villa mansion home decor ceramic vase with brass fruit plate"}
-34	Key Holder	USD	30.0000	8	32	key-holder	{"delta": "", "html": "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality"}
-35	Mornadi Velvet Bed	USD	40.0000	9	33	mornadi-velvet-bed	{"delta": "", "html": "Mornadi Velvet Bed Base with Headboard Slats Support Classic Style Bedroom Furniture Bed Set"}
-36	Sofa for Coffe Cafe	USD	50.0000	9	34	sofa-for-coffe-cafe	{"delta": "", "html": "Ratttan Outdoor furniture Set Waterproof  Rattan Sofa for Coffe Cafe"}
-37	3 Tier Corner Shelves	USD	700.0000	9	33	3-tier-corner-shelves	{"delta": "", "html": "3 Tier Corner Shelves | 3 PCs Wall Mount Kitchen Shelf | Floating Bedroom Shelf"}
-38	Plastic Table	USD	50.0000	9	35	plastic-table	{"delta": "", "html": "V\\ufeffery good quality plastic table for multi purpose now in reasonable price"}
-39	3 DOOR PORTABLE	USD	41.0000	9	36	3-door-portable	{"delta": "", "html": "Material: Stainless Steel and Fabric  Item Size: 110 cm x 45 cm x 175 cm Package Contents: 1 Storage Wardrobe"}
-3	Acer Predator Triton 500 SE	USD	2900.0000	2	2	acer-predator-triton-500-se	{"delta":"","html":""}
-4	TCL 32-inch Class 3-Series HD LED Smart Android TV	USD	200.0000	\N	3	tcl-32-inch-class-3-series-hd-led-smart-android-tv	{"delta":"","html":""}
-40	Sleeve Shirt Womens	USD	90.0000	10	37	sleeve-shirt-womens	{"delta": "", "html": "Cotton Solid Color Professional Wear Sleeve Shirt Womens Work Blouses Wholesale Clothing Casual Plain Custom Top OEM Customized"}
-41	ank Tops for Womens/Girls	USD	50.0000	10	38	ank-tops-for-womensgirls	{"delta": "", "html": "PACK OF 3 CAMISOLES ,VERY COMFORTABLE SOFT COTTON STUFF, COMFORTABLE IN ALL FOUR SEASONS"}
-42	sublimation plain kids tank	USD	100.0000	10	39	sublimation-plain-kids-tank	{"delta": "", "html": "sublimation plain kids tank tops wholesale"}
-43	Women Sweaters Wool	USD	600.0000	10	40	women-sweaters-wool	{"delta": "", "html": "2021 Custom Winter Fall Zebra Knit Crop Top Women Sweaters Wool Mohair Cos Customize Crew Neck Women' S Crop Top Sweater"}
-44	women winter clothes	USD	57.0000	10	41	women-winter-clothes	{"delta": "", "html": "women winter clothes thick fleece hoodie top with sweat pantjogger women sweatsuit set joggers pants two piece pants set"}
-45	NIGHT SUIT	USD	55.0000	11	42	night-suit	{"delta": "", "html": "NIGHT SUIT RED MICKY MOUSE..  For Girls. Fantastic Suits."}
-46	Stiched Kurta plus trouser	USD	80.0000	11	43	stiched-kurta-plus-trouser	{"delta": "", "html": "FABRIC: LILEIN CHEST: 21 LENGHT: 37 TROUSER: (38) :ARABIC LILEIN"}
-47	frock gold printed	USD	600.0000	11	44	frock-gold-printed	{"delta": "", "html": "Ghazi fabric long frock gold printed ready to wear stitched collection (G992)"}
-48	Ladies Multicolored Dress	USD	79.0000	11	45	ladies-multicolored-dress	{"delta": "", "html": "This classy shirt for women gives you a gorgeous look on everyday wear and specially for semi-casual wears."}
-49	Malai Maxi Dress	USD	50.0000	11	46	malai-maxi-dress	{"delta": "", "html": "Ready to wear, Unique design according to modern standard fashion, Best fitting ,Imported stuff"}
-50	women's shoes	USD	40.0000	12	47	womens-shoes	{"delta": "", "html": "Close: Lace, Style with bottom: Increased inside, Sole Material: Rubber"}
-51	Sneaker shoes	USD	120.0000	12	48	sneaker-shoes	{"delta": "", "html": "Synthetic Leather Casual Sneaker shoes for Women/girls Sneakers For Women"}
-52	Women Strip Heel	USD	40.0000	12	49	women-strip-heel	{"delta": "", "html": "Features: Flip-flops, Mid Heel, Comfortable, Striped Heel, Antiskid, Striped"}
-53	Chappals & Shoe Ladies Metallic	USD	23.0000	12	50	chappals-shoe-ladies-metallic	{"delta": "", "html": "Womens Chappals & Shoe Ladies Metallic Tong Thong Sandal Flat Summer 2020 Maasai Sandals"}
-54	Women Shoes	USD	36.0000	12	51	women-shoes	{"delta": "", "html": "2020 New Arrivals Genuine Leather Fashion Trend Platform Summer Women Shoes"}
-55	half sleeves T shirts	USD	23.0000	13	52	half-sleeves-t-shirts	{"delta": "", "html": "Many store is creating new designs and trend every month and every year. Daraz.pk have a beautiful range of men fashion brands"}
-56	FREE FIRE T Shirt	USD	10.0000	13	53	free-fire-t-shirt	{"delta": "", "html": "quality and professional print - It doesn't just look high quality, it is high quality."}
-57	printed high quality T shirts	USD	35.0000	13	54	printed-high-quality-t-shirts	{"delta": "", "html": "Brand: vintage Apparel ,Export quality"}
-58	Pubg Printed Graphic T-Shirt	USD	46.0000	13	55	pubg-printed-graphic-t-shirt	{"delta": "", "html": "Product Description Features: 100% Ultra soft Polyester Jersey. Vibrant & colorful printing on front. Feels soft as cotton without ever cracking"}
-59	Money Heist Printed Summer T Shirts	USD	66.0000	13	56	money-heist-printed-summer-t-shirts	{"delta": "", "html": "Fabric Jercy, Size: M & L Wear Stylish Dual Stiched"}
-60	Sneakers Joggers Shoes	USD	40.0000	14	57	sneakers-joggers-shoes	{"delta": "", "html": "Gender: Men , Colors: Same as DisplayedCondition: 100% Brand New"}
-61	Loafers for men	USD	47.0000	14	58	loafers-for-men	{"delta": "", "html": "Men Shoes - Loafers for men - Rubber Shoes - Nylon Shoes - Shoes for men - Moccassion - Pure Nylon (Rubber) Expot Quality."}
-62	formal offices shoes	USD	57.0000	14	59	formal-offices-shoes	{"delta": "", "html": "Pattern Type: Solid, Material: PU, Toe Shape: Pointed Toe ,Outsole Material: Rubber"}
-63	Spring and summershoes	USD	20.0000	14	60	spring-and-summershoes	{"delta": "", "html": "Comfortable stretch cloth, lightweight body; ,rubber sole, anti-skid wear;"}
-64	Stylish Casual Jeans Shoes	USD	58.0000	14	61	stylish-casual-jeans-shoes	{"delta": "", "html": "High Quality ,Stylish design ,Comfortable wear ,FAshion ,Durable"}
-65	Leather Straps Wristwatch	USD	120.0000	15	62	leather-straps-wristwatch	{"delta": "", "html": "Style:Sport ,Clasp:Buckles ,Water Resistance Depth:3Bar"}
-66	Waterproof Leather Brand Watch	USD	46.0000	15	63	waterproof-leather-brand-watch	{"delta": "", "html": "Watch Crown With Environmental IPS Bronze Electroplating; Display system of 12 hours"}
-67	Royal Blue Premium Watch	USD	50.0000	15	64	royal-blue-premium-watch	{"delta": "", "html": "Men Silver Chain Royal Blue Premium Watch Latest Analog Watch"}
-68	Leather Strap Skeleton Watch	USD	46.0000	15	65	leather-strap-skeleton-watch	{"delta": "", "html": "Leather Strap Skeleton Watch for Men - Stylish and Latest Design"}
-69	Stainless Steel Wrist Watch	USD	47.0000	15	66	stainless-steel-wrist-watch	{"delta": "", "html": "Stylish Watch For Man (Luxury) Classy Men's Stainless Steel Wrist Watch - Box Packed"}
-70	Steel Analog Couple Watches	USD	35.0000	16	67	steel-analog-couple-watches	{"delta": "", "html": "Elegant design, Stylish ,Unique & Trendy,Comfortable wear"}
-71	Fashion Magnetic Wrist Watch	USD	60.0000	16	68	fashion-magnetic-wrist-watch	{"delta": "", "html": "Buy this awesome  The product is originally manufactured by the company and it's a top selling product with a very reasonable"}
-72	Stylish Luxury Digital Watch	USD	57.0000	16	69	stylish-luxury-digital-watch	{"delta": "", "html": "Stylish Luxury Digital Watch For Girls / Women - Led Smart Ladies Watches For Girls"}
-73	Golden Watch Pearls Bracelet Watch	USD	47.0000	16	70	golden-watch-pearls-bracelet-watch	{"delta": "", "html": "Product details of Golden Watch Pearls Bracelet Watch For Girls - Golden Chain Ladies Bracelate Watch for Women"}
-74	Stainless Steel Women	USD	35.0000	16	71	stainless-steel-women	{"delta": "", "html": "Fashion Skmei 1830 Shell Dial Stainless Steel Women Wrist Watch Lady Bracelet Watch Quartz Watches Ladies"}
-75	Women Shoulder Bags	USD	46.0000	17	72	women-shoulder-bags	{"delta": "", "html": "LouisWill Women Shoulder Bags Long Clutches Cross Body Bags Phone Bags PU Leather Hand Bags Large Capacity Card Holders Zipper Coin Purses Fashion Crossbody Bags for Girls Ladies"}
-76	Handbag For Girls	USD	23.0000	17	73	handbag-for-girls	{"delta": "", "html": "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather."}
-77	Fancy hand clutch	USD	44.0000	17	74	fancy-hand-clutch	{"delta": "", "html": "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather."}
-78	Leather Hand Bag	USD	57.0000	17	75	leather-hand-bag	{"delta": "", "html": "It features an attractive design that makes it a must have accessory in your collection. We sell different kind of bags for boys, kids, women, girls and also for unisex."}
-79	Seven Pocket Women Bag	USD	68.0000	17	76	seven-pocket-women-bag	{"delta": "", "html": "Seven Pocket Women Bag Handbags Lady Shoulder Crossbody Bag Female Purse Seven Pocket Bag"}
-80	Silver Ring Set Women	USD	70.0000	18	77	silver-ring-set-women	{"delta": "", "html": "Jewelry Type:RingsCertificate Type:NonePlating:Silver PlatedShapeattern:noneStyle:CLASSICReligious"}
-81	Rose Ring	USD	100.0000	18	78	rose-ring	{"delta": "", "html": "Brand: The Greetings Flower Colour: RedRing Colour: GoldenSize: Adjustable"}
-82	Rhinestone Korean Style Open Rings	USD	30.0000	18	79	rhinestone-korean-style-open-rings	{"delta": "", "html": "Fashion Jewellery 3Pcs Adjustable Pearl Rhinestone Korean Style Open Rings For Women"}
-83	Elegant Female Pearl Earrings	USD	30.0000	18	80	elegant-female-pearl-earrings	{"delta": "", "html": "Elegant Female Pearl Earrings Set Zircon Pearl Earings Women Party Accessories 9 Pairs/Set"}
-84	Chain Pin Tassel Earrings	USD	45.0000	18	81	chain-pin-tassel-earrings	{"delta": "", "html": "Pair Of Ear Cuff Butterfly Long Chain Pin Tassel Earrings - Silver ( Long Life Quality Product)"}
-85	Round Silver Frame Sun Glasses	USD	19.0000	19	82	round-silver-frame-sun-glasses	{"delta": "", "html": "A pair of sunglasses can protect your eyes from being hurt. For car driving, vacation travel, outdoor activities, social gatherings,"}
-86	Kabir Singh Square Sunglass	USD	50.0000	19	17	kabir-singh-square-sunglass	{"delta": "", "html": "Orignal Metal Kabir Singh design 2020 Sunglasses Men Brand Designer Sun Glasses Kabir Singh Square Sunglass"}
-87	Wiley X Night Vision Yellow Glasses	USD	30.0000	19	83	wiley-x-night-vision-yellow-glasses	{"delta": "", "html": "Wiley X Night Vision Yellow Glasses for Riders - Night Vision Anti Fog Driving Glasses - Free Night Glass Cover - Shield Eyes From Dust and Virus- For Night Sport Matches"}
-88	Square Sunglasses	USD	28.0000	19	84	square-sunglasses	{"delta": "", "html": "Fashion Oversized Square Sunglasses Retro Gradient Big Frame Sunglasses For Women One Piece Gafas Shade Mirror Clear Lens 17059"}
-89	LouisWill Men Sunglasses	USD	50.0000	19	85	louiswill-men-sunglasses	{"delta": "", "html": "LouisWill Men Sunglasses Polarized Sunglasses UV400 Sunglasses Day Night Dual Use Safety Driving Night Vision Eyewear AL-MG Frame Sun Glasses with Free Box for Drivers"}
-90	Bluetooth Aux	USD	25.0000	20	86	bluetooth-aux	{"delta": "", "html": "Bluetooth Aux Bluetooth Car Aux Car Bluetooth Transmitter Aux Audio Receiver Handfree Car Bluetooth Music Receiver Universal 3.5mm Streaming A2DP Wireless Auto AUX Audio Adapter With Mic For Phone MP3"}
-91	t Temperature Controller Incubator Controller	USD	40.0000	20	87	t-temperature-controller-incubator-controller	{"delta": "", "html": "Both Heat and Cool Purpose, Temperature control range; -50 to +110, Temperature measurement accuracy; 0.1, Control accuracy; 0.1"}
-92	TC Reusable Silicone Magic Washing Gloves	USD	29.0000	20	88	tc-reusable-silicone-magic-washing-gloves	{"delta": "", "html": "TC Reusable Silicone Magic Washing Gloves with Scrubber, Cleaning Brush Scrubber Gloves Heat Resistant Pair for Cleaning of Kitchen, Dishes, Vegetables and Fruits, Bathroom, Car Wash, Pet Care and Multipurpose"}
-93	Qualcomm original Car Charger	USD	40.0000	20	89	qualcomm-original-car-charger	{"delta": "", "html": "best Quality CHarger , Highly Recommended to all best Quality CHarger , Highly Recommended to all"}
-94	Cycle Bike Glow	USD	35.0000	20	90	cycle-bike-glow	{"delta": "", "html": "Universal fitment and easy to install no special wires, can be easily installed and removed. Fits most standard tyre air stem valves of road, mountain bicycles, motocycles and cars.Bright led will turn on w"}
-95	Black Motorbike	USD	569.0000	21	91	black-motorbike	{"delta": "", "html": "Engine Type:Wet sump, Single Cylinder, Four Stroke, Two Valves, Air Cooled with SOHC (Single Over Head Cam) Chain Drive Bore & Stroke:47.0 x 49.5 MM"}
-96	HOT SALE IN EUROPE electric racing motorcycle	USD	920.0000	21	92	hot-sale-in-europe-electric-racing-motorcycle	{"delta": "", "html": "HOT SALE IN EUROPE electric racing motorcycle electric motorcycle for sale adult electric motorcycles"}
-97	Automatic Motor Gas Motorcycles	USD	1050.0000	21	93	automatic-motor-gas-motorcycles	{"delta": "", "html": "150cc 4-Stroke Motorcycle Automatic Motor Gas Motorcycles Scooter motorcycles 150cc scooter"}
-98	new arrivals Fashion motocross goggles	USD	900.0000	21	94	new-arrivals-fashion-motocross-goggles	{"delta": "", "html": "new arrivals Fashion motocross goggles motorcycle motocross racing motorcycle"}
-99	Wholesale cargo lashing Belt	USD	930.0000	21	95	wholesale-cargo-lashing-belt	{"delta": "", "html": "Wholesale cargo lashing Belt Tie Down end Ratchet strap customized strap 25mm motorcycle 1500kgs with rubber handle"}
-100	lighting ceiling kitchen	USD	30.0000	22	96	lighting-ceiling-kitchen	{"delta": "", "html": "Wholesale slim hanging decorative kid room lighting ceiling kitchen chandeliers pendant light modern"}
-101	Metal Ceramic Flower	USD	35.0000	22	97	metal-ceramic-flower	{"delta": "", "html": "Metal Ceramic Flower Chandelier Home Lighting American Vintage Hanging Lighting Pendant Lamp"}
-102	3 lights lndenpant kitchen islang	USD	34.0000	22	98	3-lights-lndenpant-kitchen-islang	{"delta": "", "html": "3 lights lndenpant kitchen islang dining room pendant rice paper chandelier contemporary led pendant light modern chandelier"}
-103	American Vintage Wood Pendant Light	USD	46.0000	22	99	american-vintage-wood-pendant-light	{"delta": "", "html": "American Vintage Wood Pendant Light Farmhouse Antique Hanging Lamp Lampara Colgante"}
-104	Crystal chandelier maria theresa for 12 light	USD	47.0000	22	100	crystal-chandelier-maria-theresa-for-12-light	{"delta": "", "html": "Crystal chandelier maria theresa for 12 light"}
-107	OnePlus 10 Pro | 5G Android Smartphone	USD	697.1700	1	\N	oneplus-10-pro-5g-android-smartphone	{"delta": "", "html": ""}
-112	Apple iPhone 11 Pro Max	USD	689.0000	1	\N	apple-iphone-11-pro-max	{"delta": "", "html": ""}
-5	iPhone 9	USD	549.0000	1	4	iphone-9	{"delta": "", "html": "An apple mobile which is nothing like apple"}
-6	iPhone X	USD	899.0000	1	5	iphone-x	{"delta": "", "html": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ..."}
-7	Samsung Universe 9	USD	1249.0000	1	6	samsung-universe-9	{"delta": "", "html": "Samsung's new variant which goes beyond Galaxy to the Universe"}
-8	OPPOF19	USD	280.0000	1	7	oppof19	{"delta": "", "html": "OPPO F19 is officially announced on April 2021."}
-9	Huawei P30	USD	499.0000	1	8	huawei-p30	{"delta": "", "html": "Huawei\\u2019s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK."}
-2	SAMSUNG Galaxy S22+ Cell Phone	USD	910.0000	1	1	samsung-galaxy-s22-cell-phone	{"delta":"{\\"ops\\":[{\\"insert\\":\\"6.6\\\\\\", 1080 x 2340pixels, Infinity-O FHD+ Dynamic AMOLED 2X Display, 4500mAh Battery, Wireless Powershare\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"128GB ROM, 8GB RAM, No SD Card Slot, Qualcomm SM8450 Snapdragon 8 Gen 1 (4 nm), Octa-Core, Adreno 730\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"Rear Camera: 50MP, f/1.8 + 10MP, f/2.4 + 12MP, f/2.2, Front Camera: 10 MP, f/2.2, Android 12, One UI 4.1\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"2G: GSM 850/900/1800/1900, CDMA 800/1900, 3G: HSDPA 850/900/1700(AWS)/1900/2100, CDMA2000 1xEV-DO, 4G LTE: 1/2/3/4/5/7/8/12/13/14/18/19/20/25/26/28/29/30/38/39/40/41/46/48/66/71, 5G: 1/3/5/7/8/20/28/38/41/66/71/260/261SA/NSA/Sub6/mmWave - Single SIM\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"No Warranty. Compatible with Most GSM and CDMA Carriers like T-Mobile, AT&T, MetroPCS, etc. Will Also work with CDMA Carriers Such as Verizon, Sprint.\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"}]}","html":"<ul><li>6.6\\", 1080 x 2340pixels, Infinity-O FHD+ Dynamic AMOLED 2X Display, 4500mAh Battery, Wireless Powershare</li><li>128GB ROM, 8GB RAM, No SD Card Slot, Qualcomm SM8450 Snapdragon 8 Gen 1 (4 nm), Octa-Core, Adreno 730</li><li>Rear Camera: 50MP, f/1.8 + 10MP, f/2.4 + 12MP, f/2.2, Front Camera: 10 MP, f/2.2, Android 12, One UI 4.1</li><li>2G: GSM 850/900/1800/1900, CDMA 800/1900, 3G: HSDPA 850/900/1700(AWS)/1900/2100, CDMA2000 1xEV-DO, 4G LTE: 1/2/3/4/5/7/8/12/13/14/18/19/20/25/26/28/29/30/38/39/40/41/46/48/66/71, 5G: 1/3/5/7/8/20/28/38/41/66/71/260/261SA/NSA/Sub6/mmWave - Single SIM</li><li>No Warranty. Compatible with Most GSM and CDMA Carriers like T-Mobile, AT&amp;T, MetroPCS, etc. Will Also work with CDMA Carriers Such as Verizon, Sprint.</li></ul>"}
-109	Samsung Galaxy S20 FE 5G	USD	550.0000	1	101	samsung-galaxy-s20-fe-5g	{"delta":"","html":""}
-108	iPhone 13 Pro Max	USD	1101.0000	1	102	iphone-13-pro-max	{"delta":"","html":""}
-111	OnePlus Nord N200 | 5G	USD	189.9900	1	103	oneplus-nord-n200-5g	{"delta":"","html":""}
-110	SAMSUNG Galaxy Z Fold 3 5G Cell Phone	USD	1144.0000	1	104	samsung-galaxy-z-fold-3-5g-cell-phone	{"delta":"","html":""}
-113	SAMSUNG Galaxy S23 Ultra Cell Phone	USD	1379.0000	1	1	samsung-galaxy-s23-ultra-cell-phone	{"delta":"{\\"ops\\":[{\\"insert\\":\\"CAPTURE THE NIGHT IN LOW LIGHT: Whether you’re headed to a concert or romantic night out, there’s no such thing as bad lighting with Night Mode; Galaxy S23 Ultra lets you capture epic content in any setting with stunning Nightography\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"HIGHEST PHONE CAMERA RESOLUTION: Create crystal-clear content worth sharing with Galaxy S23 Ultra’s 200MP camera — the highest camera resolution on a phone; Whether you’re posting or printing, Galaxy S23 Ultra always does the moment justice\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"STUNNINGLY SMOOTH VIDEO: Capture incredibly smooth video during life’s most exciting moments; With Video Stabilization, this smartphone easily records daytime outdoor adventures or those spur-of-the-moment dance parties at night\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"WRITE, DRAW, CREATE w/ S PEN: Whether you’re in Samsung Note, Microsoft Office or Google Suite, with the built-in S Pen, you can convert handwriting to text, share your creations live and keep everything on your Galaxy S23 Ultra device\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"SNAP PICS w/ S PEN: Capture epic selfies and beautiful photos with the click of your S Pen; Simply open up the camera app and click the button on the S Pen instead of the screen; Getting that great shot just got easier\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"FASTEST MOBILE PROCESSOR AVAILABLE: Whether you’re working hard, playing hard or doing both at the same time, smoothly switch between apps with our fastest processor ever\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"UNLOCK SMOOTH GAMING: Game at full throttle and smoothly switch between apps; Get more done with our fastest processor ever combined with massive internal storage; And if you’re on the move, keep going with a screen that adapts to your environment\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"BATTERY THAT POWERS YOUR DAY: Power through a packed day* or long night of gaming without worrying about your phone dying; The robust 5,000mAh battery has been fine-tuned with a smarter processor that helps manage energy usage without slowing you down\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"MORE STORAGE. MORE MEMORIES: You’re good on storage space; With an impressive amount of storage, starting at 256GB, you can enjoy being behind the camera without the stress that comes with getting close to filling up your phone\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"ADAPTIVE DISPLAY: Watch your content comfortably as Adaptive Vision Booster helps your screen adapt to your environment; Whether out in direct sunlight or in bed with the lights off, the contrast on Samsung Galaxy S23 Ultra's expansive screen still looks amazing\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"\\\\n\\"}]}","html":"<ul><li>CAPTURE THE NIGHT IN LOW LIGHT: Whether you’re headed to a concert or romantic night out, there’s no such thing as bad lighting with Night Mode; Galaxy S23 Ultra lets you capture epic content in any setting with stunning Nightography</li><li>HIGHEST PHONE CAMERA RESOLUTION: Create crystal-clear content worth sharing with Galaxy S23 Ultra’s 200MP camera — the highest camera resolution on a phone; Whether you’re posting or printing, Galaxy S23 Ultra always does the moment justice</li><li>STUNNINGLY SMOOTH VIDEO: Capture incredibly smooth video during life’s most exciting moments; With Video Stabilization, this smartphone easily records daytime outdoor adventures or those spur-of-the-moment dance parties at night</li><li>WRITE, DRAW, CREATE w/ S PEN: Whether you’re in Samsung Note, Microsoft Office or Google Suite, with the built-in S Pen, you can convert handwriting to text, share your creations live and keep everything on your Galaxy S23 Ultra device</li><li>SNAP PICS w/ S PEN: Capture epic selfies and beautiful photos with the click of your S Pen; Simply open up the camera app and click the button on the S Pen instead of the screen; Getting that great shot just got easier</li><li>FASTEST MOBILE PROCESSOR AVAILABLE: Whether you’re working hard, playing hard or doing both at the same time, smoothly switch between apps with our fastest processor ever</li><li>UNLOCK SMOOTH GAMING: Game at full throttle and smoothly switch between apps; Get more done with our fastest processor ever combined with massive internal storage; And if you’re on the move, keep going with a screen that adapts to your environment</li><li>BATTERY THAT POWERS YOUR DAY: Power through a packed day* or long night of gaming without worrying about your phone dying; The robust 5,000mAh battery has been fine-tuned with a smarter processor that helps manage energy usage without slowing you down</li><li>MORE STORAGE. MORE MEMORIES: You’re good on storage space; With an impressive amount of storage, starting at 256GB, you can enjoy being behind the camera without the stress that comes with getting close to filling up your phone</li><li>ADAPTIVE DISPLAY: Watch your content comfortably as Adaptive&nbsp;Vision&nbsp;Booster helps your&nbsp;screen&nbsp;adapt to your environment; Whether out in direct sunlight or in bed with the lights off, the contrast on Samsung Galaxy S23 Ultra's expansive&nbsp;screen&nbsp;still looks amazing</li></ul><p><br></p>"}
-105	ONEPLUS 10T | Moonstone Black | 5G	USD	549.9900	1	3	oneplus-10t-moonstone-black-5g	{"delta":"","html":""}
-106	Apple iPhone 12	USD	504.0000	1	2	apple-iphone-12	{"delta":"","html":""}
+COPY public.products_product (id, name, price_currency, price, category_id, discount_id, slug, description, created_at, updated_at) FROM stdin;
+10	MacBook Pro	USD	1749.0000	2	9	macbook-pro	{"delta": "", "html": "MacBook Pro 2021 with mini-LED display may launch between September, November"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+11	Samsung Galaxy Book	USD	1499.0000	2	10	samsung-galaxy-book	{"delta": "", "html": "Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+12	Microsoft Surface Laptop 4	USD	1499.0000	2	11	microsoft-surface-laptop-4	{"delta": "", "html": "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+13	Infinix INBOOK	USD	1099.0000	2	12	infinix-inbook	{"delta": "", "html": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey \\u2013 1 Year Warranty"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+14	HP Pavilion 15-DK1056WM	USD	1099.0000	2	13	hp-pavilion-15-dk1056wm	{"delta": "", "html": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+15	perfume Oil	USD	13.0000	5	14	perfume-oil	{"delta": "", "html": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+16	Brown Perfume	USD	40.0000	5	15	brown-perfume	{"delta": "", "html": "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+17	Fog Scent Xpressio Perfume	USD	13.0000	5	16	fog-scent-xpressio-perfume	{"delta": "", "html": "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+18	Non-Alcoholic Concentrated Perfume Oil	USD	120.0000	5	17	non-alcoholic-concentrated-perfume-oil	{"delta": "", "html": "Original Al Munakh\\u00ae by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+19	Eau De Perfume Spray	USD	30.0000	5	18	eau-de-perfume-spray	{"delta": "", "html": "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+20	Hyaluronic Acid Serum	USD	19.0000	6	19	hyaluronic-acid-serum	{"delta": "", "html": "L'Or\\u00c3\\u00a9al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+21	Tree Oil 30ml	USD	12.0000	6	20	tree-oil-30ml	{"delta": "", "html": "Tea tree oil contains a number of compounds, including terpinen-4-ol, that have been shown to kill certain bacteria,"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+22	Oil Free Moisturizer 100ml	USD	40.0000	6	21	oil-free-moisturizer-100ml	{"delta": "", "html": "Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+23	Skin Beauty Serum.	USD	46.0000	6	22	skin-beauty-serum	{"delta": "", "html": "Product name: rorec collagen hyaluronic acid white face serum riceNet weight: 15 m"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+24	Freckle Treatment Cream- 15gm	USD	70.0000	6	23	freckle-treatment-cream-15gm	{"delta": "", "html": "Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+25	- Daal Masoor 500 grams	USD	20.0000	7	24	daal-masoor-500-grams	{"delta": "", "html": "Fine quality Branded Product Keep in a cool and dry place"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+26	Elbow Macaroni - 400 gm	USD	14.0000	7	25	elbow-macaroni-400-gm	{"delta": "", "html": "Product details of Bake Parlor Big Elbow Macaroni - 400 gm"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+27	Orange Essence Food Flavou	USD	14.0000	7	26	orange-essence-food-flavou	{"delta": "", "html": "Specifications of Orange Essence Food Flavour For Cakes and Baking Food Item"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+28	cereals muesli fruit nuts	USD	46.0000	7	27	cereals-muesli-fruit-nuts	{"delta": "", "html": "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+29	Gulab Powder 50 Gram	USD	70.0000	7	28	gulab-powder-50-gram	{"delta": "", "html": "Dry Rose Flower Powder Gulab Powder 50 Gram \\u2022 Treats Wounds"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+30	Plant Hanger For Home	USD	41.0000	8	29	plant-hanger-for-home	{"delta": "", "html": "Boho Decor Plant Hanger For Home Wall Decoration Macrame Wall Hanging Shelf"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+31	Flying Wooden Bird	USD	51.0000	8	25	flying-wooden-bird	{"delta": "", "html": "Package Include 6 Birds with Adhesive Tape Shape: 3D Shaped Wooden Birds Material: Wooden MDF, Laminated 3.5mm"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+32	3D Embellishment Art Lamp	USD	20.0000	8	30	3d-embellishment-art-lamp	{"delta": "", "html": "3D led lamp sticker Wall sticker 3d wall art light on/off button  cell operated (included)"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+33	Handcraft Chinese style	USD	60.0000	8	31	handcraft-chinese-style	{"delta": "", "html": "Handcraft Chinese style art luxury palace hotel villa mansion home decor ceramic vase with brass fruit plate"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+34	Key Holder	USD	30.0000	8	32	key-holder	{"delta": "", "html": "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+35	Mornadi Velvet Bed	USD	40.0000	9	33	mornadi-velvet-bed	{"delta": "", "html": "Mornadi Velvet Bed Base with Headboard Slats Support Classic Style Bedroom Furniture Bed Set"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+36	Sofa for Coffe Cafe	USD	50.0000	9	34	sofa-for-coffe-cafe	{"delta": "", "html": "Ratttan Outdoor furniture Set Waterproof  Rattan Sofa for Coffe Cafe"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+37	3 Tier Corner Shelves	USD	700.0000	9	33	3-tier-corner-shelves	{"delta": "", "html": "3 Tier Corner Shelves | 3 PCs Wall Mount Kitchen Shelf | Floating Bedroom Shelf"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+38	Plastic Table	USD	50.0000	9	35	plastic-table	{"delta": "", "html": "V\\ufeffery good quality plastic table for multi purpose now in reasonable price"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+39	3 DOOR PORTABLE	USD	41.0000	9	36	3-door-portable	{"delta": "", "html": "Material: Stainless Steel and Fabric  Item Size: 110 cm x 45 cm x 175 cm Package Contents: 1 Storage Wardrobe"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+3	Acer Predator Triton 500 SE	USD	2900.0000	2	2	acer-predator-triton-500-se	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+4	TCL 32-inch Class 3-Series HD LED Smart Android TV	USD	200.0000	\N	3	tcl-32-inch-class-3-series-hd-led-smart-android-tv	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+40	Sleeve Shirt Womens	USD	90.0000	10	37	sleeve-shirt-womens	{"delta": "", "html": "Cotton Solid Color Professional Wear Sleeve Shirt Womens Work Blouses Wholesale Clothing Casual Plain Custom Top OEM Customized"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+41	ank Tops for Womens/Girls	USD	50.0000	10	38	ank-tops-for-womensgirls	{"delta": "", "html": "PACK OF 3 CAMISOLES ,VERY COMFORTABLE SOFT COTTON STUFF, COMFORTABLE IN ALL FOUR SEASONS"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+42	sublimation plain kids tank	USD	100.0000	10	39	sublimation-plain-kids-tank	{"delta": "", "html": "sublimation plain kids tank tops wholesale"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+43	Women Sweaters Wool	USD	600.0000	10	40	women-sweaters-wool	{"delta": "", "html": "2021 Custom Winter Fall Zebra Knit Crop Top Women Sweaters Wool Mohair Cos Customize Crew Neck Women' S Crop Top Sweater"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+44	women winter clothes	USD	57.0000	10	41	women-winter-clothes	{"delta": "", "html": "women winter clothes thick fleece hoodie top with sweat pantjogger women sweatsuit set joggers pants two piece pants set"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+45	NIGHT SUIT	USD	55.0000	11	42	night-suit	{"delta": "", "html": "NIGHT SUIT RED MICKY MOUSE..  For Girls. Fantastic Suits."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+46	Stiched Kurta plus trouser	USD	80.0000	11	43	stiched-kurta-plus-trouser	{"delta": "", "html": "FABRIC: LILEIN CHEST: 21 LENGHT: 37 TROUSER: (38) :ARABIC LILEIN"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+47	frock gold printed	USD	600.0000	11	44	frock-gold-printed	{"delta": "", "html": "Ghazi fabric long frock gold printed ready to wear stitched collection (G992)"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+48	Ladies Multicolored Dress	USD	79.0000	11	45	ladies-multicolored-dress	{"delta": "", "html": "This classy shirt for women gives you a gorgeous look on everyday wear and specially for semi-casual wears."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+49	Malai Maxi Dress	USD	50.0000	11	46	malai-maxi-dress	{"delta": "", "html": "Ready to wear, Unique design according to modern standard fashion, Best fitting ,Imported stuff"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+50	women's shoes	USD	40.0000	12	47	womens-shoes	{"delta": "", "html": "Close: Lace, Style with bottom: Increased inside, Sole Material: Rubber"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+51	Sneaker shoes	USD	120.0000	12	48	sneaker-shoes	{"delta": "", "html": "Synthetic Leather Casual Sneaker shoes for Women/girls Sneakers For Women"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+52	Women Strip Heel	USD	40.0000	12	49	women-strip-heel	{"delta": "", "html": "Features: Flip-flops, Mid Heel, Comfortable, Striped Heel, Antiskid, Striped"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+53	Chappals & Shoe Ladies Metallic	USD	23.0000	12	50	chappals-shoe-ladies-metallic	{"delta": "", "html": "Womens Chappals & Shoe Ladies Metallic Tong Thong Sandal Flat Summer 2020 Maasai Sandals"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+54	Women Shoes	USD	36.0000	12	51	women-shoes	{"delta": "", "html": "2020 New Arrivals Genuine Leather Fashion Trend Platform Summer Women Shoes"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+55	half sleeves T shirts	USD	23.0000	13	52	half-sleeves-t-shirts	{"delta": "", "html": "Many store is creating new designs and trend every month and every year. Daraz.pk have a beautiful range of men fashion brands"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+56	FREE FIRE T Shirt	USD	10.0000	13	53	free-fire-t-shirt	{"delta": "", "html": "quality and professional print - It doesn't just look high quality, it is high quality."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+57	printed high quality T shirts	USD	35.0000	13	54	printed-high-quality-t-shirts	{"delta": "", "html": "Brand: vintage Apparel ,Export quality"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+58	Pubg Printed Graphic T-Shirt	USD	46.0000	13	55	pubg-printed-graphic-t-shirt	{"delta": "", "html": "Product Description Features: 100% Ultra soft Polyester Jersey. Vibrant & colorful printing on front. Feels soft as cotton without ever cracking"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+59	Money Heist Printed Summer T Shirts	USD	66.0000	13	56	money-heist-printed-summer-t-shirts	{"delta": "", "html": "Fabric Jercy, Size: M & L Wear Stylish Dual Stiched"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+60	Sneakers Joggers Shoes	USD	40.0000	14	57	sneakers-joggers-shoes	{"delta": "", "html": "Gender: Men , Colors: Same as DisplayedCondition: 100% Brand New"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+61	Loafers for men	USD	47.0000	14	58	loafers-for-men	{"delta": "", "html": "Men Shoes - Loafers for men - Rubber Shoes - Nylon Shoes - Shoes for men - Moccassion - Pure Nylon (Rubber) Expot Quality."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+62	formal offices shoes	USD	57.0000	14	59	formal-offices-shoes	{"delta": "", "html": "Pattern Type: Solid, Material: PU, Toe Shape: Pointed Toe ,Outsole Material: Rubber"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+63	Spring and summershoes	USD	20.0000	14	60	spring-and-summershoes	{"delta": "", "html": "Comfortable stretch cloth, lightweight body; ,rubber sole, anti-skid wear;"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+64	Stylish Casual Jeans Shoes	USD	58.0000	14	61	stylish-casual-jeans-shoes	{"delta": "", "html": "High Quality ,Stylish design ,Comfortable wear ,FAshion ,Durable"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+65	Leather Straps Wristwatch	USD	120.0000	15	62	leather-straps-wristwatch	{"delta": "", "html": "Style:Sport ,Clasp:Buckles ,Water Resistance Depth:3Bar"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+66	Waterproof Leather Brand Watch	USD	46.0000	15	63	waterproof-leather-brand-watch	{"delta": "", "html": "Watch Crown With Environmental IPS Bronze Electroplating; Display system of 12 hours"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+67	Royal Blue Premium Watch	USD	50.0000	15	64	royal-blue-premium-watch	{"delta": "", "html": "Men Silver Chain Royal Blue Premium Watch Latest Analog Watch"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+68	Leather Strap Skeleton Watch	USD	46.0000	15	65	leather-strap-skeleton-watch	{"delta": "", "html": "Leather Strap Skeleton Watch for Men - Stylish and Latest Design"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+69	Stainless Steel Wrist Watch	USD	47.0000	15	66	stainless-steel-wrist-watch	{"delta": "", "html": "Stylish Watch For Man (Luxury) Classy Men's Stainless Steel Wrist Watch - Box Packed"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+70	Steel Analog Couple Watches	USD	35.0000	16	67	steel-analog-couple-watches	{"delta": "", "html": "Elegant design, Stylish ,Unique & Trendy,Comfortable wear"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+71	Fashion Magnetic Wrist Watch	USD	60.0000	16	68	fashion-magnetic-wrist-watch	{"delta": "", "html": "Buy this awesome  The product is originally manufactured by the company and it's a top selling product with a very reasonable"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+72	Stylish Luxury Digital Watch	USD	57.0000	16	69	stylish-luxury-digital-watch	{"delta": "", "html": "Stylish Luxury Digital Watch For Girls / Women - Led Smart Ladies Watches For Girls"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+73	Golden Watch Pearls Bracelet Watch	USD	47.0000	16	70	golden-watch-pearls-bracelet-watch	{"delta": "", "html": "Product details of Golden Watch Pearls Bracelet Watch For Girls - Golden Chain Ladies Bracelate Watch for Women"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+74	Stainless Steel Women	USD	35.0000	16	71	stainless-steel-women	{"delta": "", "html": "Fashion Skmei 1830 Shell Dial Stainless Steel Women Wrist Watch Lady Bracelet Watch Quartz Watches Ladies"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+75	Women Shoulder Bags	USD	46.0000	17	72	women-shoulder-bags	{"delta": "", "html": "LouisWill Women Shoulder Bags Long Clutches Cross Body Bags Phone Bags PU Leather Hand Bags Large Capacity Card Holders Zipper Coin Purses Fashion Crossbody Bags for Girls Ladies"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+76	Handbag For Girls	USD	23.0000	17	73	handbag-for-girls	{"delta": "", "html": "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+77	Fancy hand clutch	USD	44.0000	17	74	fancy-hand-clutch	{"delta": "", "html": "This fashion is designed to add a charming effect to your casual outfit. This Bag is made of synthetic leather."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+78	Leather Hand Bag	USD	57.0000	17	75	leather-hand-bag	{"delta": "", "html": "It features an attractive design that makes it a must have accessory in your collection. We sell different kind of bags for boys, kids, women, girls and also for unisex."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+79	Seven Pocket Women Bag	USD	68.0000	17	76	seven-pocket-women-bag	{"delta": "", "html": "Seven Pocket Women Bag Handbags Lady Shoulder Crossbody Bag Female Purse Seven Pocket Bag"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+80	Silver Ring Set Women	USD	70.0000	18	77	silver-ring-set-women	{"delta": "", "html": "Jewelry Type:RingsCertificate Type:NonePlating:Silver PlatedShapeattern:noneStyle:CLASSICReligious"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+81	Rose Ring	USD	100.0000	18	78	rose-ring	{"delta": "", "html": "Brand: The Greetings Flower Colour: RedRing Colour: GoldenSize: Adjustable"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+82	Rhinestone Korean Style Open Rings	USD	30.0000	18	79	rhinestone-korean-style-open-rings	{"delta": "", "html": "Fashion Jewellery 3Pcs Adjustable Pearl Rhinestone Korean Style Open Rings For Women"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+83	Elegant Female Pearl Earrings	USD	30.0000	18	80	elegant-female-pearl-earrings	{"delta": "", "html": "Elegant Female Pearl Earrings Set Zircon Pearl Earings Women Party Accessories 9 Pairs/Set"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+84	Chain Pin Tassel Earrings	USD	45.0000	18	81	chain-pin-tassel-earrings	{"delta": "", "html": "Pair Of Ear Cuff Butterfly Long Chain Pin Tassel Earrings - Silver ( Long Life Quality Product)"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+85	Round Silver Frame Sun Glasses	USD	19.0000	19	82	round-silver-frame-sun-glasses	{"delta": "", "html": "A pair of sunglasses can protect your eyes from being hurt. For car driving, vacation travel, outdoor activities, social gatherings,"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+86	Kabir Singh Square Sunglass	USD	50.0000	19	17	kabir-singh-square-sunglass	{"delta": "", "html": "Orignal Metal Kabir Singh design 2020 Sunglasses Men Brand Designer Sun Glasses Kabir Singh Square Sunglass"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+87	Wiley X Night Vision Yellow Glasses	USD	30.0000	19	83	wiley-x-night-vision-yellow-glasses	{"delta": "", "html": "Wiley X Night Vision Yellow Glasses for Riders - Night Vision Anti Fog Driving Glasses - Free Night Glass Cover - Shield Eyes From Dust and Virus- For Night Sport Matches"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+88	Square Sunglasses	USD	28.0000	19	84	square-sunglasses	{"delta": "", "html": "Fashion Oversized Square Sunglasses Retro Gradient Big Frame Sunglasses For Women One Piece Gafas Shade Mirror Clear Lens 17059"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+89	LouisWill Men Sunglasses	USD	50.0000	19	85	louiswill-men-sunglasses	{"delta": "", "html": "LouisWill Men Sunglasses Polarized Sunglasses UV400 Sunglasses Day Night Dual Use Safety Driving Night Vision Eyewear AL-MG Frame Sun Glasses with Free Box for Drivers"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+90	Bluetooth Aux	USD	25.0000	20	86	bluetooth-aux	{"delta": "", "html": "Bluetooth Aux Bluetooth Car Aux Car Bluetooth Transmitter Aux Audio Receiver Handfree Car Bluetooth Music Receiver Universal 3.5mm Streaming A2DP Wireless Auto AUX Audio Adapter With Mic For Phone MP3"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+91	t Temperature Controller Incubator Controller	USD	40.0000	20	87	t-temperature-controller-incubator-controller	{"delta": "", "html": "Both Heat and Cool Purpose, Temperature control range; -50 to +110, Temperature measurement accuracy; 0.1, Control accuracy; 0.1"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+92	TC Reusable Silicone Magic Washing Gloves	USD	29.0000	20	88	tc-reusable-silicone-magic-washing-gloves	{"delta": "", "html": "TC Reusable Silicone Magic Washing Gloves with Scrubber, Cleaning Brush Scrubber Gloves Heat Resistant Pair for Cleaning of Kitchen, Dishes, Vegetables and Fruits, Bathroom, Car Wash, Pet Care and Multipurpose"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+93	Qualcomm original Car Charger	USD	40.0000	20	89	qualcomm-original-car-charger	{"delta": "", "html": "best Quality CHarger , Highly Recommended to all best Quality CHarger , Highly Recommended to all"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+94	Cycle Bike Glow	USD	35.0000	20	90	cycle-bike-glow	{"delta": "", "html": "Universal fitment and easy to install no special wires, can be easily installed and removed. Fits most standard tyre air stem valves of road, mountain bicycles, motocycles and cars.Bright led will turn on w"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+95	Black Motorbike	USD	569.0000	21	91	black-motorbike	{"delta": "", "html": "Engine Type:Wet sump, Single Cylinder, Four Stroke, Two Valves, Air Cooled with SOHC (Single Over Head Cam) Chain Drive Bore & Stroke:47.0 x 49.5 MM"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+96	HOT SALE IN EUROPE electric racing motorcycle	USD	920.0000	21	92	hot-sale-in-europe-electric-racing-motorcycle	{"delta": "", "html": "HOT SALE IN EUROPE electric racing motorcycle electric motorcycle for sale adult electric motorcycles"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+97	Automatic Motor Gas Motorcycles	USD	1050.0000	21	93	automatic-motor-gas-motorcycles	{"delta": "", "html": "150cc 4-Stroke Motorcycle Automatic Motor Gas Motorcycles Scooter motorcycles 150cc scooter"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+98	new arrivals Fashion motocross goggles	USD	900.0000	21	94	new-arrivals-fashion-motocross-goggles	{"delta": "", "html": "new arrivals Fashion motocross goggles motorcycle motocross racing motorcycle"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+99	Wholesale cargo lashing Belt	USD	930.0000	21	95	wholesale-cargo-lashing-belt	{"delta": "", "html": "Wholesale cargo lashing Belt Tie Down end Ratchet strap customized strap 25mm motorcycle 1500kgs with rubber handle"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+100	lighting ceiling kitchen	USD	30.0000	22	96	lighting-ceiling-kitchen	{"delta": "", "html": "Wholesale slim hanging decorative kid room lighting ceiling kitchen chandeliers pendant light modern"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+101	Metal Ceramic Flower	USD	35.0000	22	97	metal-ceramic-flower	{"delta": "", "html": "Metal Ceramic Flower Chandelier Home Lighting American Vintage Hanging Lighting Pendant Lamp"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+102	3 lights lndenpant kitchen islang	USD	34.0000	22	98	3-lights-lndenpant-kitchen-islang	{"delta": "", "html": "3 lights lndenpant kitchen islang dining room pendant rice paper chandelier contemporary led pendant light modern chandelier"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+103	American Vintage Wood Pendant Light	USD	46.0000	22	99	american-vintage-wood-pendant-light	{"delta": "", "html": "American Vintage Wood Pendant Light Farmhouse Antique Hanging Lamp Lampara Colgante"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+104	Crystal chandelier maria theresa for 12 light	USD	47.0000	22	100	crystal-chandelier-maria-theresa-for-12-light	{"delta": "", "html": "Crystal chandelier maria theresa for 12 light"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+107	OnePlus 10 Pro | 5G Android Smartphone	USD	697.1700	1	\N	oneplus-10-pro-5g-android-smartphone	{"delta": "", "html": ""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+112	Apple iPhone 11 Pro Max	USD	689.0000	1	\N	apple-iphone-11-pro-max	{"delta": "", "html": ""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+5	iPhone 9	USD	549.0000	1	4	iphone-9	{"delta": "", "html": "An apple mobile which is nothing like apple"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+6	iPhone X	USD	899.0000	1	5	iphone-x	{"delta": "", "html": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ..."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+7	Samsung Universe 9	USD	1249.0000	1	6	samsung-universe-9	{"delta": "", "html": "Samsung's new variant which goes beyond Galaxy to the Universe"}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+8	OPPOF19	USD	280.0000	1	7	oppof19	{"delta": "", "html": "OPPO F19 is officially announced on April 2021."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+9	Huawei P30	USD	499.0000	1	8	huawei-p30	{"delta": "", "html": "Huawei\\u2019s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK."}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+109	Samsung Galaxy S20 FE 5G	USD	550.0000	1	101	samsung-galaxy-s20-fe-5g	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+108	iPhone 13 Pro Max	USD	1101.0000	1	102	iphone-13-pro-max	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+111	OnePlus Nord N200 | 5G	USD	189.9900	1	103	oneplus-nord-n200-5g	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+110	SAMSUNG Galaxy Z Fold 3 5G Cell Phone	USD	1144.0000	1	104	samsung-galaxy-z-fold-3-5g-cell-phone	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+105	ONEPLUS 10T | Moonstone Black | 5G	USD	549.9900	1	3	oneplus-10t-moonstone-black-5g	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+106	Apple iPhone 12	USD	504.0000	1	2	apple-iphone-12	{"delta":"","html":""}	2023-03-31 01:52:56.89608+00	2023-03-31 01:52:56.902893+00
+2	SAMSUNG Galaxy S22+ Cell Phone	USD	910.0000	1	1	samsung-galaxy-s22-cell-phone	{"delta":"{\\"ops\\":[{\\"insert\\":\\"6.6\\\\\\", 1080 x 2340pixels, Infinity-O FHD+ Dynamic AMOLED 2X Display, 4500mAh Battery, Wireless Powershare\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"128GB ROM, 8GB RAM, No SD Card Slot, Qualcomm SM8450 Snapdragon 8 Gen 1 (4 nm), Octa-Core, Adreno 730\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"Rear Camera: 50MP, f/1.8 + 10MP, f/2.4 + 12MP, f/2.2, Front Camera: 10 MP, f/2.2, Android 12, One UI 4.1\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"2G: GSM 850/900/1800/1900, CDMA 800/1900, 3G: HSDPA 850/900/1700(AWS)/1900/2100, CDMA2000 1xEV-DO, 4G LTE: 1/2/3/4/5/7/8/12/13/14/18/19/20/25/26/28/29/30/38/39/40/41/46/48/66/71, 5G: 1/3/5/7/8/20/28/38/41/66/71/260/261SA/NSA/Sub6/mmWave - Single SIM\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"No Warranty. Compatible with Most GSM and CDMA Carriers like T-Mobile, AT&T, MetroPCS, etc. Will Also work with CDMA Carriers Such as Verizon, Sprint.\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"}]}","html":"<ul><li>6.6\\", 1080 x 2340pixels, Infinity-O FHD+ Dynamic AMOLED 2X Display, 4500mAh Battery, Wireless Powershare</li><li>128GB ROM, 8GB RAM, No SD Card Slot, Qualcomm SM8450 Snapdragon 8 Gen 1 (4 nm), Octa-Core, Adreno 730</li><li>Rear Camera: 50MP, f/1.8 + 10MP, f/2.4 + 12MP, f/2.2, Front Camera: 10 MP, f/2.2, Android 12, One UI 4.1</li><li>2G: GSM 850/900/1800/1900, CDMA 800/1900, 3G: HSDPA 850/900/1700(AWS)/1900/2100, CDMA2000 1xEV-DO, 4G LTE: 1/2/3/4/5/7/8/12/13/14/18/19/20/25/26/28/29/30/38/39/40/41/46/48/66/71, 5G: 1/3/5/7/8/20/28/38/41/66/71/260/261SA/NSA/Sub6/mmWave - Single SIM</li><li>No Warranty. Compatible with Most GSM and CDMA Carriers like T-Mobile, AT&amp;T, MetroPCS, etc. Will Also work with CDMA Carriers Such as Verizon, Sprint.</li></ul>"}	2023-03-31 01:52:56.89608+00	2023-03-31 02:33:38.087556+00
+113	SAMSUNG Galaxy S23 Ultra Cell Phone	USD	1379.0000	1	1	samsung-galaxy-s23-ultra-cell-phone	{"delta":"{\\"ops\\":[{\\"insert\\":\\"CAPTURE THE NIGHT IN LOW LIGHT: Whether you’re headed to a concert or romantic night out, there’s no such thing as bad lighting with Night Mode; Galaxy S23 Ultra lets you capture epic content in any setting with stunning Nightography\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"HIGHEST PHONE CAMERA RESOLUTION: Create crystal-clear content worth sharing with Galaxy S23 Ultra’s 200MP camera — the highest camera resolution on a phone; Whether you’re posting or printing, Galaxy S23 Ultra always does the moment justice\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"STUNNINGLY SMOOTH VIDEO: Capture incredibly smooth video during life’s most exciting moments; With Video Stabilization, this smartphone easily records daytime outdoor adventures or those spur-of-the-moment dance parties at night\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"WRITE, DRAW, CREATE w/ S PEN: Whether you’re in Samsung Note, Microsoft Office or Google Suite, with the built-in S Pen, you can convert handwriting to text, share your creations live and keep everything on your Galaxy S23 Ultra device\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"SNAP PICS w/ S PEN: Capture epic selfies and beautiful photos with the click of your S Pen; Simply open up the camera app and click the button on the S Pen instead of the screen; Getting that great shot just got easier\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"FASTEST MOBILE PROCESSOR AVAILABLE: Whether you’re working hard, playing hard or doing both at the same time, smoothly switch between apps with our fastest processor ever\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"UNLOCK SMOOTH GAMING: Game at full throttle and smoothly switch between apps; Get more done with our fastest processor ever combined with massive internal storage; And if you’re on the move, keep going with a screen that adapts to your environment\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"BATTERY THAT POWERS YOUR DAY: Power through a packed day* or long night of gaming without worrying about your phone dying; The robust 5,000mAh battery has been fine-tuned with a smarter processor that helps manage energy usage without slowing you down\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"MORE STORAGE. MORE MEMORIES: You’re good on storage space; With an impressive amount of storage, starting at 256GB, you can enjoy being behind the camera without the stress that comes with getting close to filling up your phone\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"ADAPTIVE DISPLAY: Watch your content comfortably as Adaptive Vision Booster helps your screen adapt to your environment; Whether out in direct sunlight or in bed with the lights off, the contrast on Samsung Galaxy S23 Ultra's expansive screen still looks amazing\\"},{\\"attributes\\":{\\"list\\":\\"bullet\\"},\\"insert\\":\\"\\\\n\\"},{\\"insert\\":\\"\\\\n\\"}]}","html":"<ul><li>CAPTURE THE NIGHT IN LOW LIGHT: Whether you’re headed to a concert or romantic night out, there’s no such thing as bad lighting with Night Mode; Galaxy S23 Ultra lets you capture epic content in any setting with stunning Nightography</li><li>HIGHEST PHONE CAMERA RESOLUTION: Create crystal-clear content worth sharing with Galaxy S23 Ultra’s 200MP camera — the highest camera resolution on a phone; Whether you’re posting or printing, Galaxy S23 Ultra always does the moment justice</li><li>STUNNINGLY SMOOTH VIDEO: Capture incredibly smooth video during life’s most exciting moments; With Video Stabilization, this smartphone easily records daytime outdoor adventures or those spur-of-the-moment dance parties at night</li><li>WRITE, DRAW, CREATE w/ S PEN: Whether you’re in Samsung Note, Microsoft Office or Google Suite, with the built-in S Pen, you can convert handwriting to text, share your creations live and keep everything on your Galaxy S23 Ultra device</li><li>SNAP PICS w/ S PEN: Capture epic selfies and beautiful photos with the click of your S Pen; Simply open up the camera app and click the button on the S Pen instead of the screen; Getting that great shot just got easier</li><li>FASTEST MOBILE PROCESSOR AVAILABLE: Whether you’re working hard, playing hard or doing both at the same time, smoothly switch between apps with our fastest processor ever</li><li>UNLOCK SMOOTH GAMING: Game at full throttle and smoothly switch between apps; Get more done with our fastest processor ever combined with massive internal storage; And if you’re on the move, keep going with a screen that adapts to your environment</li><li>BATTERY THAT POWERS YOUR DAY: Power through a packed day* or long night of gaming without worrying about your phone dying; The robust 5,000mAh battery has been fine-tuned with a smarter processor that helps manage energy usage without slowing you down</li><li>MORE STORAGE. MORE MEMORIES: You’re good on storage space; With an impressive amount of storage, starting at 256GB, you can enjoy being behind the camera without the stress that comes with getting close to filling up your phone</li><li>ADAPTIVE DISPLAY: Watch your content comfortably as Adaptive&nbsp;Vision&nbsp;Booster helps your&nbsp;screen&nbsp;adapt to your environment; Whether out in direct sunlight or in bed with the lights off, the contrast on Samsung Galaxy S23 Ultra's expansive&nbsp;screen&nbsp;still looks amazing</li></ul><p><br></p>"}	2023-03-31 01:52:56.89608+00	2023-03-31 02:34:17.570074+00
 \.
 
 
@@ -1611,7 +1621,7 @@ SELECT pg_catalog.setval('public.core_commandhistory_id_seq', 3, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 26, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 29, true);
 
 
 --
@@ -1625,7 +1635,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 23, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 25, true);
 
 
 --
