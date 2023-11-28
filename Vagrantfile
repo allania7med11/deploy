@@ -7,10 +7,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, path: "config/db/setup.sh"
   config.vm.network "forwarded_port", guest: 5432, host: 5433, host_ip: "127.0.0.1"
   config.vm.network "forwarded_port", guest: 2000, host: 2000
+  config.vm.network "forwarded_port", guest: 2010, host: 2010
   config.vm.network "forwarded_port", guest: 2200, host: 2200
-  config.vm.network "forwarded_port", guest: 2011, host: 2011
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = 3
-    vb.memory = 12000
+    vb.memory = 16000
   end
 end
