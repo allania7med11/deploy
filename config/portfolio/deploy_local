@@ -1,7 +1,16 @@
-# use the container to generate structure_front and copy it to /var/www/
-sudo cp -r portfolio /var/www/
+# use the container to generate portfolio and copy it to /var/www/
+# in portfolio folder
+# build portfolio image
+docker build -t portfolio  .
+# run portfolio container
+sudo docker run --name portfolio -d  --network=host --env-file .env portfolio
+# after the portfolio generated in portfolio container copy it in /var/www/
+sudo docker cp  portfolio:/app/portfolio /var/www/
+# stop and remove the portfolio container
+sudo docker stop portfolio
+sudo docker rm portfolio
 # copy ngnix portfolio config and enable it
-sudo cp /vagrant/ngnix/sites-available/portfolio /etc/nginx/sites-available
+sudo cp /vagrant/config/portfolio/portfolio /etc/nginx/sites-available
 sudo ln -s /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/
 # restart nginx
 sudo nginx -t
