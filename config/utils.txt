@@ -1,2 +1,9 @@
 sudo kill -9 $(sudo lsof -t -i:2200)
 sudo chmod 666 /var/run/docker.sock
+
+*Upload an SSH Public Key to remote server
+**in local
+    ssh-keygen
+    cat ~/.ssh/id_rsa.pub
+**in remote server
+    echo "ssh-rsa EXAMPLEzaC1yc2E...GvaQ== username@203.0.113.0" >> ~/.ssh/authorized_keys
