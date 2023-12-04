@@ -1,0 +1,6 @@
+# build donation_back image
+docker build -t donation_back --no-cache .
+# run donation_back container
+sudo docker run --name donation_back -d  --network=host --env-file .env --restart unless-stopped donation_back
+# copy donation_back_static generated in donation_back container to /var/www/
+sudo docker cp  donation_back:/app/donation_back_static /var/www/
