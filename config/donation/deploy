@@ -1,5 +1,5 @@
 echo "Add ngnix files"
-sudo cp -a /vagrant/config/donation/donation  /etc/nginx/sites-available/
+sudo cp -a ./config/donation/donation  /etc/nginx/sites-available/
 sudo ln -s /etc/nginx/sites-available/donation /etc/nginx/sites-enabled/
 echo "Restart nginx"
 sudo nginx -t

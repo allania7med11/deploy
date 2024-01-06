@@ -1,5 +1,5 @@
 echo "Add ngnix files"
-sudo cp -a /vagrant/config/shop/shop  /etc/nginx/sites-available/
+sudo cp -a ./config/shop/shop  /etc/nginx/sites-available/
 sudo ln -s /etc/nginx/sites-available/shop /etc/nginx/sites-enabled/
 echo "Restart nginx"
 sudo nginx -t

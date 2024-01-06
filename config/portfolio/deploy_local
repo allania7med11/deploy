@@ -10,7 +10,7 @@ sudo docker cp  portfolio:/app/portfolio /var/www/
 sudo docker stop portfolio
 sudo docker rm portfolio
 # copy ngnix portfolio config and enable it
-sudo cp /vagrant/config/portfolio/portfolio /etc/nginx/sites-available
+sudo cp ./config/portfolio/portfolio /etc/nginx/sites-available
 sudo ln -s /etc/nginx/sites-available/portfolio /etc/nginx/sites-enabled/
 # restart nginx
 sudo nginx -t

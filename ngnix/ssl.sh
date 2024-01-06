@@ -1,4 +1,4 @@
-source /vagrant/.env
+source ./.env
 echo "Installing Certbot"
 sudo snap install core; sudo snap refresh core
 sudo apt remove certbot

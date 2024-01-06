@@ -1,4 +1,4 @@
-# sudo chmod +x /vagrant/init.sh && /vagrant/init.sh
+# sudo chmod +x ./init.sh && ./init.sh
 Run () {
    sudo chmod +x $1 && $1
 }
