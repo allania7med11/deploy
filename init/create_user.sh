@@ -1,4 +1,7 @@
 #!/bin/bash
+echo "****Load variables from $SCRIPT_DIR/.env****"
+SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
+source "$SCRIPT_DIR/.env"
 
 # Set default values or use environment variables if available
 NEW_USERNAME="${NEW_USERNAME:-ah}"
