@@ -3,6 +3,6 @@ Run () {
    sudo chmod +x $1 && $1
 }
 
-Run /vagrant/ngnix/setup.sh
-Run /vagrant/config/docker/setup.sh
-Run /vagrant/config/db/setup.sh
+Run ./ngnix/setup.sh
+Run ./config/docker/setup.sh
+Run ./config/db/setup.sh
