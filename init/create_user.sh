@@ -4,17 +4,17 @@ SCRIPT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 source "$SCRIPT_DIR/.env"
 
 # Set default values or use environment variables if available
-NEW_USERNAME="${NEW_USERNAME:-ah}"
+USERNAME="${USERNAME:your_username}"
 SSH_PUBLIC_KEY="${SSH_PUBLIC_KEY:-your_ssh_key_here}"
 
 # Create a new user
-adduser "$NEW_USERNAME"
+adduser "$USERNAME"
 
 # Add the new user to the sudo group
-usermod -aG sudo "$NEW_USERNAME"
+usermod -aG sudo "$USERNAME"
 
 # Set up SSH access for the new user
-su - "$NEW_USERNAME" <<EOF
+su - "$USERNAME" <<EOF
 mkdir ~/.ssh
 chmod 700 ~/.ssh
 echo "$SSH_PUBLIC_KEY" >> ~/.ssh/authorized_keys
@@ -26,4 +26,4 @@ EOF
 sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
 sudo systemctl restart ssh
 
-echo "User $NEW_USERNAME created with sudo rights and SSH access."
+echo "User $USERNAME created with sudo rights and SSH access."
