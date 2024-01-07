@@ -2,14 +2,11 @@
 # build structure_back image
 docker build  -t structure_back --no-cache  .
 # tag your local Docker image with your Docker Hub username
-docker tag structure_back:latest allania7med11/structure_back:v1.1.1
+docker tag structure_back:latest allania7med11/structure_back:latest
 # push the Docker image to Docker Hub 
-docker push allania7med11/structure_back:v1.1.1
+docker push allania7med11/structure_back:latest
 # in the server
-# load the initial database
-scp -r structure_db user@remotehost:/var/db/
-sudo -u postgres psql -f load.sql
 # pull the image from Docker Hub
-docker pull allania7med11/structure_back:v1.1.1
+docker pull allania7med11/structure_back:latest
 # run structure_back container with the env file
-docker run -d  --network=host --env-file .env --restart unless-stopped allania7med11/structure_back:v1.1.1
+docker run -d  --network=host --env-file .env --restart unless-stopped allania7med11/structure_back:latest
