@@ -1,4 +1,5 @@
 .vagrant
+.vscode
 data
 *.log
 .env
