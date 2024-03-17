@@ -1,0 +1,52 @@
+- name: Perform Google Drive Operations
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Basic usage
+      debug:
+        msg: "'{{ lookup('env', 'HOME') }}' is the HOME environment variable."
+    - name: Log client_secret
+      debug:
+        msg: "Client Id: '{{ lookup('env', 'CLIENT_ID') }}' Client Secret: {{ lookup('env', 'CLIENT_SECRET') }}"
+
+    - name: Get device code
+      uri:
+        url: "https://oauth2.googleapis.com/device/code"
+        method: POST
+        body_format: form-urlencoded
+        body:
+          client_id: "{{ lookup('env', 'CLIENT_ID') }}"
+          scope: "https://www.googleapis.com/auth/drive.file"
+      register: device_code_response
+    
+    - name: Print device code response
+      debug:
+        var: device_code_response.json
+
+    - name: Ask user confirmation to continue
+      pause:
+        prompt: "Do you want to continue? (yes/no)"
+      register: continue_prompt
+
+    - name: Exchange device code for access token
+      uri:
+        url: "https://accounts.google.com/o/oauth2/token"
+        method: POST
+        body_format: form-urlencoded
+        body:
+          client_id: "{{ lookup('env', 'CLIENT_ID') }}"
+          client_secret: "{{ lookup('env', 'CLIENT_SECRET') }}"
+          device_code: "{{ device_code_response.json.device_code }}"
+          grant_type: "urn:ietf:params:oauth:grant-type:device_code"
+      register: access_token_response
+
+    - name: Log access_token_response
+      debug:
+        msg: "access_token_response.json: '{{ access_token_response.json }}'"
+
+    - name: Upload file to Google Drive
+      command: |
+        curl --location 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart' \
+        --header 'Authorization: Bearer {{ access_token_response.json.access_token }}' \
+        --form 'metadata="{\"name\": \"backup.zip\"}";type=application/json' \
+        --form 'file=@"backup.zip"'
