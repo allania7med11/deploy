@@ -1,0 +1,9 @@
+---
+- name: Setup Server
+  hosts: all
+  become: true
+  roles:
+    - aptitude
+    - postgres
+    - docker
+    - nginx
