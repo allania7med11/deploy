@@ -1,0 +1,69 @@
+- name: Clone project repository
+  git:
+    repo: https://github.com/allania7med11/portfolio
+    dest: "{{ dockerfile_directory }}"
+    version: master  # Specify the branch/tag you want to clone
+
+- name: Build portfolio image
+  docker_image:
+    name: portfolio
+    build:
+      path: "{{ dockerfile_directory }}"
+    source: build
+
+- name: Run portfolio container
+  docker_container:
+    name: portfolio
+    image: portfolio
+    state: started
+    restart_policy: always
+    networks:
+      - name: host
+    volumes:
+      - "{{ dockerfile_directory }}:/app/portfolio"
+
+- name: Wait for portfolio container to start
+  wait_for:
+    host: localhost
+    port: 80
+    delay: 10
+    timeout: 120
+
+- name: Copy portfolio from container to /var/www/
+  command: docker cp portfolio:/app/portfolio /var/www/
+  ignore_errors: yes
+
+- name: Stop portfolio container
+  docker_container:
+    name: portfolio
+    state: stopped
+  ignore_errors: yes
+
+- name: Remove portfolio container
+  docker_container:
+    name: portfolio
+    state: absent
+  ignore_errors: yes
+
+- name: Template NGINX portfolio configuration
+  template:
+    src: ../../../templates/portfolio/ngnix.j2
+    dest: /etc/nginx/sites-available/portfolio
+
+- name: Enable NGINX portfolio configuration
+  file:
+    src: /etc/nginx/sites-available/portfolio
+    dest: /etc/nginx/sites-enabled/portfolio
+    state: link
+
+- name: Test NGINX configuration
+  command: nginx -t
+  register: nginx_test
+  changed_when: false
+  ignore_errors: true
+
+- name: Restart NGINX
+  systemd:
+    name: nginx
+    state: restarted
+  when: nginx_test.rc == 0
