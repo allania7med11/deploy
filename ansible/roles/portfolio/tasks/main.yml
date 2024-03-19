@@ -11,6 +11,11 @@
       path: "{{ dockerfile_directory }}"
     source: build
 
+- name: Delete directory if it exists
+  file:
+    path: "{{ dockerfile_directory }}/portfolio"
+    state: absent
+
 - name: Run portfolio container
   docker_container:
     name: portfolio
@@ -19,35 +24,44 @@
     restart_policy: always
     networks:
       - name: host
-    volumes:
-      - "{{ dockerfile_directory }}:/app/portfolio"
+    env_file: "{{ ansible_directory }}/config/portfolio/.env"
+    detach: yes   # Detach from the container after starting it
+  register: portfolio_container
 
-- name: Wait for portfolio container to start
-  wait_for:
-    host: localhost
-    port: 80
-    delay: 10
-    timeout: 120
+- name: Get Docker container ID
+  command: docker ps -qf "name=portfolio"
+  register: container_id_output
 
-- name: Copy portfolio from container to /var/www/
-  command: docker cp portfolio:/app/portfolio /var/www/
-  ignore_errors: yes
+- name: Extract container ID
+  set_fact:
+    container_id: "{{ container_id_output.stdout_lines[0] }}"
+
+- name: Wait for "Generation completed successfully" message
+  command: docker logs --tail 1 {{ container_id }}
+  register: logs_output
+  until: logs_output.stdout_lines | length > 0 and logs_output.stdout_lines[0] is search("Generation completed successfully")
+  retries: 20
+  delay: 5
+
+- name: Copy files from container to host
+  shell: sudo docker cp  portfolio:/app/portfolio /var/www/
+
 
 - name: Stop portfolio container
   docker_container:
     name: portfolio
     state: stopped
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Remove portfolio container
   docker_container:
     name: portfolio
     state: absent
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Template NGINX portfolio configuration
   template:
-    src: ../../../templates/portfolio/ngnix.j2
+    src: "../../../templates/portfolio/ngnix.j2"
     dest: /etc/nginx/sites-available/portfolio
 
 - name: Enable NGINX portfolio configuration
