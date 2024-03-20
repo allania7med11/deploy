@@ -3,8 +3,8 @@
   vars:
     dockerfile_directory: "/vagrant/apps/portfolio/portfolio"
     ansible_directory: "/vagrant/ansible"
-    server: false
-    listen_port: "2000"
+    server: "portfolio"
+    listen_port: false
     backend: "http://localhost:2011"
   hosts: all
   become: true
