@@ -54,3 +54,13 @@
     name: portfolio
     state: absent
   ignore_errors: true
+
+- name: Ensure front_directory exists
+  file:
+    path: "{{ front_directory }}"
+    state: directory
+
+- name: Compress generated front folder under Vagrant folder
+  archive:
+    path: /var/www/portfolio
+    dest: "{{ front_directory }}/portfolio.tgz"

@@ -2,12 +2,6 @@
   hosts: localhost
   gather_facts: false
   tasks:
-    - name: Basic usage
-      debug:
-        msg: "'{{ lookup('env', 'HOME') }}' is the HOME environment variable."
-    - name: Log client_secret
-      debug:
-        msg: "Client Id: '{{ lookup('env', 'CLIENT_ID') }}' Client Secret: {{ lookup('env', 'CLIENT_SECRET') }}"
 
     - name: Get device code
       uri:
@@ -37,7 +31,7 @@
           client_id: "{{ lookup('env', 'CLIENT_ID') }}"
           client_secret: "{{ lookup('env', 'CLIENT_SECRET') }}"
           device_code: "{{ device_code_response.json.device_code }}"
-          grant_type: "urn:ietf:params:oauth:grant-type:device_code"
+          grant_type: "device_code"
       register: access_token_response
 
     - name: Log access_token_response

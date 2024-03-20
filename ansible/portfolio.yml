@@ -3,6 +3,7 @@
   vars:
     dockerfile_directory: "/vagrant/apps/portfolio/portfolio"
     ansible_directory: "/vagrant/ansible"
+    front_directory: "/vagrant/apps/portfolio/front"
     server: "portfolio"
     listen_port: false
     backend: "http://localhost:2011"

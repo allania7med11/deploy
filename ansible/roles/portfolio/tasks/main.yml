@@ -1,6 +1,11 @@
 - name: Ngnix configuration
   import_tasks:
     file: ngnix.yml
+
 - name: Build project
   import_tasks:
     file: build.yml
+
+- name: Push project
+  import_tasks:
+    file: push.yml

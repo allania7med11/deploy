@@ -1,0 +1,37 @@
+- name: Log REFRESH_TOKEN
+  debug:
+    msg: "REFRESH_TOKEN: {{ lookup('env', 'REFRESH_TOKEN') }}"
+
+- name: Exchange device code for access token
+  uri:
+    url: "https://accounts.google.com/o/oauth2/token"
+    method: POST
+    body_format: form-urlencoded
+    body:
+      client_id: "{{ lookup('env', 'CLIENT_ID') }}"
+      client_secret: "{{ lookup('env', 'CLIENT_SECRET') }}"
+      refresh_token: "{{ lookup('env', 'REFRESH_TOKEN') }}"
+      grant_type: "refresh_token"
+  register: access_token_response
+
+- name: Set folder_id variable
+  set_fact:
+    folder_id: "{{ lookup('env', 'FOLDER_ID') }}"
+
+- name: Upload file to Google Drive
+  command: >
+    curl --location 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart' \
+    --header 'Authorization: Bearer {{ access_token }}' \
+    --form 'metadata={{ metadata | to_json }};type=application/json' \
+    --form 'file=@"{{ file_path }}"' \
+
+  register: curl_output
+  vars:
+    access_token: "{{ access_token_response.json.access_token }}"
+    metadata: '{"name": "portfolio.tgz", "parents": ["{{ folder_id }}"]}'
+    file_path: "{{ front_directory }}/portfolio.tgz"
+  # failed_when: curl_output.stdout != "200"
+
+- name: Display Curl Output
+  debug:
+    var: curl_output.stdout
