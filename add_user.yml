@@ -1,0 +1,27 @@
+---
+- name: Create and configure new user
+  hosts: all
+  gather_facts: no
+  become: yes
+  vars:
+    remote_username: "{{ lookup('env', 'REMOTE_USERNAME') }}"
+    remote_password: "{{ lookup('env', 'REMOTE_PASSWORD') }}"
+  tasks:
+    - name: Create new user
+      user:
+        name: "{{ remote_username }}"
+        password: "{{ remote_password | password_hash('sha512') }}"
+        createhome: yes
+
+    - name: Add SSH directory
+      file:
+        path: "/home/{{ remote_username }}/.ssh"
+        state: directory
+        owner: "{{ remote_username }}"
+        group: "{{ remote_username }}"
+        mode: "0700"
+
+    - name: Add SSH public key to authorized_keys
+      authorized_key:
+        user: "{{ remote_username }}"
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

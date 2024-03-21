@@ -1,0 +1,61 @@
+- name: Create user
+  user:
+    name: "{{ remote_username }}"
+    createhome: true
+    home: "/home/{{ remote_username }}"
+  tags:
+    - create_user
+
+- name: Set password for the user
+  user:
+    name: "{{ remote_username }}"
+    password: "{{ remote_password | password_hash('sha512') }}"
+  tags:
+    - set_password
+
+- name: Add user to sudo group
+  user:
+    name: "{{ remote_username }}"
+    groups: sudo
+    append: true
+  tags:
+    - add_to_sudo_group
+
+- name: I am confused
+  command: 'whoami'
+  become: true
+  become_method: su
+  become_user: "{{ remote_username }}"
+  register: myidentity
+
+- name: my secret identity
+  debug:
+    msg: '{{ myidentity.stdout }}'
+
+
+- name: Create .ssh directory
+  file:
+    path: "/home/{{ remote_username }}/.ssh"
+    state: directory
+    mode: "0700"
+  tags:
+    - create_ssh_directory
+
+- name: Copy public key to authorized_keys
+  copy:
+    content: "{{ lookup('file', '/home/' + current_user + '/.ssh/id_rsa.pub') }}"
+    dest: "/home/{{ remote_username }}/.ssh/authorized_keys"
+    mode: "0600"
+  tags:
+    - copy_public_key
+
+- name: Log content value
+  debug:
+    msg: "Content of id_rsa.pub file: {{ lookup('file', '/home/' + current_user + '/.ssh/id_rsa.pub') }}"
+
+- name: Switch to the remote user's home directory
+  command: "su -s /bin/bash {{ remote_username }}"
+  args:
+    creates: "/home/{{ remote_username }}"
+  tags:
+    - switch_user
