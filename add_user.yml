@@ -12,6 +12,11 @@
         name: "{{ remote_username }}"
         password: "{{ remote_password | password_hash('sha512') }}"
         createhome: yes
+    
+    - name: Set Bash as the default shell
+      user:
+        name: "{{ remote_username }}"
+        shell: /bin/bash
 
     - name: Add SSH directory
       file:

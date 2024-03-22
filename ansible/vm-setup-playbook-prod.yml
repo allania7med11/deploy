@@ -1,6 +1,6 @@
 ---
 - name: Setup Server
-  hosts: local
+  hosts: prod
   become: true
   roles:
     - aptitude

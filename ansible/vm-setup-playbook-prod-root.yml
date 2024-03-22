@@ -1,9 +1,9 @@
 ---
-- name: Setup Server
-  hosts: all
-  become: true
+- name: Create and configure new user
+  hosts: prod_root
+  gather_facts: no
+  become: yes
   vars:
-    current_user: "{{ lookup('env', 'CURRENT_USERNAME') }}"
     remote_username: "{{ lookup('env', 'REMOTE_USERNAME') }}"
     remote_password: "{{ lookup('env', 'REMOTE_PASSWORD') }}"
   roles:

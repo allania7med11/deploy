@@ -1,5 +1,11 @@
-[servers]
+[local]
 deploy ansible_host=deploy
+
+[prod_root]
+deploy_prod_root ansible_host=deploy_prod_root
+
+[prod]
+deploy_prod ansible_host=deploy_prod  ansible_password="1945"
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
