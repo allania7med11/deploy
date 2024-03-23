@@ -1,6 +1,10 @@
 - name: install nginx
   apt: name=nginx state=latest
+
+- name: Unlink default Nginx configuration
+  command: unlink /etc/nginx/sites-enabled/default
+
 - name: start nginx
   service:
-      name: nginx
-      state: started
+    name: nginx
+    state: started

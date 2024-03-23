@@ -4,9 +4,10 @@
     front_directory: "~/apps/portfolio/front"
     file_name: "portfolio"
     deployed_file_name: "portfolio_latest.tgz"
-    server: "about.effectivewebapp.com"
+    server: "{{ lookup('env', 'PORTFOLIO_SERVER') }}"
     listen_port: 80
     backend: "http://localhost:2011"
+    email: "{{ lookup('env', 'EMAIL') }}"
   hosts: prod
   roles:
     - portfolio_deploy

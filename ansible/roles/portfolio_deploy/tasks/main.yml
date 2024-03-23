@@ -3,6 +3,11 @@
   import_tasks:
     file: ngnix.yml
 
+- name: SSL configuration
+  become: true
+  import_tasks:
+    file: ssl.yml
+
 - name: Pull project
   import_tasks:
     file: pull.yml

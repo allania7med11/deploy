@@ -7,3 +7,4 @@
     - postgres
     - docker
     - nginx
+    - certbot
