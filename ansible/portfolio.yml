@@ -7,7 +7,7 @@
     server: "portfolio"
     listen_port: false
     backend: "http://localhost:2011"
-  hosts: all
+  hosts: local
   become: true
   roles:
     - portfolio

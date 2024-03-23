@@ -1,0 +1,19 @@
+- name: Set full absolute path
+  set_fact:
+    full_path: "{{ front_directory | regex_replace('^~', ansible_env.HOME) }}/{{ deployed_file_name }}"
+
+- name: Extract downloaded file
+  become: true
+  unarchive:
+    src: "{{ full_path }}"
+    dest: "/var/www/"
+    remote_src: yes
+    creates: "/var/www/{{ file_name }}"
+
+- name: Set permissions on extracted files
+  become: true
+  file:
+    path: "/var/www/{{ file_name }}"
+    state: directory
+    recurse: yes
+    mode: '0755'

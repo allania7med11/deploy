@@ -4,3 +4,6 @@ ansible-playbook --inventory ansible/inventory/vm-setup-playbook/hosts ansible/p
 
 ansible-playbook --inventory ansible/inventory/vm-setup-playbook-prod-root/hosts ansible/vm-setup-playbook-prod-root.yml
 ansible-playbook --inventory ansible/inventory/vm-setup-playbook/hosts ansible/vm-setup-playbook-prod.yml
+
+
+ansible-playbook --inventory ansible/inventory/vm-setup-playbook/hosts ansible/portfolio_deploy.yml

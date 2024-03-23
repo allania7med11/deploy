@@ -1,0 +1,8 @@
+- name: Pull project
+  import_tasks:
+    file: pull.yml
+
+- name: Run project
+  import_tasks:
+    file: run.yml
+

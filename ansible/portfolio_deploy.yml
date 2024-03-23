@@ -1,0 +1,12 @@
+---
+- name: Setup Portfolio
+  vars:
+    front_directory: "~/apps/portfolio/front"
+    file_name: "portfolio"
+    deployed_file_name: "portfolio_latest.tgz"
+    server: "portfolio"
+    listen_port: false
+    backend: "http://localhost:2011"
+  hosts: prod
+  roles:
+    - portfolio_deploy

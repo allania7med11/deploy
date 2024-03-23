@@ -1,0 +1,52 @@
+- name: Create directory if not exists
+  file:
+    path: "{{ front_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: Exchange refresh_token for access token
+  uri:
+    url: "https://accounts.google.com/o/oauth2/token"
+    method: POST
+    body_format: form-urlencoded
+    body:
+      client_id: "{{ lookup('env', 'CLIENT_ID') }}"
+      client_secret: "{{ lookup('env', 'CLIENT_SECRET') }}"
+      refresh_token: "{{ lookup('env', 'REFRESH_TOKEN') }}"
+      grant_type: "refresh_token"
+  register: access_token_response
+
+- name: Set folder_id variable
+  set_fact:
+    folder_id: "{{ lookup('env', 'FOLDER_ID') }}"
+    access_token: "{{ access_token_response.json.access_token }}"
+    filename: "{{ deployed_file_name }}"
+
+- name: Query files in Google Drive
+  uri:
+    url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ filename }}'+and+'{{ folder_id }}'+in+parents"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+  register: list_files_response
+
+- name: Extract file ID
+  set_fact:
+    file_id: "{{ list_files_response.json.files[0].id }}"
+  when: list_files_response.json.files | length > 0
+
+- name: Download file from Google Drive
+  uri:
+    url: "https://www.googleapis.com/drive/v3/files/{{ file_id }}?alt=media"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    return_content: yes
+  register: download_response
+  when: file_id is defined
+
+- name: Save downloaded file
+  copy:
+    content: "{{ download_response.content }}"
+    dest: "{{ front_directory }}/{{ deployed_file_name }}"
+  when: download_response.status == 200
