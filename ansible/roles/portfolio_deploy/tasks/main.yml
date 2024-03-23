@@ -1,3 +1,8 @@
+- name: Ngnix configuration
+  become: true
+  import_tasks:
+    file: ngnix.yml
+
 - name: Pull project
   import_tasks:
     file: pull.yml

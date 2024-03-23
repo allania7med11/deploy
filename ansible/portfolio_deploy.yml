@@ -4,8 +4,8 @@
     front_directory: "~/apps/portfolio/front"
     file_name: "portfolio"
     deployed_file_name: "portfolio_latest.tgz"
-    server: "portfolio"
-    listen_port: false
+    server: "about.effectivewebapp.com"
+    listen_port: 80
     backend: "http://localhost:2011"
   hosts: prod
   roles:
