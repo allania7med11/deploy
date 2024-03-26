@@ -1,11 +1,12 @@
 ---
 - name: Setup Portfolio
   vars:
+    project_name: "portfolio"
     dockerfile_directory: "/vagrant/apps/portfolio/portfolio"
     ansible_directory: "/vagrant/ansible"
     front_directory: "/vagrant/apps/portfolio/front"
-    server: "portfolio"
-    listen_port: false
+    server: false
+    listen_port: 2000
     backend: "http://localhost:2011"
   hosts: local
   become: true

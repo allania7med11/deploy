@@ -1,0 +1,3 @@
+- name: Ngnix configuration
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"

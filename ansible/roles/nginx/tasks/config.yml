@@ -1,0 +1,22 @@
+- name: Template NGINX portfolio configuration
+  template:
+    src: "{{ template_ngnix_file }}"
+    dest: /etc/nginx/sites-available/{{  project_name }}
+
+- name: Enable NGINX portfolio configuration
+  file:
+    src: /etc/nginx/sites-available/{{  project_name }}
+    dest: /etc/nginx/sites-enabled/{{  project_name }}
+    state: link
+
+- name: Test NGINX configuration
+  command: nginx -t
+  register: nginx_test
+  changed_when: false
+  ignore_errors: true
+
+- name: Restart NGINX
+  systemd:
+    name: nginx
+    state: restarted
+  when: nginx_test.rc == 0

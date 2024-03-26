@@ -1,6 +1,6 @@
 - name: Ngnix configuration
   import_tasks:
-    file: ngnix.yml
+    file: ../../nginx/tasks/config.yml
 
 - name: Build project
   import_tasks:
