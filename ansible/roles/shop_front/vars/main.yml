@@ -5,4 +5,7 @@ branch: "main"
 project_directory: "/vagrant/apps/shop"
 dockerfile_directory: "{{ project_directory }}/shop_front"
 env_file_path: "{{ ansible_directory }}/config/{{  project_name }}/.env"
+drive_folder_id: "{{ lookup('env', 'SHOP_FRONT_FOLDER_ID') }}"
+generated_file_name: "{{  project_name }}.tgz"
+generated_file_path: "{{ project_directory }}/{{  generated_file_name }}"
  

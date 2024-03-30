@@ -1,3 +1,7 @@
 - name: Build project
   import_tasks:
     file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
+
+- name: Push project
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/drive/tasks/push.yml"
