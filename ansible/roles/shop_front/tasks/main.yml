@@ -1,0 +1,3 @@
+- name: Build project
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"

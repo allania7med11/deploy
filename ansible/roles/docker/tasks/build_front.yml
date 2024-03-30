@@ -1,0 +1,83 @@
+- name: Clone project repository
+  git:
+    repo: "{{ repo }}"
+    dest: "{{ dockerfile_directory }}"
+    version: "{{ branch }}"  # Specify the branch/tag you want to clone
+
+- name: Build {{  project_name }} image
+  docker_image:
+    name: "{{  project_name }}"
+    build:
+      path: "{{ dockerfile_directory }}"
+    source: build
+
+# - name: Read contents of .env file
+#   set_fact:
+#     env_contents: "{{ lookup('file', env_file).split('\n') }}"
+
+# - name: Convert .env contents to dictionary
+#   set_fact:
+#     env_dict: "{{ env_dict | default({}) | combine({item.split('=')[0]: item.split('=')[1]}) }}"
+#   loop: "{{ env_contents }}"
+#   when: item != ''
+
+
+- name: Convert .env file to dictionary
+  import_tasks: 
+    file: "{{ ansible_directory }}/roles/env/tasks/convert_env_to_dict.yml"
+  vars:
+    file_path: "{{ env_file_path }}"
+    var_name: "env_dict"
+
+- name: Run {{  project_name }} container
+  docker_container:
+    name: "{{  project_name }}"
+    image: "{{  project_name }}"
+    state: started
+    restart_policy: always
+    networks:
+      - name: host
+    env:
+      "{{ env_dict }}"
+    detach: yes   # Detach from the container after starting it
+
+# - name: Get Docker container ID
+#   command: docker ps -qf "name={{  project_name }}"
+#   register: container_id_output
+
+# - name: Extract container ID
+#   set_fact:
+#     container_id: "{{ container_id_output.stdout_lines[0] }}"
+
+# - name: Wait for "Generation completed successfully" message
+#   command: docker logs --tail 1 {{ container_id }}
+#   register: logs_output
+#   until: logs_output.stdout_lines | length > 0 and logs_output.stdout_lines[0] is search("Generation completed successfully")
+#   retries: 20
+#   delay: 5
+
+# - name: Copy files from container to host
+#   shell: sudo docker cp  {{  project_name }}:/app/{{  project_name }} /var/www/
+
+
+# - name: Stop {{  project_name }} container
+#   docker_container:
+#     name: "{{  project_name }}"
+#     state: stopped
+#   ignore_errors: true
+
+# - name: Remove {{  project_name }} container
+#   docker_container:
+#     name: "{{  project_name }}"
+#     state: absent
+#   ignore_errors: true
+
+# - name: Ensure front_directory exists
+#   file:
+#     path: "{{ front_directory }}"
+#     state: directory
+
+# - name: Compress generated front folder under Vagrant folder
+#   archive:
+#     path: /var/www/{{  project_name }}
+#     dest: "{{ front_directory }}/{{  project_name }}.tgz"
