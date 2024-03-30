@@ -17,7 +17,7 @@
 
 - name: Query files in Google Drive
   uri:
-    url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ generated_file_name }}'+and+'{{ drive_folder_id }}'+in+parents"
+    url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ generated_folder_name }}'+and+'{{ drive_folder_id }}'+in+parents"
     method: GET
     headers:
       Authorization: "Bearer {{ access_token }}"
@@ -43,11 +43,11 @@
     curl --location 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart' \
     --header 'Authorization: Bearer {{ access_token }}' \
     --form 'metadata={{ metadata | to_json }};type=application/json' \
-    --form 'file=@"{{ generated_file_path }}"' \
+    --form 'file=@"{{ generated_compress_folder_path }}"' \
     -w '%{http_code}' \
     -o /dev/null
   register: curl_output
   vars:
     access_token: "{{ access_token }}"
-    metadata: '{"name": "{{ generated_file_name }}", "parents": ["{{ drive_folder_id }}"]}'
+    metadata: '{"name": "{{ generated_folder_name }}", "parents": ["{{ drive_folder_id }}"]}'
   failed_when: curl_output.stdout != "200"
