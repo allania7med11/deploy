@@ -2,5 +2,7 @@ project_name: "shop_front"
 ansible_directory: "{{ lookup('env','PWD') }}/ansible"
 repo:  "https://github.com/allania7med11/shop_front"
 branch: "main"
-dockerfile_directory: "/vagrant/apps/shop/shop_front"
+project_directory: "/vagrant/apps/shop"
+dockerfile_directory: "{{ project_directory }}/shop_front"
 env_file_path: "{{ ansible_directory }}/config/{{  project_name }}/.env"
+ 
