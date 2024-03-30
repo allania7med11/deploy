@@ -1,0 +1,6 @@
+project_name: "shop"
+listen_port: "2020"
+server: false
+backend: "http://localhost:2011"
+ansible_directory: "{{ lookup('env','PWD') }}/ansible"
+template_ngnix_file: "{{ ansible_directory }}/templates/{{  project_name }}/ngnix.j2"
