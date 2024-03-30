@@ -4,7 +4,7 @@ server {
         
         location /back_static/ {
                 autoindex on;
-                alias /var/www/{{ project_name }}_back_static/;
+                alias /var/www/{{ generated_folder_name }}/;
         }
         
         location ~ ^/(admin|api)/ {
@@ -17,6 +17,6 @@ server {
         
         location / {
                 autoindex on;
-                alias /var/www/{{ project_name }}_front/;
+                alias /var/www/{{ generated_folder_name_front }}/;
         }
 }

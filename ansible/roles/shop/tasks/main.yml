@@ -1,3 +1,7 @@
 - name: Ngnix configuration
   import_tasks:
     file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
+
+- name: Build project
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/build_back.yml"
