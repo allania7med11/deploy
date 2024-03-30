@@ -19,7 +19,12 @@
     file_path: "{{ env_file_path }}"
     var_name: "env_dict"
 
-- name: Run {{  project_name }} container
+- name: Overwrite environment variables to generate static folder
+  set_fact:
+    env_dict:
+      "{{ env_dict | default({}) | combine({'ENVIRONMENT': 'debug', 'COLLECTSTATIC': 'True'}) }}"
+
+- name: Run {{  project_name }} container for static folder generation
   docker_container:
     name: "{{  project_name }}"
     image: "{{  project_name }}"
@@ -30,6 +35,7 @@
     env:
       "{{ env_dict }}"
     detach: yes   # Detach from the container after starting it
+
 
 - name: Get Docker container ID
   command: docker ps -qf "name={{  project_name }}"
