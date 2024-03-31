@@ -1,0 +1,7 @@
+project_name: "dev"
+listen_port: "4000"
+server: false
+ansible_directory: "{{ lookup('env','PWD') }}/ansible"
+template_ngnix_file: "{{ ansible_directory }}/templates/{{  project_name }}/ngnix.j2"
+backend: "http://localhost:8000"
+frontend: "http://localhost:3000"

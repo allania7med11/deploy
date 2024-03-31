@@ -1,0 +1,6 @@
+---
+- name: Setup dev
+  hosts: local
+  become: true
+  roles:
+    - dev
