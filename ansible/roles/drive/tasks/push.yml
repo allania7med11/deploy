@@ -15,7 +15,7 @@
     folder_id: "{{ drive_folder_id }}"
     access_token: "{{ access_token_response.json.access_token }}"
 
-- name: Query files in Google Drive
+- name: Query files in Google Drive with same name as generated_folder_name
   uri:
     url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ generated_folder_name }}'+and+'{{ drive_folder_id }}'+in+parents"
     method: GET
@@ -23,11 +23,11 @@
       Authorization: "Bearer {{ access_token }}"
   register: list_files_response
 
-- name: Extract file IDs
+- name: Extract file IDs with same name as generated_folder_name
   set_fact:
     file_ids: "{{ list_files_response.json.files | map(attribute='id') | list }}"
 
-- name: Delete files
+- name: Delete files with same name as generated_folder_name
   uri:
     url: "https://www.googleapis.com/drive/v3/files/{{ item }}"
     method: DELETE
@@ -38,7 +38,7 @@
   loop: "{{ file_ids }}"
   when: file_ids | length > 0
 
-- name: Upload file to Google Drive
+- name: Upload generated_compress_folder to Google Drive
   command: >
     curl --location 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart' \
     --header 'Authorization: Bearer {{ access_token }}' \

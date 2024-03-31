@@ -1,0 +1,13 @@
+- name: Check if PostgreSQL database exists
+  shell: "sudo -u postgres psql -lqt | cut -d '|' -f 1 | grep -qw '{{ db_name }}'"
+  register: db_exists
+  changed_when: false
+  check_mode: no
+
+- name: Ensure PostgreSQL database is created if not exists and load data to database
+  command: >
+    sudo -u postgres createdb --owner={{ postgres_user }} {{ db_name }} &&
+    sudo -u postgres psql -d {{ db_name }} -f {{ db_init_path }}
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+  when: not db_exists.rc == 0
