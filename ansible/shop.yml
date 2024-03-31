@@ -4,4 +4,4 @@
   become: true
   roles:
     - shop
-    # - shop_front
+    - shop_front
