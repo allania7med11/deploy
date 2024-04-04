@@ -3,6 +3,9 @@
     repo: "{{ repo }}"
     dest: "{{ dockerfile_directory }}"
     version: "{{ branch }}"  # Specify the branch/tag you want to clone
+    update: yes
+    force: yes
+    recursive: yes
 
 - name: Build {{  project_name }} image
   docker_image:

@@ -28,13 +28,7 @@ DROP ROLE postgres;
 --
 
 CREATE ROLE postgres;
-ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:pbqFR3RGjhGg06mAcaUEBQ==$kwuVmpQ9h/HERE3Et8/hZhysBgTWkKJ/fzeFYTzlqgw=:5LSlpIVdHhwzhMNsPVZjAs8tGq960j3twert7gOaOMs=';
-
---
--- User Configurations
---
-
-
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:vB6R/QWWK3Dn8VO33mNIIg==$G6FGbEKryWoOvtNAVGeO9/3IPDbyqUr4BcXlXHNBPXc=:BiPekGgtV2BlNvchhGOR7E6WOmPBBBVp25mNfkCKYUA=';
 
 
 
@@ -46,91 +40,6 @@ ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION
 --
 
 --
--- Database "template1" dump
---
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
--- Dumped by pg_dump version 16.2 (Debian 16.2-1.pgdg120+2)
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-UPDATE pg_catalog.pg_database SET datistemplate = false WHERE datname = 'template1';
-DROP DATABASE template1;
---
--- Name: template1; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE template1 WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
-
-
-ALTER DATABASE template1 OWNER TO postgres;
-
-\connect template1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: DATABASE template1; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON DATABASE template1 IS 'default template for new databases';
-
-
---
--- Name: template1; Type: DATABASE PROPERTIES; Schema: -; Owner: postgres
---
-
-ALTER DATABASE template1 IS_TEMPLATE = true;
-
-
-\connect template1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: DATABASE template1; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE CONNECT,TEMPORARY ON DATABASE template1 FROM PUBLIC;
-GRANT CONNECT ON DATABASE template1 TO PUBLIC;
-
-
---
--- PostgreSQL database dump complete
---
-
---
 -- Database "postgres" dump
 --
 
@@ -138,8 +47,8 @@ GRANT CONNECT ON DATABASE template1 TO PUBLIC;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
--- Dumped by pg_dump version 16.2 (Debian 16.2-1.pgdg120+2)
+-- Dumped from database version 14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -157,7 +66,7 @@ DROP DATABASE postgres;
 -- Name: postgres; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE postgres WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+CREATE DATABASE postgres WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.UTF-8';
 
 
 ALTER DATABASE postgres OWNER TO postgres;
@@ -194,8 +103,8 @@ COMMENT ON DATABASE postgres IS 'default administrative connection database';
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
--- Dumped by pg_dump version 16.2 (Debian 16.2-1.pgdg120+2)
+-- Dumped from database version 14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -212,7 +121,7 @@ SET row_security = off;
 -- Name: shop_db; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE shop_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+CREATE DATABASE shop_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'en_US.UTF-8';
 
 
 ALTER DATABASE shop_db OWNER TO postgres;
@@ -262,7 +171,7 @@ CREATE SEQUENCE public.account_emailaddress_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.account_emailaddress_id_seq OWNER TO postgres;
+ALTER TABLE public.account_emailaddress_id_seq OWNER TO postgres;
 
 --
 -- Name: account_emailaddress_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -299,7 +208,7 @@ CREATE SEQUENCE public.account_emailconfirmation_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.account_emailconfirmation_id_seq OWNER TO postgres;
+ALTER TABLE public.account_emailconfirmation_id_seq OWNER TO postgres;
 
 --
 -- Name: account_emailconfirmation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -333,7 +242,7 @@ CREATE SEQUENCE public.auth_group_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_group_id_seq OWNER TO postgres;
+ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -367,7 +276,7 @@ CREATE SEQUENCE public.auth_group_permissions_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_group_permissions_id_seq OWNER TO postgres;
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -403,7 +312,7 @@ CREATE SEQUENCE public.auth_permission_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_permission_id_seq OWNER TO postgres;
+ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -458,7 +367,7 @@ CREATE SEQUENCE public.auth_user_groups_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_user_groups_id_seq OWNER TO postgres;
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -480,7 +389,7 @@ CREATE SEQUENCE public.auth_user_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_user_id_seq OWNER TO postgres;
+ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -514,7 +423,7 @@ CREATE SEQUENCE public.auth_user_user_permissions_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNER TO postgres;
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -561,7 +470,7 @@ CREATE SEQUENCE public.core_commandhistory_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.core_commandhistory_id_seq OWNER TO postgres;
+ALTER TABLE public.core_commandhistory_id_seq OWNER TO postgres;
 
 --
 -- Name: core_commandhistory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -602,7 +511,7 @@ CREATE SEQUENCE public.django_admin_log_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.django_admin_log_id_seq OWNER TO postgres;
+ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -637,7 +546,7 @@ CREATE SEQUENCE public.django_content_type_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.django_content_type_id_seq OWNER TO postgres;
+ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -672,7 +581,7 @@ CREATE SEQUENCE public.django_migrations_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.django_migrations_id_seq OWNER TO postgres;
+ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -721,7 +630,7 @@ CREATE SEQUENCE public.products_category_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.products_category_id_seq OWNER TO postgres;
+ALTER TABLE public.products_category_id_seq OWNER TO postgres;
 
 --
 -- Name: products_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -756,7 +665,7 @@ CREATE SEQUENCE public.products_discount_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.products_discount_id_seq OWNER TO postgres;
+ALTER TABLE public.products_discount_id_seq OWNER TO postgres;
 
 --
 -- Name: products_discount_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -791,7 +700,7 @@ CREATE SEQUENCE public.products_file_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.products_file_id_seq OWNER TO postgres;
+ALTER TABLE public.products_file_id_seq OWNER TO postgres;
 
 --
 -- Name: products_file_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -828,7 +737,7 @@ CREATE SEQUENCE public.products_order_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.products_order_id_seq OWNER TO postgres;
+ALTER TABLE public.products_order_id_seq OWNER TO postgres;
 
 --
 -- Name: products_order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -865,7 +774,7 @@ CREATE SEQUENCE public.products_orderitems_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.products_orderitems_id_seq OWNER TO postgres;
+ALTER TABLE public.products_orderitems_id_seq OWNER TO postgres;
 
 --
 -- Name: products_orderitems_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -906,7 +815,7 @@ CREATE SEQUENCE public.products_product_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.products_product_id_seq OWNER TO postgres;
+ALTER TABLE public.products_product_id_seq OWNER TO postgres;
 
 --
 -- Name: products_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -945,7 +854,7 @@ CREATE SEQUENCE public.socialaccount_socialaccount_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.socialaccount_socialaccount_id_seq OWNER TO postgres;
+ALTER TABLE public.socialaccount_socialaccount_id_seq OWNER TO postgres;
 
 --
 -- Name: socialaccount_socialaccount_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -985,7 +894,7 @@ CREATE SEQUENCE public.socialaccount_socialapp_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.socialaccount_socialapp_id_seq OWNER TO postgres;
+ALTER TABLE public.socialaccount_socialapp_id_seq OWNER TO postgres;
 
 --
 -- Name: socialaccount_socialapp_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -1023,7 +932,7 @@ CREATE SEQUENCE public.socialaccount_socialtoken_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.socialaccount_socialtoken_id_seq OWNER TO postgres;
+ALTER TABLE public.socialaccount_socialtoken_id_seq OWNER TO postgres;
 
 --
 -- Name: socialaccount_socialtoken_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -1304,7 +1213,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$320000$6ICofaNViSOgTzdl2J4krZ$ujY2qhb2um31OBXLQA4ZRAGX/IkEavzAYuIllpcu0LA=	2024-04-02 22:32:20.321587+00	t	allaniahmedkr			allaniahmedkr@gmail.com	t	t	2024-04-02 22:24:07.468651+00
 \.
 
 
@@ -1345,8 +1253,6 @@ COPY public.core_commandhistory (id, name, applied_at) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2024-04-02 22:33:59.066566+00	1	iPhone 9	3		17	1
-2	2024-04-02 22:34:34.228202+00	1	Smartphones	3		15	1
 \.
 
 
@@ -1383,50 +1289,50 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2024-04-02 00:11:21.340539+00
-2	auth	0001_initial	2024-04-02 00:11:21.419178+00
-3	account	0001_initial	2024-04-02 00:11:21.467295+00
-4	account	0002_email_max_length	2024-04-02 00:11:21.487067+00
-5	account	0003_alter_emailaddress_create_unique_verified_email	2024-04-02 00:11:21.519024+00
-6	account	0004_alter_emailaddress_drop_unique_email	2024-04-02 00:11:21.540411+00
-7	account	0005_emailaddress_idx_upper_email	2024-04-02 00:11:21.559408+00
-8	admin	0001_initial	2024-04-02 00:11:21.590182+00
-9	admin	0002_logentry_remove_auto_add	2024-04-02 00:11:21.608192+00
-10	admin	0003_logentry_add_action_flag_choices	2024-04-02 00:11:21.627514+00
-11	contenttypes	0002_remove_content_type_name	2024-04-02 00:11:21.668638+00
-12	auth	0002_alter_permission_name_max_length	2024-04-02 00:11:21.690068+00
-13	auth	0003_alter_user_email_max_length	2024-04-02 00:11:21.710378+00
-14	auth	0004_alter_user_username_opts	2024-04-02 00:11:21.728534+00
-15	auth	0005_alter_user_last_login_null	2024-04-02 00:11:21.750604+00
-16	auth	0006_require_contenttypes_0002	2024-04-02 00:11:21.754192+00
-17	auth	0007_alter_validators_add_error_messages	2024-04-02 00:11:21.774411+00
-18	auth	0008_alter_user_username_max_length	2024-04-02 00:11:21.79578+00
-19	auth	0009_alter_user_last_name_max_length	2024-04-02 00:11:21.813398+00
-20	auth	0010_alter_group_name_max_length	2024-04-02 00:11:21.834262+00
-21	auth	0011_update_proxy_permissions	2024-04-02 00:11:21.853231+00
-22	auth	0012_alter_user_first_name_max_length	2024-04-02 00:11:21.871833+00
-23	authtoken	0001_initial	2024-04-02 00:11:21.89936+00
-24	authtoken	0002_auto_20160226_1747	2024-04-02 00:11:21.963481+00
-25	authtoken	0003_tokenproxy	2024-04-02 00:11:21.968757+00
-26	core	0001_initial	2024-04-02 00:11:21.977364+00
-27	products	0001_initial	2024-04-02 00:11:22.028159+00
-28	products	0002_product_slug_alter_category_name_alter_category_slug	2024-04-02 00:11:22.059988+00
-29	products	0002_product_description	2024-04-02 00:11:22.073368+00
-30	products	0003_merge_20230206_2022	2024-04-02 00:11:22.076086+00
-31	products	0004_category_created_at_category_updated_at_and_more	2024-04-02 00:11:22.119902+00
-32	products	0005_order_alter_product_options_orderitems	2024-04-02 00:11:22.198755+00
-33	products	0006_alter_order_total_amount_alter_orderitems_subtotal	2024-04-02 00:11:22.244103+00
-34	products	0007_alter_orderitems_unique_together	2024-04-02 00:11:22.267019+00
-35	products	0008_alter_orderitems_quantity	2024-04-02 00:11:22.296153+00
-36	products	0009_remove_order_session_id_order_uuid	2024-04-02 00:11:22.340365+00
-37	products	0010_alter_order_uuid_alter_orderitems_order	2024-04-02 00:11:22.390885+00
-38	sessions	0001_initial	2024-04-02 00:11:22.406431+00
-39	socialaccount	0001_initial	2024-04-02 00:11:22.527543+00
-40	socialaccount	0002_token_max_lengths	2024-04-02 00:11:22.609499+00
-41	socialaccount	0003_extra_data_default_dict	2024-04-02 00:11:22.632327+00
-42	socialaccount	0004_app_provider_id_settings	2024-04-02 00:11:22.674563+00
-43	socialaccount	0005_socialtoken_nullable_app	2024-04-02 00:11:22.715396+00
-44	socialaccount	0006_alter_socialaccount_extra_data	2024-04-02 00:11:22.745917+00
+1	contenttypes	0001_initial	2024-04-04 00:48:45.320857+00
+2	auth	0001_initial	2024-04-04 00:48:45.377319+00
+3	account	0001_initial	2024-04-04 00:48:45.406357+00
+4	account	0002_email_max_length	2024-04-04 00:48:45.416625+00
+5	account	0003_alter_emailaddress_create_unique_verified_email	2024-04-04 00:48:45.436447+00
+6	account	0004_alter_emailaddress_drop_unique_email	2024-04-04 00:48:45.450474+00
+7	account	0005_emailaddress_idx_upper_email	2024-04-04 00:48:45.462488+00
+8	admin	0001_initial	2024-04-04 00:48:45.482553+00
+9	admin	0002_logentry_remove_auto_add	2024-04-04 00:48:45.491092+00
+10	admin	0003_logentry_add_action_flag_choices	2024-04-04 00:48:45.501249+00
+11	contenttypes	0002_remove_content_type_name	2024-04-04 00:48:45.521616+00
+12	auth	0002_alter_permission_name_max_length	2024-04-04 00:48:45.533273+00
+13	auth	0003_alter_user_email_max_length	2024-04-04 00:48:45.543432+00
+14	auth	0004_alter_user_username_opts	2024-04-04 00:48:45.552942+00
+15	auth	0005_alter_user_last_login_null	2024-04-04 00:48:45.563377+00
+16	auth	0006_require_contenttypes_0002	2024-04-04 00:48:45.565457+00
+17	auth	0007_alter_validators_add_error_messages	2024-04-04 00:48:45.573608+00
+18	auth	0008_alter_user_username_max_length	2024-04-04 00:48:45.58658+00
+19	auth	0009_alter_user_last_name_max_length	2024-04-04 00:48:45.598043+00
+20	auth	0010_alter_group_name_max_length	2024-04-04 00:48:45.608168+00
+21	auth	0011_update_proxy_permissions	2024-04-04 00:48:45.617716+00
+22	auth	0012_alter_user_first_name_max_length	2024-04-04 00:48:45.627183+00
+23	authtoken	0001_initial	2024-04-04 00:48:45.644986+00
+24	authtoken	0002_auto_20160226_1747	2024-04-04 00:48:45.703107+00
+25	authtoken	0003_tokenproxy	2024-04-04 00:48:45.706048+00
+26	core	0001_initial	2024-04-04 00:48:45.712873+00
+27	products	0001_initial	2024-04-04 00:48:45.747204+00
+28	products	0002_product_slug_alter_category_name_alter_category_slug	2024-04-04 00:48:45.763071+00
+29	products	0002_product_description	2024-04-04 00:48:45.770668+00
+30	products	0003_merge_20230206_2022	2024-04-04 00:48:45.773201+00
+31	products	0004_category_created_at_category_updated_at_and_more	2024-04-04 00:48:45.7927+00
+32	products	0005_order_alter_product_options_orderitems	2024-04-04 00:48:45.837038+00
+33	products	0006_alter_order_total_amount_alter_orderitems_subtotal	2024-04-04 00:48:45.856185+00
+34	products	0007_alter_orderitems_unique_together	2024-04-04 00:48:45.869271+00
+35	products	0008_alter_orderitems_quantity	2024-04-04 00:48:45.880915+00
+36	products	0009_remove_order_session_id_order_uuid	2024-04-04 00:48:45.90249+00
+37	products	0010_alter_order_uuid_alter_orderitems_order	2024-04-04 00:48:45.925774+00
+38	sessions	0001_initial	2024-04-04 00:48:45.937612+00
+39	socialaccount	0001_initial	2024-04-04 00:48:46.012401+00
+40	socialaccount	0002_token_max_lengths	2024-04-04 00:48:46.036229+00
+41	socialaccount	0003_extra_data_default_dict	2024-04-04 00:48:46.048737+00
+42	socialaccount	0004_app_provider_id_settings	2024-04-04 00:48:46.068779+00
+43	socialaccount	0005_socialtoken_nullable_app	2024-04-04 00:48:46.093812+00
+44	socialaccount	0006_alter_socialaccount_extra_data	2024-04-04 00:48:46.113891+00
 \.
 
 
@@ -1435,8 +1341,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-ruos8lag27daun4wpuyxm9zloceecerg	eyJvcmRlcl91dWlkIjoiYzYwZDdlNDgtMTA2NS00ODEyLWE3MWYtYWI2M2NjOTM2MGFhIn0:1rrkli:-jXmAUtFq-hRVTsiGaca-OCYA7Pmc35FacAnrS_nNW8	2024-04-16 20:30:06.849507+00
-tc6h20ri04d10tl5jn2rihm284taygkb	.eJxVjjsOwjAQRO_iGlv-JbYp6TlDtN5dEz6KpSSuEHeHoDRp580bzVvUmXgeWruTOAuruXNQnCSbjfROe5mYO5lT0cW5SOBAnMQAbR2HtvzEv2aOWQZ88rQBesB0qwrrtM73rLaK2umirpX4ddm7h4ERlnF74wNY7jFB8IXRxJQYPec-OTQ9BcsBcogRrGHPBrHTOkZrMiUkb5L4fAFsbkbH:1rrmg0:QNsNlNkSX45kPO-ZhZ2UY0tD4kDha-2c4k-eGmzIxQM	2024-04-16 22:32:20.323641+00
+3cw47l3key5wme4u7ncp36aauziasbn0	eyJvcmRlcl91dWlkIjoiYjljOTQ3MWMtNjhiMS00ZjljLWIyMmMtNTBlMGI0OGEzZTIwIn0:1rsBMp:d2TJG66oPNmFfE1ET4752bhhvISziX_9WEmcbmuUAKo	2024-04-18 00:54:11.830015+00
+66n8fcs4ieb4ldlza9vv9curuiz3908w	eyJvcmRlcl91dWlkIjoiYzdkNWU5Y2YtYjAzZS00Zjc1LTgzYTEtODc4ZGFlYzg0ZmU4In0:1rsBQB:1zyXypupUpfpy0vOn6sucgPD3BYTLDIRFTG4g7An_TM	2024-04-18 00:57:39.775055+00
 \.
 
 
@@ -1445,13 +1351,13 @@ tc6h20ri04d10tl5jn2rihm284taygkb	.eJxVjjsOwjAQRO_iGlv-JbYp6TlDtN5dEz6KpSSuEHeHoD
 --
 
 COPY public.products_category (id, name, slug, created_at, updated_at) FROM stdin;
-2	mobiles	mobiles	2024-04-02 22:19:29.903975+00	2024-04-02 22:19:29.903989+00
-3	Smartphones	smartphones	2024-04-02 22:41:39.268756+00	2024-04-02 22:41:39.26877+00
-4	Laptops	laptops	2024-04-02 22:41:53.987072+00	2024-04-02 22:41:53.987117+00
-5	Fragrances	fragrances	2024-04-02 22:42:07.894759+00	2024-04-02 22:42:07.894805+00
-6	Skincare	skincare	2024-04-02 22:42:26.135547+00	2024-04-02 22:42:26.135594+00
-7	Groceries	groceries	2024-04-02 22:42:46.10024+00	2024-04-02 22:42:46.100286+00
-8	Home-decoration	home-decoration	2024-04-02 22:43:06.982077+00	2024-04-02 22:43:06.982124+00
+1	mobiles	mobiles	2024-04-04 00:57:19.387676+00	2024-04-04 00:57:19.387691+00
+2	Smartphones	smartphones	2024-04-04 00:57:58.616441+00	2024-04-04 00:57:58.616456+00
+3	Laptops	laptops	2024-04-04 00:58:10.528237+00	2024-04-04 00:58:10.52827+00
+4	Fragrances	fragrances	2024-04-04 00:58:26.604271+00	2024-04-04 00:58:26.604286+00
+5	Skincare	skincare	2024-04-04 00:58:50.988322+00	2024-04-04 00:58:50.988374+00
+6	Groceries	groceries	2024-04-04 00:59:07.657714+00	2024-04-04 00:59:07.657734+00
+7	Home-decoration	home-decoration	2024-04-04 00:59:23.695706+00	2024-04-04 00:59:23.69574+00
 \.
 
 
@@ -1497,151 +1403,151 @@ COPY public.products_discount (id, name, percent, active) FROM stdin;
 --
 
 COPY public.products_file (id, name, file, product_id) FROM stdin;
-1	\N	gcgfwfavmszyutdzkwvd	2
-2	\N	uepgw0k6nbji35dm2qxl	3
-3	\N	rmpwl7wqusabmc7vwej0	4
-4	\N	w1ddp6zshmy6q89koltt	5
-5	\N	ccgdx9rvcehuxwfi5jbb	6
-6	\N	sub1h7s6jmf4cylkw3p7	7
-7	\N	koelai8alouuh3b9q2io	8
-8	\N	sleipg0yghgfcjlto0tx	9
-9	\N	jzbcl6ttwnfclzpgijoj	10
-10	\N	vp39qecrgc7b1j9jwbpo	10
-11	\N	rhq61t8jblsjbod8jxr2	10
-12	\N	ziygjrm7sytkzwsi5qhs	10
-13	\N	p4cwr1xehbri1orc5onw	10
-14	\N	mgssbz3b5rqw4t7wjuyq	11
-15	\N	sm0uc4kzhmiry0rvs8as	11
-16	\N	qrclqdvohyjdkqvg5x0j	11
-17	\N	slps44yunfx81hb3bak8	11
-18	\N	lbb9yetxldhdik3iumkt	11
-19	\N	iikmutfkdhkzdclolafv	12
-20	\N	ttrqjifncg1mknejr2wm	12
-21	\N	tl9f6yls4fr0llhz33wj	12
-22	\N	skoayjdrvkaenms6mdd1	12
-23	\N	cna14rgzuuwmezwzprvy	13
-24	\N	lzi8yqzswgxy98bg4hed	14
-25	\N	hwiahlpyuzqfb2ybreln	14
-26	\N	ledcuetxnghh1pgmu2zu	14
-27	\N	fmanm6tlaqroqhjatzyo	14
-28	\N	dx5ju38lzfl5ku695owd	14
-29	\N	havtedxzzslvqethk5du	15
-30	\N	dgclukyjhqoz54qydw2v	15
-31	\N	c0kkzv70isnkltgbd4i9	15
-32	\N	pnwq4xz3vqtloglaxxe3	16
-33	\N	kdakthwxc8k4gu2acpsx	16
-34	\N	rryhlwmcgqk7qrugmimu	16
-35	\N	jhje09ondewvaudfwuft	16
-36	\N	gf3n6sw4y5jzrm4bob6z	17
-37	\N	jm4feig7huwyxyrdwlll	17
-38	\N	nqkl3isjqii8g1blllyu	17
-39	\N	atbqfguyrwjna6qccqwk	17
-40	\N	mfrasryj2qilbvvedrky	18
-41	\N	iftesfyipjrr5a10qnay	18
-42	\N	klcsohawifezss7qkniu	18
-43	\N	v4lgapxbkxmafvwjqaa1	18
-44	\N	byxbpxghvqgiqi7xgz7g	18
-45	\N	qf1rd4qd4hwyzydggriz	19
-46	\N	u8hubaauju4ng4itiwcw	19
-47	\N	ogiw1hqtvglwlpxmt9yx	19
-48	\N	p0jkee2179sbgujrf9ny	19
-49	\N	quv9orvznxmtdsenkmyq	19
-50	\N	emoccj6dnsejbbem9xek	20
-51	\N	szmmqi4egpujwowdfpba	20
-52	\N	ry7ysnehnnupx9i1teb6	20
-53	\N	fugqg9cwotkkuxdsxzh3	20
-54	\N	eas20nsfl7cxqwcbjgip	21
-55	\N	jmigfezor1vkn79takjj	21
-56	\N	hpp8ietwfumt17ozymr2	21
-57	\N	obsxtgr9hgla4uafem9h	21
-58	\N	gpzd3oejnln4xr8lw86d	22
-59	\N	fte7zftb9oktluifp0oo	22
-60	\N	rqdm3iryygzu57pa2r45	22
-61	\N	sxfjc7wchg7pecg9jzgp	22
-62	\N	ssjoorv1wkdkd3r0jxaz	22
-63	\N	bjhzafrjnw6ocsw1wldo	23
-64	\N	da8fos4fzejykufhzwpg	23
-65	\N	x7vmlxpoz72inyyz8ecj	23
-66	\N	xfrjrdorthccd6eo2ugi	23
-67	\N	mnlrknhel0bevnsnnniq	23
-68	\N	az0wf9bizqr8ojoe6ayy	24
-69	\N	t8zfilelhlouely6jnrv	24
-70	\N	ronqf2np6ct3yznmi98w	24
-71	\N	n2vfg60x6ppzbrl6imr2	24
-72	\N	bnxaxtutrtfil4kalnro	25
-73	\N	hjazrtoui42skzwenjvl	25
-74	\N	fijrassfhlk2sjoayo6m	25
-75	\N	qbpaytclnff62hy6jcgi	25
-76	\N	bizm4hqivyizyhude18v	25
-77	\N	okdgjszkzoyrfgc2bd8a	26
-78	\N	cnoygwwvhxsm6a5hmkez	26
-79	\N	mtyfgnnohwutlhhsqkjv	26
-80	\N	ly3vsoxji6ldj97urygu	26
-81	\N	zu8dta15vepuqfyqkvs4	26
-82	\N	rw1kdk6hdp2dqpvzr7px	27
-83	\N	loylgok8xkmadegf3h9v	27
-84	\N	zlwk8zt35f10lgnk2dex	27
-85	\N	ladgcvx1e1px4d85avpe	27
-86	\N	pm1ztxjqftos0ujfg2hw	28
-87	\N	bxx6qmmighxnmmmhglgx	28
-88	\N	uub8yng1kzlkqwdxv5qu	28
-89	\N	tw78d7tkdvloagspndce	28
-90	\N	hrmjz8snellchob7mzmm	28
-91	\N	vuzq9sx1mk7ut20ey1kd	29
-92	\N	as0irbl5l2tb4xak9ol8	29
-93	\N	fv8zhlmonww4edkprgdi	29
-94	\N	jzelc5tolcr5p3bomi54	29
-95	\N	qm82i551rpuqcswu4e7t	30
-96	\N	k4ht7utzc3ivmstbmtsy	30
-97	\N	zeu2ppo7sawnxavn4dsl	30
-98	\N	f8h5xrlkdn90bnrxxndh	30
-99	\N	j6eol9tqhizzpz8ylk9j	30
-100	\N	dujog5coxkqvofnqm3zz	31
-101	\N	zhgy6aat46gg8ezrhhtn	31
-102	\N	lmeosswvlkxdkz00jc2s	31
-103	\N	cuaocxjg03ynefwuqa9g	32
-104	\N	tnfl1f6besuqp7d7r3aq	32
-105	\N	rdkd4xqhwxetr9jigos8	32
-106	\N	twy8utdjjlsy3bjugbp3	33
-107	\N	wkrgcueezwc0qmrfkurg	33
-108	\N	pc4e8zkyxhoodlelx287	33
-109	\N	ptlvf380jhzhnuxbiclz	33
-110	\N	qngzlafa60jjlnwqkctj	33
-111	\N	mkgubm8dmmblsyn8rs2f	34
-112	\N	ky93fhbwxxseajut97ra	34
-113	\N	atidcrjvsiyay4bcwilx	34
-114	\N	wgzubkzvxthttb7b3jzf	34
-115	\N	sbjrm8gjzgbntwsueebn	34
-116	\N	mlk6artjpfjchqtkatfi	35
-117	\N	mawmx4duxxbdl6g6pbo1	35
-118	\N	etblyfz5zlhp0nukimku	35
-119	\N	iurseozsdj9vw0mpge2r	35
-120	\N	mwhedkuuwycclhjxyme9	35
-121	\N	hsezaeaxroupvdmu4fhm	36
-122	\N	euoqzpcfpi5saqwz6jgh	36
-123	\N	tabme1yz20wkhosipmuj	36
-124	\N	jj2ogmk3wgfodjzxyejz	36
-125	\N	b2vxkkh3uakvhpntnqlb	36
-126	\N	btqp58csjmatjgdoapve	36
-127	\N	rj3oubnt9bmamjicg7at	37
-128	\N	qwgyewodmhn4yypy2eaw	37
-129	\N	pztvubqhtw0wd7ehm6n2	37
-130	\N	yeqm0wsbhlu1opgicatd	37
-131	\N	lflyiucxvdvrpadeznce	37
-132	\N	ferfby9j8y6dw6zvgwea	38
-133	\N	nen7xorb177vhfdlzmpt	38
-134	\N	peoxe2tlvsbml98l9uzz	38
-135	\N	efyaklgmoevi0nyquout	38
-136	\N	vjaoguerhbm2orubq1pm	38
-137	\N	gdo8blzt6rnddfjbqvqg	39
-138	\N	g76rtlgqnsdqjp3blwmo	39
-139	\N	uebczdlfnuio8e5t4rys	39
-140	\N	crluraic6952r0nuy9jj	39
-141	\N	hwpm9ggncbup7smwaejp	39
-142	\N	umcaftg6qn3zikgg8jdx	40
-143	\N	zurhaueqc8knrkss3ffx	40
-144	\N	nd5ytlgq5ildobd7u6bf	40
-145	\N	eicv8hqrznwvvqa6tl0b	40
+1	\N	dlyeoi0sttffbb4ym6pn	1
+2	\N	jd1uhczkvfvsgk3dtma5	2
+3	\N	ejlablhmugsmhpcare3z	3
+4	\N	sabrusbcu4bys6fcoemd	4
+5	\N	cngzwch0xhcdqo3jfflq	5
+6	\N	bogpmclbujlea1zs00p2	6
+7	\N	znocdqz3ted43vonpqlb	7
+8	\N	kk18qz9vxs9psnfmskja	8
+9	\N	gjj9criwmgwxcgvcvl2u	9
+10	\N	jkocapuohaewxo1mhoou	9
+11	\N	ejmuw7k0ijowyguznqod	9
+12	\N	nemxnj8ctb8gmx3z7tqc	9
+13	\N	zr3rfxj7leqbychcxlh1	9
+14	\N	hstbkhi6e6noozkl4vk3	10
+15	\N	yeecwzerolstmspmkr1w	10
+16	\N	zl9rgrlpsg4wgxoiibwa	10
+17	\N	jc49mikceurkrrp8rf0x	10
+18	\N	qdejlnmo4vhuo5ozzwsy	10
+19	\N	rlpshk0nwhdy0woiwrtp	11
+20	\N	oykxa8r08pkknvbfqpbg	11
+21	\N	glmw02aenzzs3kuenmpr	11
+22	\N	goy5xt3oelph7xid8cmf	11
+23	\N	trys9kkch5vmdvnozdim	12
+24	\N	pvtagoq6js5c20ckksqg	13
+25	\N	upxqljdr9bjyo0vyyasj	13
+26	\N	zig7lcez67yjl1xghalb	13
+27	\N	qodpd58aekmpp3b3r0mb	13
+28	\N	vdloeteiumaecimaxo0n	13
+29	\N	un6rpemflrrcgppzifav	14
+30	\N	eek6alnoi2di7590dqrj	14
+31	\N	kh9i11nzybhix3f0nqnz	14
+32	\N	bcuwqfzz4tulopkdssow	15
+33	\N	wu63qewreyhjgkoqaosq	15
+34	\N	rl1mqozujuqcgxsaoxtl	15
+35	\N	qt9y24srpegir6g56jwr	15
+36	\N	ed311mk9bizykajjmtlg	16
+37	\N	xarwcv0g4tt3p5vzzzkm	16
+38	\N	ngy6ctj4o3b9xchflro2	16
+39	\N	zos8pt02bbirxydvae9p	16
+40	\N	c4jsvorevqord2ocplbv	17
+41	\N	shsqcqumn3hlgurqpxzo	17
+42	\N	m28efa3iez9cflu8upnl	17
+43	\N	t4vposhqj0jjn7s02km0	17
+44	\N	mkh5jf8wiwrvl3xzcxa1	17
+45	\N	kboey2xnjyhexzuk4hvi	18
+46	\N	japxvtaglkelcafikvz4	18
+47	\N	figvwoh55qwjynshwibh	18
+48	\N	exupzq27csftq1g2iuna	18
+49	\N	nuvzziikohp15lfwmi78	18
+50	\N	bvvfl66taxkpgybkggzo	19
+51	\N	pivbsph2ox1siz4hj2ch	19
+52	\N	jjqcorntlia9krlbldkn	19
+53	\N	x10qurfiosfpxf4jvsi6	19
+54	\N	wakwibkcougpmyalysgw	20
+55	\N	imrp4l5kbspwrngtc72l	20
+56	\N	liy0iddcgqtuedlbyxad	20
+57	\N	udzciwm719tizzsp2cba	20
+58	\N	ya0wxcgkq2cymwyo245v	21
+59	\N	mrb1dnrympy5gpfdyw0f	21
+60	\N	kkreo33r8l9rtibxvstj	21
+61	\N	yhghhsgq2rz5r7ejxtwq	21
+62	\N	as4twucvrg1rcm9rvb0b	21
+63	\N	ocjahhnl6eamp2vo6875	22
+64	\N	fzdxhnubheyhhtoe4zcz	22
+65	\N	v96i7uunzxpj7rwenlzs	22
+66	\N	y8ry9y2yqyjgzqyvzo9p	22
+67	\N	x8a2nfm19ahmopmk5cox	22
+68	\N	rf75n4wlgpb49ivod4ve	23
+69	\N	z29olxqafa3ksxwn7trp	23
+70	\N	ert7wmrjsximl3b0ykum	23
+71	\N	gk48mltzju5aljxfdjjg	23
+72	\N	quprettur7dxldveo41k	24
+73	\N	wyb4t4i13ixigmf35kxv	24
+74	\N	omeuladh8np80plrfik4	24
+75	\N	vms90owk5lq4tx2wzkyx	24
+76	\N	owkduj8cxwduyaqnw5nl	24
+77	\N	uirshkcivjjuqz5zp70d	25
+78	\N	hj5nqmeyoonajqsmgtcv	25
+79	\N	ao754k7jrcfkongsawii	25
+80	\N	e88cvueuh2kez4gycaak	25
+81	\N	ooiwrsnl8d49lgqegqa1	25
+82	\N	pulwsfwhwbhd8t7qymjy	26
+83	\N	krch3wx0hnepdcxzhnrl	26
+84	\N	jjbjyof8x1yc18vrkjrn	26
+85	\N	wmhijm2ldk10egfxlixw	26
+86	\N	y45ufisz3musgf9zrmpv	27
+87	\N	sfd41mrmoqy2ppnh6lcq	27
+88	\N	xuirsjucrcfpfacsmewc	27
+89	\N	csqglsewwwh9vuez9rvg	27
+90	\N	y7fa3unarnglidq3ijdd	27
+91	\N	xpirmnfas1frh5f8s5ki	28
+92	\N	yof4ulubrurgtn75ed5n	28
+93	\N	grehs7aeqyeo2bbqx2uo	28
+94	\N	vsdxkjotngp7w81wgl2f	28
+95	\N	hvl9glonjzizlrpazlf0	29
+96	\N	xxlb8pn2uhnraf2dvj5q	29
+97	\N	tnngvpautvl2tns5gqsb	29
+98	\N	sq9txeyimr5xw5jzhwgm	29
+99	\N	aamv7pktyobhhr6lzori	29
+100	\N	ggfo3mae4cjppxzojm9g	30
+101	\N	dbvplzfcpz1ibvcblvin	30
+102	\N	s8fdffkoz2kmrlbzv08s	30
+103	\N	z1anaytmk1sdouibbgkp	31
+104	\N	vzghdtzrkbnjrqs37zyz	31
+105	\N	n9gupsnst1jd6ggxmdew	31
+106	\N	mfidk9rl2bjmfelfynzx	32
+107	\N	x5vvcfi8qvfncs5i1rhy	32
+108	\N	c2dkj3bclclpqsp7wxdz	32
+109	\N	ifgujxyzhw0zvbbyxwq8	32
+110	\N	zd5ltshq81b4815alswf	32
+111	\N	wrmdnx7bex7p8zrva8re	33
+112	\N	fw7pr1muvirgupri2cey	33
+113	\N	rttpgsox1ea53guuxcav	33
+114	\N	pq72am8hamtrrjcfzktt	33
+115	\N	uypugsn7eesylbvcrvry	33
+116	\N	frchyqyta9wgf4bll37j	34
+117	\N	khd3hcdprl7tnjj1xyyv	34
+118	\N	f0b7nxnkggjxbtmgykag	34
+119	\N	opgazhw1fsacyxlivpui	34
+120	\N	unpy1fts1vkys73o4c4m	34
+121	\N	y65qrcyxpckr9aj9nrrh	35
+122	\N	qouifayzom5gu5nc7zan	35
+123	\N	b6damhivy9cicbqzggyj	35
+124	\N	qwenxill5qve7y67igji	35
+125	\N	og9mdchb1wkahnjrw9qv	35
+126	\N	mihf8xs1i7uh2kejpgpk	35
+127	\N	pift0a6eqifakzl0e0ui	36
+128	\N	rybebm5vhaicjttnzhyx	36
+129	\N	joiyr0gtdttsd9oi5gcm	36
+130	\N	ffbn3mq503km3nnyf7ct	36
+131	\N	pg2gv94mnzjnliravryn	36
+132	\N	xg3q6ercszb4pfmr6xf7	37
+133	\N	iko9is0hkp5ypbvcxqhg	37
+134	\N	stcoyvpy9ficw0dj9nbb	37
+135	\N	tswbydzgdl2ykfuijcb0	37
+136	\N	a8n4paljvaocwtgsgapf	37
+137	\N	ktpkwzqiivi4oih1k0m8	38
+138	\N	hanwfdkugciyaw98jlgd	38
+139	\N	tlqj2qc5rc1uhu0lij6p	38
+140	\N	a73wspf8om5emod3jyfb	38
+141	\N	vzzjguj4hanlhrg2ts6a	38
+142	\N	vtdwfmc1ajwogx84ba8p	39
+143	\N	hkexvyovitmik13iqfbm	39
+144	\N	z585xgcg3j5y8mmlpdls	39
+145	\N	homv3i2bci5qqm85zlx0	39
 \.
 
 
@@ -1650,8 +1556,8 @@ COPY public.products_file (id, name, file, product_id) FROM stdin;
 --
 
 COPY public.products_order (id, order_date, total_amount, status, user_id, uuid) FROM stdin;
-1	2024-04-02 20:30:06.838952+00	\N	draft	\N	c60d7e48-1065-4812-a71f-ab63cc9360aa
-2	2024-04-02 22:24:34.060369+00	\N	draft	1	\N
+1	2024-04-04 00:54:11.820791+00	\N	draft	\N	b9c9471c-68b1-4f9c-b22c-50e0b48a3e20
+2	2024-04-04 00:57:39.770767+00	\N	draft	\N	c7d5e9cf-b03e-4f75-83a1-878daec84fe8
 \.
 
 
@@ -1668,45 +1574,45 @@ COPY public.products_orderitems (id, quantity, subtotal, order_id, product_id) F
 --
 
 COPY public.products_product (id, name, price_currency, price, category_id, discount_id, slug, description, created_at, updated_at) FROM stdin;
-2	ONEPLUS 10T | Moonstone Black | 5G	USD	549.9900	2	\N	oneplus-10t-moonstone-black-5g	{"delta": "", "html": ""}	2024-04-02 22:19:29.908534+00	2024-04-02 22:19:29.908544+00
-3	Apple iPhone 12	USD	504.0000	2	\N	apple-iphone-12	{"delta": "", "html": ""}	2024-04-02 22:19:31.764361+00	2024-04-02 22:19:31.764409+00
-4	OnePlus 10 Pro | 5G Android Smartphone	USD	697.1700	2	\N	oneplus-10-pro-5g-android-smartphone	{"delta": "", "html": ""}	2024-04-02 22:19:32.673304+00	2024-04-02 22:19:32.673352+00
-5	iPhone 13 Pro Max	USD	1101.0000	2	\N	iphone-13-pro-max	{"delta": "", "html": ""}	2024-04-02 22:19:33.411732+00	2024-04-02 22:19:33.41178+00
-6	Samsung Galaxy S20 FE 5G	USD	550.0000	2	\N	samsung-galaxy-s20-fe-5g	{"delta": "", "html": ""}	2024-04-02 22:19:34.267727+00	2024-04-02 22:19:34.267746+00
-7	SAMSUNG Galaxy Z Fold 3 5G Cell Phone	USD	1144.0000	2	\N	samsung-galaxy-z-fold-3-5g-cell-phone	{"delta": "", "html": ""}	2024-04-02 22:19:35.045941+00	2024-04-02 22:19:35.045985+00
-8	OnePlus Nord N200 | 5G	USD	189.9900	2	\N	oneplus-nord-n200-5g	{"delta": "", "html": ""}	2024-04-02 22:19:36.222822+00	2024-04-02 22:19:36.222867+00
-9	Apple iPhone 11 Pro Max	USD	689.0000	2	\N	apple-iphone-11-pro-max	{"delta": "", "html": ""}	2024-04-02 22:19:36.943645+00	2024-04-02 22:19:36.943691+00
-10	SAMSUNG Galaxy S22+ Cell Phone	USD	910.0000	2	\N	samsung-galaxy-s22-cell-phone	{"delta": "", "html": "<ul><li>6.6\\", 1080 x 2340pixels, Infinity-O FHD+ Dynamic AMOLED 2X Display, 4500mAh Battery, Wireless Powershare</li><li>128GB ROM, 8GB RAM, No SD Card Slot, Qualcomm SM8450 Snapdragon 8 Gen 1 (4 nm), Octa-Core, Adreno 730</li><li>Rear Camera: 50MP, f/1.8 + 10MP, f/2.4 + 12MP, f/2.2, Front Camera: 10 MP, f/2.2, Android 12, One UI 4.1</li><li>2G: GSM 850/900/1800/1900, CDMA 800/1900, 3G: HSDPA 850/900/1700(AWS)/1900/2100, CDMA2000 1xEV-DO, 4G LTE: 1/2/3/4/5/7/8/12/13/14/18/19/20/25/26/28/29/30/38/39/40/41/46/48/66/71, 5G: 1/3/5/7/8/20/28/38/41/66/71/260/261SA/NSA/Sub6/mmWave - Single SIM</li><li>No Warranty. Compatible with Most GSM and CDMA Carriers like T-Mobile, AT&amp;T, MetroPCS, etc. Will Also work with CDMA Carriers Such as Verizon, Sprint.</li></ul>"}	2024-04-02 22:19:37.754466+00	2024-04-02 22:19:37.754562+00
-11	iPhone 9	USD	549.0000	3	1	iphone-9	{"delta": "", "html": "An apple mobile which is nothing like apple"}	2024-04-02 22:41:39.273617+00	2024-04-02 22:41:39.273629+00
-12	iPhone X	USD	899.0000	3	2	iphone-x	{"delta": "", "html": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ..."}	2024-04-02 22:41:43.022937+00	2024-04-02 22:41:43.022967+00
-13	Samsung Universe 9	USD	1249.0000	3	3	samsung-universe-9	{"delta": "", "html": "Samsung's new variant which goes beyond Galaxy to the Universe"}	2024-04-02 22:41:45.175113+00	2024-04-02 22:41:45.175179+00
-14	OPPOF19	USD	280.0000	3	4	oppof19	{"delta": "", "html": "OPPO F19 is officially announced on April 2021."}	2024-04-02 22:41:45.989789+00	2024-04-02 22:41:45.989835+00
-15	Huawei P30	USD	499.0000	3	5	huawei-p30	{"delta": "", "html": "Huawei\\u2019s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK."}	2024-04-02 22:41:50.413057+00	2024-04-02 22:41:50.413108+00
-16	MacBook Pro	USD	1749.0000	4	6	macbook-pro	{"delta": "", "html": "MacBook Pro 2021 with mini-LED display may launch between September, November"}	2024-04-02 22:41:53.998641+00	2024-04-02 22:41:53.99869+00
-17	Samsung Galaxy Book	USD	1499.0000	4	7	samsung-galaxy-book	{"delta": "", "html": "Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched"}	2024-04-02 22:41:56.535254+00	2024-04-02 22:41:56.535301+00
-18	Microsoft Surface Laptop 4	USD	1499.0000	4	8	microsoft-surface-laptop-4	{"delta": "", "html": "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen."}	2024-04-02 22:41:59.307896+00	2024-04-02 22:41:59.307958+00
-19	Infinix INBOOK	USD	1099.0000	4	9	infinix-inbook	{"delta": "", "html": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey \\u2013 1 Year Warranty"}	2024-04-02 22:42:02.628665+00	2024-04-02 22:42:02.62869+00
-20	HP Pavilion 15-DK1056WM	USD	1099.0000	4	10	hp-pavilion-15-dk1056wm	{"delta": "", "html": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10"}	2024-04-02 22:42:05.548804+00	2024-04-02 22:42:05.548851+00
-21	perfume Oil	USD	13.0000	5	11	perfume-oil	{"delta": "", "html": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil"}	2024-04-02 22:42:07.905518+00	2024-04-02 22:42:07.905564+00
-22	Brown Perfume	USD	40.0000	5	12	brown-perfume	{"delta": "", "html": "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml"}	2024-04-02 22:42:10.470799+00	2024-04-02 22:42:10.47083+00
-23	Fog Scent Xpressio Perfume	USD	13.0000	5	13	fog-scent-xpressio-perfume	{"delta": "", "html": "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men"}	2024-04-02 22:42:14.457311+00	2024-04-02 22:42:14.457343+00
-24	Non-Alcoholic Concentrated Perfume Oil	USD	120.0000	5	14	non-alcoholic-concentrated-perfume-oil	{"delta": "", "html": "Original Al Munakh\\u00ae by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil"}	2024-04-02 22:42:18.868154+00	2024-04-02 22:42:18.868202+00
-25	Eau De Perfume Spray	USD	30.0000	5	15	eau-de-perfume-spray	{"delta": "", "html": "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality"}	2024-04-02 22:42:22.03601+00	2024-04-02 22:42:22.036041+00
-26	Hyaluronic Acid Serum	USD	19.0000	6	16	hyaluronic-acid-serum	{"delta": "", "html": "L'Or\\u00c3\\u00a9al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid"}	2024-04-02 22:42:26.145981+00	2024-04-02 22:42:26.14603+00
-27	Tree Oil 30ml	USD	12.0000	6	17	tree-oil-30ml	{"delta": "", "html": "Tea tree oil contains a number of compounds, including terpinen-4-ol, that have been shown to kill certain bacteria,"}	2024-04-02 22:42:30.135881+00	2024-04-02 22:42:30.135895+00
-28	Oil Free Moisturizer 100ml	USD	40.0000	6	18	oil-free-moisturizer-100ml	{"delta": "", "html": "Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen."}	2024-04-02 22:42:33.817199+00	2024-04-02 22:42:33.817248+00
-29	Skin Beauty Serum.	USD	46.0000	6	19	skin-beauty-serum	{"delta": "", "html": "Product name: rorec collagen hyaluronic acid white face serum riceNet weight: 15 m"}	2024-04-02 22:42:37.09013+00	2024-04-02 22:42:37.090178+00
-30	Freckle Treatment Cream- 15gm	USD	70.0000	6	20	freckle-treatment-cream-15gm	{"delta": "", "html": "Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects."}	2024-04-02 22:42:40.313765+00	2024-04-02 22:42:40.313797+00
-31	- Daal Masoor 500 grams	USD	20.0000	7	21	daal-masoor-500-grams	{"delta": "", "html": "Fine quality Branded Product Keep in a cool and dry place"}	2024-04-02 22:42:46.111611+00	2024-04-02 22:42:46.111657+00
-32	Elbow Macaroni - 400 gm	USD	14.0000	7	22	elbow-macaroni-400-gm	{"delta": "", "html": "Product details of Bake Parlor Big Elbow Macaroni - 400 gm"}	2024-04-02 22:42:49.580858+00	2024-04-02 22:42:49.580907+00
-33	Orange Essence Food Flavou	USD	14.0000	7	23	orange-essence-food-flavou	{"delta": "", "html": "Specifications of Orange Essence Food Flavour For Cakes and Baking Food Item"}	2024-04-02 22:42:52.222995+00	2024-04-02 22:42:52.22301+00
-34	cereals muesli fruit nuts	USD	46.0000	7	24	cereals-muesli-fruit-nuts	{"delta": "", "html": "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji"}	2024-04-02 22:42:57.711827+00	2024-04-02 22:42:57.711877+00
-35	Gulab Powder 50 Gram	USD	70.0000	7	25	gulab-powder-50-gram	{"delta": "", "html": "Dry Rose Flower Powder Gulab Powder 50 Gram \\u2022 Treats Wounds"}	2024-04-02 22:43:03.043533+00	2024-04-02 22:43:03.043612+00
-36	Plant Hanger For Home	USD	41.0000	8	26	plant-hanger-for-home	{"delta": "", "html": "Boho Decor Plant Hanger For Home Wall Decoration Macrame Wall Hanging Shelf"}	2024-04-02 22:43:06.99233+00	2024-04-02 22:43:06.992373+00
-37	Flying Wooden Bird	USD	51.0000	8	22	flying-wooden-bird	{"delta": "", "html": "Package Include 6 Birds with Adhesive Tape Shape: 3D Shaped Wooden Birds Material: Wooden MDF, Laminated 3.5mm"}	2024-04-02 22:43:11.705972+00	2024-04-02 22:43:11.706019+00
-38	3D Embellishment Art Lamp	USD	20.0000	8	27	3d-embellishment-art-lamp	{"delta": "", "html": "3D led lamp sticker Wall sticker 3d wall art light on/off button  cell operated (included)"}	2024-04-02 22:43:15.301313+00	2024-04-02 22:43:15.301365+00
-39	Handcraft Chinese style	USD	60.0000	8	28	handcraft-chinese-style	{"delta": "", "html": "Handcraft Chinese style art luxury palace hotel villa mansion home decor ceramic vase with brass fruit plate"}	2024-04-02 22:43:20.72512+00	2024-04-02 22:43:20.725168+00
-40	Key Holder	USD	30.0000	8	29	key-holder	{"delta": "", "html": "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality"}	2024-04-02 22:43:24.70583+00	2024-04-02 22:43:24.705877+00
+1	ONEPLUS 10T | Moonstone Black | 5G	USD	549.9900	1	\N	oneplus-10t-moonstone-black-5g	{"delta": "", "html": ""}	2024-04-04 00:57:19.391285+00	2024-04-04 00:57:19.391298+00
+2	Apple iPhone 12	USD	504.0000	1	\N	apple-iphone-12	{"delta": "", "html": ""}	2024-04-04 00:57:21.786834+00	2024-04-04 00:57:21.786861+00
+3	OnePlus 10 Pro | 5G Android Smartphone	USD	697.1700	1	\N	oneplus-10-pro-5g-android-smartphone	{"delta": "", "html": ""}	2024-04-04 00:57:23.231141+00	2024-04-04 00:57:23.231188+00
+4	iPhone 13 Pro Max	USD	1101.0000	1	\N	iphone-13-pro-max	{"delta": "", "html": ""}	2024-04-04 00:57:24.435771+00	2024-04-04 00:57:24.435794+00
+5	Samsung Galaxy S20 FE 5G	USD	550.0000	1	\N	samsung-galaxy-s20-fe-5g	{"delta": "", "html": ""}	2024-04-04 00:57:25.177751+00	2024-04-04 00:57:25.177798+00
+6	SAMSUNG Galaxy Z Fold 3 5G Cell Phone	USD	1144.0000	1	\N	samsung-galaxy-z-fold-3-5g-cell-phone	{"delta": "", "html": ""}	2024-04-04 00:57:26.292534+00	2024-04-04 00:57:26.292554+00
+7	OnePlus Nord N200 | 5G	USD	189.9900	1	\N	oneplus-nord-n200-5g	{"delta": "", "html": ""}	2024-04-04 00:57:26.921837+00	2024-04-04 00:57:26.921882+00
+8	Apple iPhone 11 Pro Max	USD	689.0000	1	\N	apple-iphone-11-pro-max	{"delta": "", "html": ""}	2024-04-04 00:57:27.736093+00	2024-04-04 00:57:27.736139+00
+9	SAMSUNG Galaxy S22+ Cell Phone	USD	910.0000	1	\N	samsung-galaxy-s22-cell-phone	{"delta": "", "html": "<ul><li>6.6\\", 1080 x 2340pixels, Infinity-O FHD+ Dynamic AMOLED 2X Display, 4500mAh Battery, Wireless Powershare</li><li>128GB ROM, 8GB RAM, No SD Card Slot, Qualcomm SM8450 Snapdragon 8 Gen 1 (4 nm), Octa-Core, Adreno 730</li><li>Rear Camera: 50MP, f/1.8 + 10MP, f/2.4 + 12MP, f/2.2, Front Camera: 10 MP, f/2.2, Android 12, One UI 4.1</li><li>2G: GSM 850/900/1800/1900, CDMA 800/1900, 3G: HSDPA 850/900/1700(AWS)/1900/2100, CDMA2000 1xEV-DO, 4G LTE: 1/2/3/4/5/7/8/12/13/14/18/19/20/25/26/28/29/30/38/39/40/41/46/48/66/71, 5G: 1/3/5/7/8/20/28/38/41/66/71/260/261SA/NSA/Sub6/mmWave - Single SIM</li><li>No Warranty. Compatible with Most GSM and CDMA Carriers like T-Mobile, AT&amp;T, MetroPCS, etc. Will Also work with CDMA Carriers Such as Verizon, Sprint.</li></ul>"}	2024-04-04 00:57:28.410137+00	2024-04-04 00:57:28.410187+00
+10	iPhone 9	USD	549.0000	2	1	iphone-9	{"delta": "", "html": "An apple mobile which is nothing like apple"}	2024-04-04 00:57:58.619445+00	2024-04-04 00:57:58.619456+00
+11	iPhone X	USD	899.0000	2	2	iphone-x	{"delta": "", "html": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ..."}	2024-04-04 00:58:02.354087+00	2024-04-04 00:58:02.354133+00
+12	Samsung Universe 9	USD	1249.0000	2	3	samsung-universe-9	{"delta": "", "html": "Samsung's new variant which goes beyond Galaxy to the Universe"}	2024-04-04 00:58:04.807858+00	2024-04-04 00:58:04.807905+00
+13	OPPOF19	USD	280.0000	2	4	oppof19	{"delta": "", "html": "OPPO F19 is officially announced on April 2021."}	2024-04-04 00:58:05.732435+00	2024-04-04 00:58:05.732468+00
+14	Huawei P30	USD	499.0000	2	5	huawei-p30	{"delta": "", "html": "Huawei\\u2019s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK."}	2024-04-04 00:58:08.493163+00	2024-04-04 00:58:08.493195+00
+15	MacBook Pro	USD	1749.0000	3	6	macbook-pro	{"delta": "", "html": "MacBook Pro 2021 with mini-LED display may launch between September, November"}	2024-04-04 00:58:10.535627+00	2024-04-04 00:58:10.535667+00
+16	Samsung Galaxy Book	USD	1499.0000	3	7	samsung-galaxy-book	{"delta": "", "html": "Samsung Galaxy Book S (2020) Laptop With Intel Lakefield Chip, 8GB of RAM Launched"}	2024-04-04 00:58:12.915177+00	2024-04-04 00:58:12.915224+00
+17	Microsoft Surface Laptop 4	USD	1499.0000	3	8	microsoft-surface-laptop-4	{"delta": "", "html": "Style and speed. Stand out on HD video calls backed by Studio Mics. Capture ideas on the vibrant touchscreen."}	2024-04-04 00:58:15.747568+00	2024-04-04 00:58:15.747584+00
+18	Infinix INBOOK	USD	1099.0000	3	9	infinix-inbook	{"delta": "", "html": "Infinix Inbook X1 Ci3 10th 8GB 256GB 14 Win10 Grey \\u2013 1 Year Warranty"}	2024-04-04 00:58:19.025205+00	2024-04-04 00:58:19.025226+00
+19	HP Pavilion 15-DK1056WM	USD	1099.0000	3	10	hp-pavilion-15-dk1056wm	{"delta": "", "html": "HP Pavilion 15-DK1056WM Gaming Laptop 10th Gen Core i5, 8GB, 256GB SSD, GTX 1650 4GB, Windows 10"}	2024-04-04 00:58:24.241803+00	2024-04-04 00:58:24.241817+00
+20	perfume Oil	USD	13.0000	4	11	perfume-oil	{"delta": "", "html": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil"}	2024-04-04 00:58:26.607632+00	2024-04-04 00:58:26.607647+00
+21	Brown Perfume	USD	40.0000	4	12	brown-perfume	{"delta": "", "html": "Royal_Mirage Sport Brown Perfume for Men & Women - 120ml"}	2024-04-04 00:58:29.367722+00	2024-04-04 00:58:29.367743+00
+22	Fog Scent Xpressio Perfume	USD	13.0000	4	13	fog-scent-xpressio-perfume	{"delta": "", "html": "Product details of Best Fog Scent Xpressio Perfume 100ml For Men cool long lasting perfumes for Men"}	2024-04-04 00:58:32.325635+00	2024-04-04 00:58:32.325688+00
+23	Non-Alcoholic Concentrated Perfume Oil	USD	120.0000	4	14	non-alcoholic-concentrated-perfume-oil	{"delta": "", "html": "Original Al Munakh\\u00ae by Mahal Al Musk | Our Impression of Climate | 6ml Non-Alcoholic Concentrated Perfume Oil"}	2024-04-04 00:58:36.536647+00	2024-04-04 00:58:36.536675+00
+24	Eau De Perfume Spray	USD	30.0000	4	15	eau-de-perfume-spray	{"delta": "", "html": "Genuine  Al-Rehab spray perfume from UAE/Saudi Arabia/Yemen High Quality"}	2024-04-04 00:58:47.134258+00	2024-04-04 00:58:47.134296+00
+25	Hyaluronic Acid Serum	USD	19.0000	5	16	hyaluronic-acid-serum	{"delta": "", "html": "L'Or\\u00c3\\u00a9al Paris introduces Hyaluron Expert Replumping Serum formulated with 1.5% Hyaluronic Acid"}	2024-04-04 00:58:50.999922+00	2024-04-04 00:58:50.999965+00
+26	Tree Oil 30ml	USD	12.0000	5	17	tree-oil-30ml	{"delta": "", "html": "Tea tree oil contains a number of compounds, including terpinen-4-ol, that have been shown to kill certain bacteria,"}	2024-04-04 00:58:54.974222+00	2024-04-04 00:58:54.974264+00
+27	Oil Free Moisturizer 100ml	USD	40.0000	5	18	oil-free-moisturizer-100ml	{"delta": "", "html": "Dermive Oil Free Moisturizer with SPF 20 is specifically formulated with ceramides, hyaluronic acid & sunscreen."}	2024-04-04 00:58:57.596996+00	2024-04-04 00:58:57.597029+00
+28	Skin Beauty Serum.	USD	46.0000	5	19	skin-beauty-serum	{"delta": "", "html": "Product name: rorec collagen hyaluronic acid white face serum riceNet weight: 15 m"}	2024-04-04 00:59:00.561691+00	2024-04-04 00:59:00.561714+00
+29	Freckle Treatment Cream- 15gm	USD	70.0000	5	20	freckle-treatment-cream-15gm	{"delta": "", "html": "Fair & Clear is Pakistan's only pure Freckle cream which helpsfade Freckles, Darkspots and pigments. Mercury level is 0%, so there are no side effects."}	2024-04-04 00:59:03.159743+00	2024-04-04 00:59:03.159766+00
+30	- Daal Masoor 500 grams	USD	20.0000	6	21	daal-masoor-500-grams	{"delta": "", "html": "Fine quality Branded Product Keep in a cool and dry place"}	2024-04-04 00:59:07.661939+00	2024-04-04 00:59:07.661957+00
+31	Elbow Macaroni - 400 gm	USD	14.0000	6	22	elbow-macaroni-400-gm	{"delta": "", "html": "Product details of Bake Parlor Big Elbow Macaroni - 400 gm"}	2024-04-04 00:59:09.362617+00	2024-04-04 00:59:09.362632+00
+32	Orange Essence Food Flavou	USD	14.0000	6	23	orange-essence-food-flavou	{"delta": "", "html": "Specifications of Orange Essence Food Flavour For Cakes and Baking Food Item"}	2024-04-04 00:59:11.644084+00	2024-04-04 00:59:11.644108+00
+33	cereals muesli fruit nuts	USD	46.0000	6	24	cereals-muesli-fruit-nuts	{"delta": "", "html": "original fauji cereal muesli 250gm box pack original fauji cereals muesli fruit nuts flakes breakfast cereal break fast faujicereals cerels cerel foji fouji"}	2024-04-04 00:59:15.662244+00	2024-04-04 00:59:15.662261+00
+34	Gulab Powder 50 Gram	USD	70.0000	6	25	gulab-powder-50-gram	{"delta": "", "html": "Dry Rose Flower Powder Gulab Powder 50 Gram \\u2022 Treats Wounds"}	2024-04-04 00:59:18.810672+00	2024-04-04 00:59:18.810718+00
+35	Plant Hanger For Home	USD	41.0000	7	26	plant-hanger-for-home	{"delta": "", "html": "Boho Decor Plant Hanger For Home Wall Decoration Macrame Wall Hanging Shelf"}	2024-04-04 00:59:23.70122+00	2024-04-04 00:59:23.701239+00
+36	Flying Wooden Bird	USD	51.0000	7	22	flying-wooden-bird	{"delta": "", "html": "Package Include 6 Birds with Adhesive Tape Shape: 3D Shaped Wooden Birds Material: Wooden MDF, Laminated 3.5mm"}	2024-04-04 00:59:27.391854+00	2024-04-04 00:59:27.391896+00
+37	3D Embellishment Art Lamp	USD	20.0000	7	27	3d-embellishment-art-lamp	{"delta": "", "html": "3D led lamp sticker Wall sticker 3d wall art light on/off button  cell operated (included)"}	2024-04-04 00:59:32.354987+00	2024-04-04 00:59:32.355009+00
+38	Handcraft Chinese style	USD	60.0000	7	28	handcraft-chinese-style	{"delta": "", "html": "Handcraft Chinese style art luxury palace hotel villa mansion home decor ceramic vase with brass fruit plate"}	2024-04-04 00:59:35.435461+00	2024-04-04 00:59:35.435487+00
+39	Key Holder	USD	30.0000	7	29	key-holder	{"delta": "", "html": "Attractive DesignMetallic materialFour key hooksReliable & DurablePremium Quality"}	2024-04-04 00:59:39.811659+00	2024-04-04 00:59:39.811672+00
 \.
 
 
@@ -1780,7 +1686,7 @@ SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 1, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 1, false);
 
 
 --
@@ -1801,7 +1707,7 @@ SELECT pg_catalog.setval('public.core_commandhistory_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 2, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 
 
 --
@@ -1822,7 +1728,7 @@ SELECT pg_catalog.setval('public.django_migrations_id_seq', 44, true);
 -- Name: products_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.products_category_id_seq', 8, true);
+SELECT pg_catalog.setval('public.products_category_id_seq', 7, true);
 
 
 --
@@ -1857,7 +1763,7 @@ SELECT pg_catalog.setval('public.products_orderitems_id_seq', 1, false);
 -- Name: products_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.products_product_id_seq', 40, true);
+SELECT pg_catalog.setval('public.products_product_id_seq', 39, true);
 
 
 --

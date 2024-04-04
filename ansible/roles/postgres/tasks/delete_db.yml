@@ -1,16 +1,12 @@
 - name: Check if PostgreSQL database exists
-  shell: "sudo -u postgres psql -lqt | cut -d '|' -f 1 | grep -qw '{{ db_name }}'"
-  register: db_exists
+  shell: |
+    sudo -u postgres psql -lqt | cut -d '|' -f 1 | grep -qw 'shop_db' && echo 0 || echo 1
   changed_when: false
-  check_mode: no
+  register: db_exists
+  ignore_errors: yes
 
-- name: Disconnect clients from PostgreSQL database
-  become: yes
-  command: >
-    sudo -u postgres psql -U {{ postgres_user }} -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '{{ db_name }}' AND pid <> pg_backend_pid();"
-  environment:
-    PGPASSWORD: "{{ postgres_password }}"
-  when: db_exists.rc == 0
+- set_fact:
+    database_exists: "{{ db_exists.stdout == '0' }}"
 
 - name: Delete PostgreSQL database
   become: yes
@@ -18,4 +14,4 @@
     sudo -u postgres psql -U {{ postgres_user }} -d postgres -c "DROP DATABASE IF EXISTS {{ db_name }};"
   environment:
     PGPASSWORD: "{{ postgres_password }}"
-  when: db_exists.rc == 0
+  when: database_exists

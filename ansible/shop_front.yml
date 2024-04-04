@@ -1,6 +1,6 @@
 ---
-- name: Setup dev
+- name: Setup shop_front
   hosts: local
   become: true
   roles:
-    - dev
+    - shop_front
