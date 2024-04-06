@@ -1,6 +1,5 @@
 ---
 - name: Setup shop prod
   hosts: prod
-  become: true
   roles:
     - shop_prod

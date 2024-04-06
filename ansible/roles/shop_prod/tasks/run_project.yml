@@ -1,0 +1,4 @@
+- name: Pull from Google Drive
+  import_tasks:
+    file: "./pull.yml"
+

@@ -1,0 +1,32 @@
+- name: Query files in Google Drive
+  uri:
+    url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ filename }}'+and+'{{ folder_id }}'+in+parents&orderBy%3DmodifiedTime+desc"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+  register: list_files_response
+
+- name: Extract file ID
+  set_fact:
+    file_id: "{{ list_files_response.json.files[0].id }}"
+  when: list_files_response.json.files | length > 0
+
+- name: Download file from Google Drive
+  uri:
+    url: "https://www.googleapis.com/drive/v3/files/{{ file_id }}?alt=media"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    return_content: yes
+  register: download_response
+  when: file_id is defined
+
+- name: Debug
+  debug:
+    msg: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ filename }}'+and+'{{ folder_id }}'+in+parents, {{ access_token }}"
+
+- name: Save downloaded file
+  copy:
+    content: "{{ download_response.content }}"
+    dest: "{{ dest }}"
+  when: download_response.status == 200

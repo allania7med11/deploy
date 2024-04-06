@@ -1,0 +1,15 @@
+- name: Exchange refresh_token for access token
+  uri:
+    url: "https://accounts.google.com/o/oauth2/token"
+    method: POST
+    body_format: form-urlencoded
+    body:
+      client_id: "{{ lookup('env', 'CLIENT_ID') }}"
+      client_secret: "{{ lookup('env', 'CLIENT_SECRET') }}"
+      refresh_token: "{{ lookup('env', 'REFRESH_TOKEN') }}"
+      grant_type: "refresh_token"
+  register: access_token_response
+
+- name: Set access_token variable
+  set_fact:
+    access_token: "{{ access_token_response.json.access_token }}"
