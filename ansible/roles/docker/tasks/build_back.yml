@@ -12,7 +12,7 @@
 - name: Run {{  project_name }} container
   docker_container:
     name: "{{  project_name }}"
-    image: "{{  project_name }}"
+    image: "{{  docker_image }}"
     state: started
     restart_policy: always
     networks:

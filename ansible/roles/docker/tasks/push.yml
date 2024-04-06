@@ -1,0 +1,14 @@
+- name: Log into DockerHub
+  docker_login:
+    username: "{{  dockerhub_username }}"
+    password: "{{  dockerhub_password }}"
+
+- name: Push Docker image to Docker Hub
+  docker_image:
+    name: "{{  docker_image }}"
+    push: true
+    source: local
+
+- name: Push generated_compress_folder to Google Drive
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/drive/tasks/push.yml"

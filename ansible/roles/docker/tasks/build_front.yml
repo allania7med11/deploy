@@ -9,7 +9,7 @@
 
 - name: Build {{  project_name }} image
   docker_image:
-    name: "{{  project_name }}"
+    name: "{{  docker_image }}"
     build:
       path: "{{ dockerfile_directory }}"
     source: build
@@ -30,7 +30,7 @@
 - name: Run {{  project_name }} container for static folder generation
   docker_container:
     name: "{{  project_name }}"
-    image: "{{  project_name }}"
+    image: "{{  docker_image }}"
     state: started
     restart_policy: always
     networks:
