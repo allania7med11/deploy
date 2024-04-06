@@ -12,6 +12,13 @@
   import_tasks:
     file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
 
+- name: Pull Initial Shop Database
+  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
+  vars:
+    filename: "shop_db_init.zip"
+    folder_id: "{{ drive_folder_id }}"
+    dest: "{{ project_directory }}/shop_db_init.zip"
+
 - name: Pull .env file
   import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
   vars:
