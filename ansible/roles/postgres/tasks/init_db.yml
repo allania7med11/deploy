@@ -7,18 +7,7 @@
     mode: "0755"
   ignore_errors: true 
 
-- name: Check if PostgreSQL database exists
-  shell: |
-    sudo -u postgres psql -lqt | cut -d '|' -f 1 | grep -qw 'shop_db' && echo 0 || echo 1
-  changed_when: false
-  register: db_exists
-  ignore_errors: true
-
-- set_fact:
-    database_exists: "{{ db_exists.stdout == '0' }}"
-
 - name: Create template1 database from template0
-  become: true
   command: >
     sudo -u postgres psql -U {{ postgres_user }} -d postgres -c "CREATE DATABASE template1 TEMPLATE template0;"
   environment:
@@ -44,6 +33,6 @@
     sudo -u postgres psql -d {{ db_name }} -f {{ db_init_path }}
   environment:
     PGPASSWORD: "{{ postgres_password }}"
-  become: true
+  become: false
   when: create_db_result is succeeded
 

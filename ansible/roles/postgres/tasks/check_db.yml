@@ -8,10 +8,5 @@
 - set_fact:
     database_exists: "{{ db_exists.stdout == '0' }}"
 
-- name: Delete PostgreSQL database
-  become: true
-  command: >
-    sudo -u postgres psql -U {{ postgres_user }} -d postgres -c "DROP DATABASE IF EXISTS {{ db_name }};"
-  environment:
-    PGPASSWORD: "{{ postgres_password }}"
-  when: database_exists
+- debug:
+    msg: "database_exists: {{ database_exists }}"
