@@ -23,3 +23,8 @@
   import_tasks:
     file: "{{ ansible_directory }}/roles/postgres/tasks/init_db.yml"
   when: not database_exists
+
+- name: Ngnix configuration
+  become: true
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
