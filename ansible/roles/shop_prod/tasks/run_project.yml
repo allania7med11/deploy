@@ -24,18 +24,19 @@
     file: "{{ ansible_directory }}/roles/postgres/tasks/init_db.yml"
   when: not database_exists
 
-- name: Ngnix configuration
-  become: true
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
+# - name: Ngnix configuration
+#   become: true
+#   import_tasks:
+#     file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
 
 # - name: SSL configuration
 #   become: true
 #   import_tasks:
 #     file: "{{ ansible_directory }}/roles/nginx/tasks/ssl.yml"
 
-- name: Pull Back App
-  import_tasks: "./pull.yml" 
+- name: Pull generated_compress_folder and env file from Google Drive and Docker image from Dockerhub
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/pull.yml"
 
-- name: Run Back App
-  import_tasks: "./run.yml"
+# - name: Run Back App
+#   import_tasks: "./run.yml"
