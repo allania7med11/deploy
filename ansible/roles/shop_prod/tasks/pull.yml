@@ -1,0 +1,6 @@
+- name: Pull back_static
+  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
+  vars:
+    filename: "shop_back_static"
+    folder_id: "{{ drive_folder_id }}"
+    dest: "{{ shop_back_static_path }}"

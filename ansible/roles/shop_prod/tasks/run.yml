@@ -1,0 +1,19 @@
+- name: Set full absolute path
+  set_fact:
+    full_path: "{{ shop_back_static_path | regex_replace('^~', ansible_env.HOME) }}"
+
+- name: Extract downloaded file
+  become: true
+  unarchive:
+    src: "{{ full_path }}"
+    dest: "/var/www/"
+    remote_src: yes
+    creates: "/var/www/shop_back_static"
+
+- name: Set permissions on extracted files
+  become: true
+  file:
+    path: "/var/www/shop_back_static"
+    state: directory
+    recurse: yes
+    mode: '0755'

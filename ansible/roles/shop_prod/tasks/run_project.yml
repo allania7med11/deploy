@@ -28,3 +28,14 @@
   become: true
   import_tasks:
     file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
+
+# - name: SSL configuration
+#   become: true
+#   import_tasks:
+#     file: "{{ ansible_directory }}/roles/nginx/tasks/ssl.yml"
+
+- name: Pull Back App
+  import_tasks: "./pull.yml" 
+
+- name: Run Back App
+  import_tasks: "./run.yml"

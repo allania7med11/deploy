@@ -1,0 +1,12 @@
+- name: Log Certbot command
+  debug:
+    msg: "Certbot command: certbot --nginx --non-interactive --agree-tos --email {{ email }} --domains {{ server }}"
+
+- name: Run certbot to get SSL certificate
+  shell: certbot --nginx --non-interactive --agree-tos --email {{ email }} --domains {{ server }}
+
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
