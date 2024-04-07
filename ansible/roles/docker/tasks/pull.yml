@@ -20,4 +20,4 @@
   vars:
     filename: ".env.docx"
     folder_id: "{{ drive_folder_id }}"
-    dest: "{{ env_path }}"
+    dest: "{{ env_file_path }}"

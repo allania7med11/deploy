@@ -1,6 +1,10 @@
-- name: Read contents of  file
-  set_fact:
-    env_contents: "{{ lookup('file', file_path).split('\n') }}"
+- name: Read contents of file
+  become: true
+  command: "cat {{ file_path }}"
+  register: key
+  
+-  set_fact:
+    env_contents: "{{ key.stdout.split('\n') }}"
 
 - name: Convert .env contents to dictionary
   set_fact:
