@@ -1,0 +1,5 @@
+---
+- name: Setup shop prod
+  hosts: prod
+  roles:
+    - shop_front_prod
