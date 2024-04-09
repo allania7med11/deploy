@@ -1,6 +1,10 @@
+- name: Set database_exists
+  import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/check_db.yml" 
+
 - name: Initiate the database
   import_tasks:
     file: "{{ ansible_directory }}/roles/postgres/tasks/init_db.yml"
+  when: not database_exists
 
 - name: Ngnix configuration
   import_tasks:
