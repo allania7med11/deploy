@@ -18,14 +18,6 @@
     recurse: yes
     mode: '0755'
 
-- name: Convert .env file to dictionary
-  become: false
-  import_tasks: 
-    file: "{{ ansible_directory }}/roles/env/tasks/convert_env_to_dict.yml"
-  vars:
-    file_path: "{{ env_file_path }}"
-    var_name: "env_dict_run"
-
 - name: Run {{  project_name }} container
   docker_container:
     name: "{{  project_name }}"
@@ -34,6 +26,5 @@
     restart_policy: always
     networks:
       - name: host
-    env:
-      "{{ env_dict_run }}"
+    env_file: "{{ env_file_path }}"
     detach: yes   # Detach from the container after starting it

@@ -1,4 +1,5 @@
 project_name: "shop"
+update_ngnix: false
 listen_port: "80"
 server: "shop.effectivewebapp.com"
 backend: "http://localhost:2011"

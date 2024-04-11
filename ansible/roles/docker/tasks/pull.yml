@@ -18,6 +18,6 @@
 - name: Pull env file
   import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
   vars:
-    filename: ".env.docx"
+    filename: ".env"
     folder_id: "{{ drive_folder_id }}"
     dest: "{{ env_file_path }}"
