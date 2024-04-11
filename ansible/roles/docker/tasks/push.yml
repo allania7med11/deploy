@@ -19,6 +19,7 @@
   vars:
     file_name: "{{ generated_folder_name }}"
     file_path: "{{ generated_compress_folder_path }}"
+    folder_id: "{{ drive_folder_id }}"
 
 - name: Push generated_compress_folder to Google Drive
   import_tasks:
@@ -26,3 +27,4 @@
   vars:
     file_name: ".env"
     file_path: "{{ env_file_path }}"
+    folder_id: "{{ drive_folder_id }}"
