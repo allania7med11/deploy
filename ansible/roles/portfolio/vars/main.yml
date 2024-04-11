@@ -1,0 +1,17 @@
+project_name: "portfolio"
+ansible_directory: "{{ lookup('env','PWD') }}/ansible"
+repo:  "https://github.com/allania7med11/shop_front"
+branch: "main"
+project_directory: "/vagrant/apps/shop"
+dockerfile_directory: "/vagrant/apps/portfolio/portfolio"
+env_file_generate_static_path: "/vagrant/ansible/config/{{  project_name }}/.env"
+drive_folder_id: "{{ lookup('env', 'SHOP_FRONT_FOLDER_ID') }}"
+generated_folder_name: "{{  project_name }}"
+generated_compress_folder_name: "{{  generated_folder_name }}.tgz"
+generated_compress_folder_path: "{{ project_directory }}/{{  generated_compress_folder_name }}"
+docker_image: "{{ project_name }}"
+template_ngnix_file: "{{ ansible_directory }}/templates/{{  project_name }}/ngnix.j2"
+front_directory: "/vagrant/apps/portfolio/front"
+server: false
+listen_port: 2000
+backend: "http://localhost:2011"
