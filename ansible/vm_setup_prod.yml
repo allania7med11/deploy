@@ -1,6 +1,9 @@
 ---
 - name: Setup Server
   hosts: prod
+  vars:
+    postgres_user: "{{ lookup('env', 'POSTGRES_USER') }}"
+    postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
   become: true
   roles:
     - aptitude
