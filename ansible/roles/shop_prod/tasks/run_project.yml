@@ -28,13 +28,13 @@
   become: true
   import_tasks:
     file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
-  when: "{{ update_ngnix }}"
+  when: update_ngnix
 
 - name: SSL configuration
   become: true
   import_tasks:
     file: "{{ ansible_directory }}/roles/nginx/tasks/ssl.yml"
-  when: "{{ update_ngnix }}"
+  when: update_ngnix
 
 - name: Pull generated_compress_folder and env file from Google Drive and Docker image from Dockerhub
   import_tasks:

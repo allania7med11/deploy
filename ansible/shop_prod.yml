@@ -1,5 +1,5 @@
 ---
 - name: Setup shop prod
-  hosts: prod
+  hosts: "{{ host_on| default('prod') }}"
   roles:
     - shop_prod
