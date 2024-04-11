@@ -1,0 +1,3 @@
+- name: Backup the database
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/postgres/tasks/backup_db.yml"

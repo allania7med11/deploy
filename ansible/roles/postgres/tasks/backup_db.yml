@@ -1,0 +1,26 @@
+- name: Check if PostgreSQL database exists
+  shell: |
+    sudo -u postgres psql -lqt | cut -d '|' -f 1 | grep -qw '{{ db_name }}' && echo 0 || echo 1
+  changed_when: false
+  register: db_exists
+  ignore_errors: true
+
+- set_fact:
+    database_exists: "{{ db_exists.stdout == '0' }}"
+
+- name: Ensure backup_directory exists
+  file:
+    path: "{{ backup_directory }}"
+    state: directory
+
+- name: Debug
+  debug:
+    msg: sudo -u postgres pg_dump {{ db_name }} > /home/vagrant/apps/shop/backup/{{ db_name }}_$(date "+%Y_%m_%d_%I_%M_%p").sql
+
+- name: Backup PostgreSQL database
+  become: true
+  shell:
+    cmd: sudo -u postgres pg_dump {{ db_name }} > /home/vagrant/apps/shop/backup/{{ db_name }}_$(date "+%Y_%m_%d_%I_%M_%p").sql
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+  when: database_exists
