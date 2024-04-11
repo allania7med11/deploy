@@ -1,11 +1,17 @@
 [local]
 deploy ansible_host=deploy
 
+[prod_root_staging]
+deploy_prod_root_staging ansible_host=deploy_prod_root_staging
+
+[prod_staging]
+deploy_prod_staging ansible_host=deploy_prod_staging
+
 [prod_root]
 deploy_prod_root ansible_host=deploy_prod_root
 
 [prod]
-deploy_prod ansible_host=deploy_prod  ansible_password="1945"
+deploy_prod ansible_host=deploy_prod
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
