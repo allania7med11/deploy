@@ -24,11 +24,6 @@
     backup_name: "{{ db_name }}_{{ lookup('pipe', 'date +%Y_%m_%d_%H_%M') }}.sql"
   when: database_exists
 
-- name: Debug
-  debug:
-    msg: sudo -u postgres pg_dump {{ db_name }} > {{ backup_directory }}/{{ backup_name }}
-  when: database_exists
-
 - name: Backup PostgreSQL database
   become: true
   shell:
