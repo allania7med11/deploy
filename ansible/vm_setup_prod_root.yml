@@ -1,6 +1,6 @@
 ---
 - name: Create and configure new user
-  hosts: prod_root
+  hosts: "{{ host_on| default('prod_root') }}"
   gather_facts: no
   become: yes
   vars:
