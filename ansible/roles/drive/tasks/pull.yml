@@ -21,9 +21,6 @@
   register: download_response
   when: file_id is defined
 
-- name: Debug
-  debug:
-    msg: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ filename }}'+and+'{{ folder_id }}'+in+parents, {{ access_token }}"
 
 - name: Save downloaded file
   copy:

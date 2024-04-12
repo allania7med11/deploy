@@ -7,14 +7,6 @@
     mode: "0755"
   ignore_errors: true 
 
-- name: Create template1 database from template0
-  command: >
-    sudo -u postgres psql -U {{ postgres_user }} -d postgres -c "CREATE DATABASE template1 TEMPLATE template0;"
-  environment:
-    PGPASSWORD: "{{ postgres_password }}"
-  when: not database_exists
-  ignore_errors: true
-
 - name: Ensure PostgreSQL database is created if not exists
   command: >
     sudo -u postgres createdb -U {{ postgres_user }} -O {{ postgres_user }} {{ db_name }}
@@ -24,9 +16,6 @@
   register: create_db_result
   when: not database_exists
 
-- name: Debug
-  debug:
-    msg: "sudo -u postgres psql -d {{ db_name }} -f {{ db_init_path }}"
 
 - name: Load data to PostgreSQL database
   command: >

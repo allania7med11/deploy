@@ -21,7 +21,7 @@
     file_path: "{{ generated_compress_folder_path }}"
     folder_id: "{{ drive_folder_id }}"
 
-- name: Push generated_compress_folder to Google Drive
+- name: Push env file to Google Drive
   import_tasks:
     file: "{{ ansible_directory }}/roles/drive/tasks/push_file.yml"
   vars:
