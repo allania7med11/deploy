@@ -16,3 +16,11 @@
   register: create_db_result
   when: not database_exists
 
+- name: Load data to PostgreSQL database
+  command: >
+    sudo -u postgres psql -d {{ db_name }} -f {{ db_init_path }}
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+  become: false
+  when: create_db_result is succeeded
+
