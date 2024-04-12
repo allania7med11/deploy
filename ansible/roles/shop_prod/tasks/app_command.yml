@@ -1,5 +1,7 @@
-- name: Execute commands in docker container
-  command: docker exec -it {{  project_name }} bash -c 'echo "Hello remote machine"'
+- name: Run command in docker container
+  community.docker.docker_container_exec:
+    container: "{{ project_name }}"
+    command: echo "Hello remote machine"
   register: result
 
 - name: Print stdout
