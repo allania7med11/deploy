@@ -1,0 +1,36 @@
+- name: Query files in Google Drive with same name as {{ file_name }}
+  uri:
+    url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ file_name }}'+and+'{{ folder_id }}'+in+parents"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+  register: list_files_response
+
+- name: Extract file IDs with same name as {{ file_name }}
+  set_fact:
+    file_ids: "{{ list_files_response.json.files | map(attribute='id') | list }}"
+
+- name: Delete files with same name as {{ file_name }}
+  uri:
+    url: "https://www.googleapis.com/drive/v3/files/{{ item }}"
+    method: DELETE
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    status_code: 204
+    validate_certs: yes
+  loop: "{{ file_ids }}"
+  when: file_ids | length > 0
+
+- name: Upload {{ file_name }} to Google Drive
+  command: >
+    curl --location 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart' \
+    --header 'Authorization: Bearer {{ access_token }}' \
+    --form 'metadata={{ metadata | to_json }};type=application/json' \
+    --form 'file=@"{{ file_path }}"' \
+    -w '%{http_code}' \
+    -o /dev/null
+  register: curl_output
+  vars:
+    access_token: "{{ access_token }}"
+    metadata: '{"name": "{{ file_name }}", "parents": ["{{ folder_id }}"]}'
+  failed_when: curl_output.stdout != "200"

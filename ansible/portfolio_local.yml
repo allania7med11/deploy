@@ -1,0 +1,6 @@
+---
+- name: Setup Portfolio
+  hosts: local
+  become: true
+  roles:
+    - portfolio

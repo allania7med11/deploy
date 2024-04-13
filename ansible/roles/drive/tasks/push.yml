@@ -10,25 +10,24 @@
       grant_type: "refresh_token"
   register: access_token_response
 
-- name: Set folder_id variable
+- name: Set access_token variable
   set_fact:
-    folder_id: "{{ lookup('env', 'FOLDER_ID') }}"
+    folder_id: "{{ drive_folder_id }}"
     access_token: "{{ access_token_response.json.access_token }}"
-    filename: "portfolio.tgz"
 
-- name: Query files in Google Drive
+- name: Query files in Google Drive with same name as generated_folder_name
   uri:
-    url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ filename }}'+and+'{{ folder_id }}'+in+parents"
+    url: "https://www.googleapis.com/drive/v3/files?q=name%3D'{{ generated_folder_name }}'+and+'{{ drive_folder_id }}'+in+parents"
     method: GET
     headers:
       Authorization: "Bearer {{ access_token }}"
   register: list_files_response
 
-- name: Extract file IDs
+- name: Extract file IDs with same name as generated_folder_name
   set_fact:
     file_ids: "{{ list_files_response.json.files | map(attribute='id') | list }}"
 
-- name: Delete files
+- name: Delete files with same name as generated_folder_name
   uri:
     url: "https://www.googleapis.com/drive/v3/files/{{ item }}"
     method: DELETE
@@ -39,17 +38,16 @@
   loop: "{{ file_ids }}"
   when: file_ids | length > 0
 
-- name: Upload file to Google Drive
+- name: Upload generated_compress_folder to Google Drive
   command: >
     curl --location 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart' \
     --header 'Authorization: Bearer {{ access_token }}' \
     --form 'metadata={{ metadata | to_json }};type=application/json' \
-    --form 'file=@"{{ file_path }}"' \
+    --form 'file=@"{{ generated_compress_folder_path }}"' \
     -w '%{http_code}' \
     -o /dev/null
   register: curl_output
   vars:
     access_token: "{{ access_token }}"
-    metadata: '{"name": "{{ filename }}", "parents": ["{{ folder_id }}"]}'
-    file_path: "{{ front_directory }}/{{ filename }}"
+    metadata: '{"name": "{{ generated_folder_name }}", "parents": ["{{ drive_folder_id }}"]}'
   failed_when: curl_output.stdout != "200"

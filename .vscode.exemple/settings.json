@@ -1,0 +1,6 @@
+{
+    "proj": "shop_front_prod", // portfolio_local, shop, shop_front, vm_setup_prod_root
+    "vars": "host_on=prod_staging job=run_project", // run_project, backup_db
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

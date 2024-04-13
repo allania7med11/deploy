@@ -1,0 +1,12 @@
+- name: Check if PostgreSQL database exists
+  shell: |
+    sudo -u postgres psql -lqt | cut -d '|' -f 1 | grep -qw 'shop_db' && echo 0 || echo 1
+  changed_when: false
+  register: db_exists
+  ignore_errors: true
+
+- set_fact:
+    database_exists: "{{ db_exists.stdout == '0' }}"
+
+- debug:
+    msg: "database_exists: {{ database_exists }}"

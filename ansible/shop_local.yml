@@ -1,0 +1,6 @@
+---
+- name: Setup shop
+  hosts: local
+  become: true
+  roles:
+    - shop

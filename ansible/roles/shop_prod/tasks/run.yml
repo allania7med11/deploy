@@ -1,0 +1,30 @@
+- name: Set full absolute path
+  set_fact:
+    full_path: "{{ shop_back_static_path | regex_replace('^~', ansible_env.HOME) }}"
+
+- name: Extract downloaded file
+  become: true
+  unarchive:
+    src: "{{ full_path }}"
+    dest: "/var/www/"
+    remote_src: yes
+    creates: "/var/www/shop_back_static"
+
+- name: Set permissions on extracted files
+  become: true
+  file:
+    path: "/var/www/shop_back_static"
+    state: directory
+    recurse: yes
+    mode: '0755'
+
+- name: Run {{  project_name }} container
+  docker_container:
+    name: "{{  project_name }}"
+    image: "{{  docker_image }}"
+    state: started
+    restart_policy: always
+    networks:
+      - name: host
+    env_file: "{{ env_file_path }}"
+    detach: yes   # Detach from the container after starting it

@@ -1,0 +1,17 @@
+- name: Check if PostgreSQL database exists
+  shell: |
+    sudo -u postgres psql -lqt | cut -d '|' -f 1 | grep -qw '{{ db_name }}' && echo 0 || echo 1
+  changed_when: false
+  register: db_exists
+  ignore_errors: true
+
+- set_fact:
+    database_exists: "{{ db_exists.stdout == '0' }}"
+
+- name: Delete PostgreSQL database
+  become: true
+  command: >
+    sudo -u postgres psql -U {{ postgres_user }} -d postgres -c "DROP DATABASE IF EXISTS {{ db_name }};"
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+  when: database_exists

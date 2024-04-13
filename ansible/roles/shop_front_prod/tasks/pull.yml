@@ -1,0 +1,6 @@
+- name: Pull front_static
+  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
+  vars:
+    filename: "shop_front"
+    folder_id: "{{ drive_folder_id }}"
+    dest: "{{ shop_front_path }}"

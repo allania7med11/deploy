@@ -1,0 +1,26 @@
+- name: Ensure correct permissions for /home/vagrant directory
+  become: true
+  file:
+    path: /home/vagrant
+    owner: vagrant
+    group: vagrant
+    mode: "0755"
+  ignore_errors: true 
+
+- name: Ensure PostgreSQL database is created if not exists
+  command: >
+    sudo -u postgres createdb -U {{ postgres_user }} -O {{ postgres_user }} {{ db_name }}
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+  ignore_errors: false
+  register: create_db_result
+  when: not database_exists
+
+- name: Load data to PostgreSQL database
+  command: >
+    sudo -u postgres psql -d {{ db_name }} -f {{ db_init_path }}
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+  become: false
+  when: create_db_result is succeeded
+

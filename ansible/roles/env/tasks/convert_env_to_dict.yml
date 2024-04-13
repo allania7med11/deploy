@@ -1,0 +1,17 @@
+- name: Read contents of file
+  become: true
+  command: "cat {{ file_path }}"
+  register: key
+  
+-  set_fact:
+    env_contents: "{{ key.stdout.split('\n') }}"
+
+- name: Convert .env contents to dictionary
+  set_fact:
+    "dc": "{{ dc | default({}) | combine({item.split('=')[0]: item.split('=')[1]}) }}"
+  loop: "{{ env_contents }}"
+  when: item != ''
+
+- name: Set dict
+  set_fact:
+    "{{ var_name }}": "{{ dc }}"

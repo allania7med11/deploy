@@ -1,7 +1,3 @@
-- name: Ngnix configuration
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
-
 - name: Build project
   import_tasks:
     file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
@@ -9,3 +5,5 @@
 - name: Push generated_compress_folder to Google Drive
   import_tasks:
     file: "{{ ansible_directory }}/roles/drive/tasks/push.yml"
+
+    

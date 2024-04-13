@@ -1,9 +1,0 @@
----
-- name: Setup Server
-  hosts: local
-  become: true
-  roles:
-    - aptitude
-    - postgres
-    - docker
-    - nginx

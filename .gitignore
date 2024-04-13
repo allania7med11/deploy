@@ -2,6 +2,7 @@
 .vscode
 data
 *.log
-.env
+.env*
 apps
 backups
+venv

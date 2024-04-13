@@ -1,0 +1,15 @@
+- name: Build static folder
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
+
+
+- name: Run {{  project_name }} container
+  docker_container:
+    name: "{{  project_name }}"
+    image: "{{  docker_image }}"
+    state: started
+    restart_policy: always
+    networks:
+      - name: host
+    env_file: "{{ env_file_path }}"
+    detach: yes   # Detach from the container after starting it

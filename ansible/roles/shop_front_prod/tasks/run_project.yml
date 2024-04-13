@@ -1,0 +1,17 @@
+- name: Create project directory if not exists
+  file:
+    path: "{{ project_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: Set Google Drive access Token
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
+
+
+- name: Pull generated_compress_folder 
+  import_tasks:
+    file: "./pull.yml"
+
+- name: Run Back App
+  import_tasks: "./run.yml"

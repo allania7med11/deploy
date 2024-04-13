@@ -1,0 +1,13 @@
+---
+- name: Setup Server
+  hosts: "{{ host_on| default('prod') }}"
+  vars:
+    postgres_user: "{{ lookup('env', 'POSTGRES_USER') }}"
+    postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+  become: true
+  roles:
+    - aptitude
+    - postgres
+    - docker
+    - nginx
+    - certbot
