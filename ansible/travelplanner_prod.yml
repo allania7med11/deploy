@@ -1,0 +1,6 @@
+---
+- name: Setup travelplanner_prod
+  hosts: local
+  become: true
+  roles:
+    - travelplanner_prod

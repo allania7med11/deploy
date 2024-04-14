@@ -1,0 +1,29 @@
+- name: Create project directory if not exists
+  file:
+    path: "{{ project_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: Set Google Drive access Token
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
+
+
+- name: Ngnix configuration
+  become: true
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
+  when: update_ngnix
+
+- name: SSL configuration
+  become: true
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/nginx/tasks/ssl.yml"
+  when: update_ngnix
+
+- name: Pull env file from Google Drive and Docker image from Dockerhub
+  import_tasks:
+    file: "./pull.yml"
+
+- name: Run Back App
+  import_tasks: "./run.yml"
