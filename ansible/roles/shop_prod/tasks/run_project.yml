@@ -11,17 +11,9 @@
 - name: Set database_exists
   import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/check_db.yml" 
 
-- name: Pull Initial  Database
-  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
-  vars:
-    filename: "shop_db_init.zip"
-    folder_id: "{{ drive_folder_id }}"
-    dest: "{{ db_init_path }}"
-  when: not database_exists
-
-- name: Initiate the database
+- name: Load the database
   import_tasks:
-    file: "{{ ansible_directory }}/roles/postgres/tasks/init_db.yml"
+    file: "./load_db.yml"
   when: not database_exists
 
 - name: Ngnix configuration
