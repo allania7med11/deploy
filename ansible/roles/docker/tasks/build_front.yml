@@ -1,20 +1,3 @@
-- name: Clone project repository
-  git:
-    repo: "{{ repo }}"
-    dest: "{{ dockerfile_directory }}"
-    version: "{{ branch }}"  # Specify the branch/tag you want to clone
-    update: yes
-    force: yes
-    recursive: yes
-
-- name: Build {{  project_name }} image
-  docker_image:
-    name: "{{  docker_image }}"
-    build:
-      path: "{{ dockerfile_directory }}"
-    source: build
-
-
 - name: Run {{  project_name }} container for static folder generation
   docker_container:
     name: "{{  project_name }}"

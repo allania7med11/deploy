@@ -13,13 +13,18 @@
     dest: "{{ db_init_path }}"
   when: not database_exists
 
+- name: Initiate the database
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/postgres/tasks/init_db.yml"
+  when: not database_exists
+
 - name: Ngnix configuration
   import_tasks:
     file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
 
 - name: Build project
   import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_back.yml"
+    file: "{{ ansible_directory }}/roles/docker/tasks/build.yml"
 
 - name: Push generated_compress_folder to Google Drive and Docker image to Dockerhub
   import_tasks:

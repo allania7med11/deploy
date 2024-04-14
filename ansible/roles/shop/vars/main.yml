@@ -1,7 +1,7 @@
 project_name: "shop"
-listen_port: "2020"
+listen_port: "2030"
 server: false
-backend: "http://localhost:2011"
+backend: "http://localhost:2031"
 ansible_directory: "{{ lookup('env','PWD') }}/ansible"
 template_ngnix_file: "{{ ansible_directory }}/templates/{{  project_name }}/ngnix.j2"
 repo:  "https://github.com/allania7med11/shop_back"
@@ -23,3 +23,4 @@ db_init_path: "{{ project_directory }}/shop_db_init.sql"
 dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}"
 dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}"
 docker_image: "{{ dockerhub_username }}/shop_back:latest"
+rebuild_image: true

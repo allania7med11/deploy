@@ -1,7 +1,7 @@
-- name: Build static folder
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
-
+- name: Remove existing {{ project_name }} container if it exists
+  docker_container:
+    name: "{{ project_name }}"
+    state: absent
 
 - name: Run {{  project_name }} container
   docker_container:

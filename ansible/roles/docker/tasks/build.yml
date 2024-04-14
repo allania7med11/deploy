@@ -1,0 +1,34 @@
+- name: Clone project repository
+  git:
+    repo: "{{ repo }}"
+    dest: "{{ dockerfile_directory }}"
+    version: "{{ branch }}"  # Specify the branch/tag you want to clone
+    update: yes
+    force: yes
+    recursive: yes
+
+- name: Check if {{ docker_image }} exists
+  docker_image_info:
+    name: "{{ docker_image }}"
+  register: docker_image_info
+
+- name: Build {{ project_name }} image if necessary
+  docker_image:
+    name: "{{ docker_image }}"
+    build:
+      path: "{{ dockerfile_directory }}"
+      pull: yes
+      nocache: "{{ rebuild_image | default('no') | bool }}"
+    state: present
+    source: build
+  when: not docker_image_info.images or (rebuild_image | default(false) | bool)
+
+- name: Build static folder
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
+  when: env_file_generate_static_path is defined
+
+- name: Run project
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/build_back.yml"
+  when: env_file_path is defined
