@@ -18,9 +18,9 @@
 
 - name: Set folder_id variable
   set_fact:
-    folder_id: "{{ lookup('env', 'FOLDER_ID') }}"
+    folder_id: "{{ drive_folder_id }}"
     access_token: "{{ access_token_response.json.access_token }}"
-    filename: "{{ deployed_file_name }}"
+    filename: "{{ generated_folder_name }}"
 
 - name: Query files in Google Drive
   uri:
