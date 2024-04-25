@@ -1,0 +1,6 @@
+---
+- name: Setup structure
+  hosts: local
+  become: true
+  roles:
+    - structure

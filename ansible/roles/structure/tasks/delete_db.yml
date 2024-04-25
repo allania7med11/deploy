@@ -1,0 +1,21 @@
+- name: Stop the Docker container
+  community.general.docker_container:
+    name: "{{ project_name }}"
+    state: absent  # This ensures the container is not only stopped but also removed
+  register: container_destroyed
+  failed_when: container_destroyed is failed
+
+- name: Delete the database
+  import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/delete_db.yml"
+  when: container_destroyed is succeeded
+
+- name: Run {{  project_name }} container
+  docker_container:
+    name: "{{  project_name }}"
+    image: "{{  docker_image }}"
+    state: started
+    restart_policy: always
+    networks:
+      - name: host
+    env_file: "{{ env_file_path }}"
+    detach: yes   # Detach from the container after starting it
