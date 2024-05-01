@@ -1,0 +1,6 @@
+---
+- name: Setup travelplanner
+  hosts: local
+  become: true
+  roles:
+    - travelplanner

@@ -8,10 +8,10 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "deploy"
   config.hostsupdater.aliases = ["portfolio"]
   config.vm.network "forwarded_port", guest: 5432, host: 5434, host_ip: "127.0.0.1"
-  config.vm.network "forwarded_port", guest: 2000, host: 2000
-  config.vm.network "forwarded_port", guest: 2010, host: 2010
-  config.vm.network "forwarded_port", guest: 2020, host: 2020
-  config.vm.network "forwarded_port", guest: 2030, host: 2030
+  config.vm.network "forwarded_port", guest: 2000, host: 2000 # portfolio
+  config.vm.network "forwarded_port", guest: 2010, host: 2010 # structure
+  config.vm.network "forwarded_port", guest: 2020, host: 2020 # travelplanner
+  config.vm.network "forwarded_port", guest: 2030, host: 2030 # shop
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = 2
     vb.memory = 6000
