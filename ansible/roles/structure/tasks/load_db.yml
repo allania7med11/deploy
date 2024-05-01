@@ -1,7 +1,7 @@
 - name: Set Google Drive access Token
   import_tasks:
     file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
-  when: not access_token
+  when: access_token is not defined
 
 - name: Delete the database
   import_tasks:
