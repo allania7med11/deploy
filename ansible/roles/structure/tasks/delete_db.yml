@@ -5,14 +5,25 @@
   register: container_destroyed
   failed_when: container_destroyed is failed
 
+- name: Terminate existing connections to the database
+  command: >
+    sudo -u postgres psql -U {{ postgres_user }} -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid)
+    FROM pg_stat_activity
+    WHERE pg_stat_activity.datname = '{{ project_name }}_db'
+    AND pid <> pg_backend_pid();"
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+  register: terminate_connections_result
+  when: container_destroyed is succeeded
+
 - name: Delete the database
   import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/delete_db.yml"
   when: container_destroyed is succeeded
 
-- name: Run {{  project_name }} container
+- name: Run {{ project_name }} container
   docker_container:
-    name: "{{  project_name }}"
-    image: "{{  docker_image }}"
+    name: "{{ project_name }}"
+    image: "{{ docker_image }}"
     state: started
     restart_policy: always
     networks:
