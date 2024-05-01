@@ -1,0 +1,16 @@
+- name: Log into DockerHub
+  docker_login:
+    username: "{{  dockerhub_username }}"
+    password: "{{  dockerhub_password }}"
+
+- name: Pull Docker image from Docker Hub
+  docker_image:
+    name: "{{  docker_image }}"
+    source: pull
+
+- name: Pull env file
+  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
+  vars:
+    filename: ".env"
+    folder_id: "{{ drive_folder_id }}"
+    dest: "{{ env_file_path }}"

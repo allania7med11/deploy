@@ -1,0 +1,10 @@
+project_name: "portfolio"
+front_directory: "~/apps/portfolio/front"
+file_name: "portfolio"
+deployed_file_name: "portfolio"
+server: "{{ lookup('env', 'PORTFOLIO_SERVER') }}"
+listen_port: 80
+backend: "http://localhost:2011"
+email: "{{ lookup('env', 'EMAIL') }}"
+drive_folder_id: "{{ lookup('env', 'PORTFOLIO_FOLDER_ID') }}"
+generated_folder_name: "{{  project_name }}"

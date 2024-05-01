@@ -4,8 +4,7 @@
 - name: Unlink default Nginx configuration
   command: unlink /etc/nginx/sites-enabled/default
   ignore_errors: true
-  when: ansible_facts['file_exists'] is defined and ansible_facts['file_exists']
-
+  
 - name: start nginx
   service:
     name: nginx

@@ -1,6 +1,6 @@
 - name: Build project
   import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
+    file: "{{ ansible_directory }}/roles/docker/tasks/build.yml"
 
 - name: Push generated_compress_folder to Google Drive
   import_tasks:

@@ -8,13 +8,6 @@
   import_tasks:
     file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
 
-- name: Set database_exists
-  import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/check_db.yml" 
-
-- name: Load the database
-  import_tasks:
-    file: "./load_db.yml"
-  when: not database_exists
 
 - name: Ngnix configuration
   become: true
@@ -28,9 +21,9 @@
     file: "{{ ansible_directory }}/roles/nginx/tasks/ssl.yml"
   when: update_ngnix
 
-- name: Pull generated_compress_folder and env file from Google Drive and Docker image from Dockerhub
+- name: Pull env file from Google Drive and Docker image from Dockerhub
   import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/pull.yml"
+    file: "./pull.yml"
 
 - name: Run Back App
   import_tasks: "./run.yml"
