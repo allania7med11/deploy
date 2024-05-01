@@ -1,0 +1,40 @@
+- name: Create project directory if not exists
+  file:
+    path: "{{ project_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: Set Google Drive access Token
+  import_tasks: "{{ ansible_directory }}/roles/utils/tasks/sub_task.yml"
+  vars:
+    sub_task_name: "Set Google Drive access Token"
+    tasks_file_path: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
+
+- name: Pull generated_compress_folder and env file from Google Drive and Docker image from Dockerhub
+  import_tasks: "{{ ansible_directory }}/roles/utils/tasks/sub_task.yml"
+  vars:
+    sub_task_name: "Pull generated_compress_folder and env file from Google Drive and Docker image from Dockerhub"
+    tasks_file_path: "{{ ansible_directory }}/roles/docker/tasks/pull.yml"
+
+- name: Set database_exists
+  import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/check_db.yml" 
+
+- name: Load the database
+  import_tasks:
+    file: "./load_db.yml"
+  when: not database_exists
+
+- name: Ngnix configuration
+  become: true
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
+  when: update_ngnix
+
+- name: SSL configuration
+  become: true
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/nginx/tasks/ssl.yml"
+  when: update_ngnix
+
+- name: Run Back App
+  import_tasks: "./run.yml"
