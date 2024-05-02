@@ -6,6 +6,11 @@
       Authorization: "Bearer {{ access_token }}"
   register: list_files_response
 
+- name: Fail if no files are found
+  fail:
+    msg: "failed url:https://www.googleapis.com/drive/v3/files?q=name%3D'{{ filename }}'+and+'{{ folder_id }}'+in+parents&orderBy%3DmodifiedTime+desc"
+  when: (list_files_response.json.files | default([]) | length) == 0
+
 - name: Extract file ID
   set_fact:
     file_id: "{{ list_files_response.json.files[0].id }}"

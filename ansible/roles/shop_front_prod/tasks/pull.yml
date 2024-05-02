@@ -3,4 +3,4 @@
   vars:
     filename: "shop_front"
     folder_id: "{{ drive_folder_id }}"
-    dest: "{{ shop_front_path }}"
+    dest: "{{ front_path }}"

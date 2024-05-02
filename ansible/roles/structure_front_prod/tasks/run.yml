@@ -8,12 +8,12 @@
     src: "{{ full_path }}"
     dest: "/var/www/"
     remote_src: yes
-    creates: "/var/www/shop_front"
+    creates: "/var/www/{{ generated_folder_name }}"
 
 - name: Set permissions on extracted files
   become: true
   file:
-    path: "/var/www/shop_front"
+    path: "/var/www/{{ generated_folder_name }}"
     state: directory
     recurse: yes
     mode: '0755'
