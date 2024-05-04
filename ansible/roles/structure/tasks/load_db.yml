@@ -1,0 +1,31 @@
+- name: Set Google Drive access Token
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
+  when: access_token is not defined
+
+- name: Delete the database
+  import_tasks:
+    file: "./delete_db.yml"
+
+- name: Set database_exists
+  import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/check_db.yml" 
+
+- name: Pull Initial  Database
+  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
+  vars:
+    filename: "{{ db_init_compress_name }}"
+    folder_id: "{{ drive_folder_id }}"
+    dest: "{{ db_init_folder }}/{{ db_init_compress_name }}"
+  when: not database_exists
+
+- name: Extract downloaded file
+  become: true
+  unarchive:
+    src: "{{ db_init_folder }}/{{ db_init_compress_name }}"
+    dest: "{{ db_init_folder }}"
+    remote_src: yes
+
+- name: Initiate the database
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/postgres/tasks/init_db.yml"
+  when: not database_exists

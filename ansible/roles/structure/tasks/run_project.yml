@@ -1,0 +1,23 @@
+- name: Set Google Drive access Token
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
+
+- name: Set database_exists
+  import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/check_db.yml" 
+
+- name: Load the database
+  import_tasks:
+    file: "./load_db.yml"
+  when: not database_exists
+
+- name: Ngnix configuration
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/nginx/tasks/config.yml"
+
+- name: Build project
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/build_back.yml"
+
+- name: Push generated_compress_folder to Google Drive and Docker image to Dockerhub
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/push.yml"

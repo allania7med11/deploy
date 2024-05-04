@@ -1,0 +1,5 @@
+---
+- name: Setup structure_front_prod
+  hosts: "{{ host_on| default('prod') }}"
+  roles:
+    - structure_front_prod

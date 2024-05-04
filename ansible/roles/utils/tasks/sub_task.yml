@@ -1,0 +1,12 @@
+- name: SUB_TASK ***{{ sub_task_name }}***
+  debug:
+    msg:  |
+      Starting...
+      tasks_file_path: {{ tasks_file_path }}
+
+- name: Import subtasks from a specific file
+  import_tasks: "{{ tasks_file_path }}"
+
+- name: SUB_TASK ***{{ sub_task_name }}***
+  debug:
+    msg: "End!"

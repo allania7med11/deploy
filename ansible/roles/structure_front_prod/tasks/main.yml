@@ -1,0 +1,3 @@
+- name: "{{ job| default('run_project') }}"
+  import_tasks:
+    file: "./{{ job| default('run_project') }}.yml"

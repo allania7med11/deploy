@@ -1,0 +1,7 @@
+project_name: "structure_front"
+ansible_directory: "{{ lookup('env','PWD') }}/ansible"
+project_directory: "/home/vagrant/apps/structure"
+drive_folder_id: "{{ lookup('env', 'STRUCTURE_FRONT_FOLDER_ID') }}"
+generated_folder_name: "{{  project_name }}"
+front_path: "{{ project_directory }}/{{ generated_folder_name }}"
+ 

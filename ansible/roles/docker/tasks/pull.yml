@@ -9,15 +9,19 @@
     source: pull
 
 - name: Pull generated_compress_folder from Google Drive
-  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
+  import_tasks: "{{ ansible_directory }}/roles/utils/tasks/sub_task.yml"
   vars:
-    filename: "shop_back_static"
+    sub_task_name: "Pull generated_compress_folder from Google Drive({{ generated_folder_name }})"
+    tasks_file_path: "{{ ansible_directory }}/roles/drive/tasks/pull.yml"
+    filename: "{{ generated_folder_name }}"
     folder_id: "{{ drive_folder_id }}"
-    dest: "{{ shop_back_static_path }}"
+    dest: "{{ back_static_path }}"
 
-- name: Pull env file
-  import_tasks: "{{ ansible_directory }}/roles/drive/tasks/pull.yml" 
+- name: Pull env file from Google Drive
+  import_tasks: "{{ ansible_directory }}/roles/utils/tasks/sub_task.yml"
   vars:
+    sub_task_name: "Pull env file from Google Drive(.env)"
+    tasks_file_path: "{{ ansible_directory }}/roles/drive/tasks/pull.yml"
     filename: ".env"
     folder_id: "{{ drive_folder_id }}"
     dest: "{{ env_file_path }}"

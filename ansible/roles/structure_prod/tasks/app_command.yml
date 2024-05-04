@@ -1,0 +1,9 @@
+- name: Run command in docker container
+  community.docker.docker_container_exec:
+    container: "{{ project_name }}"
+    command: echo "Hello remote machine"
+  register: result
+
+- name: Print stdout
+  debug:
+    var: result.stdout

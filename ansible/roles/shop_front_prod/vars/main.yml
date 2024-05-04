@@ -2,5 +2,5 @@ project_name: "shop_front"
 ansible_directory: "{{ lookup('env','PWD') }}/ansible"
 project_directory: "/home/vagrant/apps/shop"
 drive_folder_id: "{{ lookup('env', 'SHOP_FRONT_FOLDER_ID') }}"
-shop_front_path: "{{ project_directory }}/shop_front"
+front_path: "{{ project_directory }}/shop_front"
  
