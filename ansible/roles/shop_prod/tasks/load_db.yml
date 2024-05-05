@@ -5,6 +5,9 @@
 - name: Delete the database
   import_tasks:
     file: "./delete_db.yml"
+  when: 
+    - delete_database is defined
+    - delete_database | bool
 
 - name: Set database_exists
   import_tasks: "{{ ansible_directory }}/roles/postgres/tasks/check_db.yml" 
