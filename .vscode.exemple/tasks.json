@@ -6,12 +6,12 @@
         {
             "label": "Run Project",
             "type": "shell",
-            "command": "export $(cat .env | xargs) && ansible-playbook --inventory ansible/inventory/vm-setup-playbook/hosts ansible/${config:proj}.yml --extra-vars '${config:vars}'",
+            "command": "./run_ansible.sh ${config:proj} ${config:host_on} ${config:job}",
             "group": "test",
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
-            },
+            }
         }
     ]
 }
