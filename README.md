@@ -3,13 +3,23 @@
 
 This repository contains an automated deployment system powered by Ansible, designed to streamline the deployment process for various projects. The system orchestrates the deployment flow seamlessly, from initial setup to deployment on production servers. This README provides an overview of the automated deployment process and its key components.
 
+## Project Links
+
+These are the projects built and deployed using this Automated Deployment Tool.
+
+- **Portfolio**: [https://about.effectivewebapp.com/](https://about.effectivewebapp.com/)
+- **Structure Analysis Software**: [https://structure.effectivewebapp.com/](https://structure.effectivewebapp.com/)
+- **Travel Planner**: [https://travelplanner.effectivewebapp.com/](https://travelplanner.effectivewebapp.com/)
+- **Shoppingify Website**: [https://structure.effectivewebapp.com/](https://shop.effectivewebapp.com/)
+
+
 ## Deployment Flow
 
 - **Setup Virtual Machine**:
   The deployment flow begins with the creation of a virtual machine using Vagrant for staging and testing purposes. From there, the system utilizes Ansible to automate the setup and configuration of the virtual machine environment. This includes installing Postgres, Docker, and Nginx.
 
 - **Build and Run Project Locally in Vagrant Virtual Machine**:
-  This step involves pulling changes from the GitHub repository, setting up project dependencies, and configuring the environment to meet project specifications. Once the environment is configured, the system triggers the build process for Docker images based on project code and configurations. Docker containers are then run to generate the static folder or as a backend container. After successful build and testing, the Docker image is pushed to Docker Hub, and static folders are pushed to Google Drive.
+  This step involves pulling changes from the GitHub repository and triggers the build process for Docker images based on project code and configurations. Docker containers are then run to generate the static folder or as a backend container. After successful build and testing, the Docker image is pushed to Docker Hub, and static folders are pushed to Google Drive.
 
 - **Pull and Run Project in the Production Server**:
   The system checks if the database exists. If not, it creates one and pulls the initial database backup from Google Drive, loading it into the database. Additionally, the Docker image is pulled, and a container for the backend is run. The system then pulls the generated frontend and static folder from Google Drive and unzips it in the `/var/www/` folder. Nginx configuration is added to `site-enabled`, so it will be responsible for mapping incoming requests for that domain to the backend container's `back_static` folder or the generated frontend folder depending on the URL.
@@ -45,14 +55,6 @@ To use the automated deployment system, follow these steps:
 ## License & copyright
 © Allani Ahmed, Full Stack Web Developer
 
-## Project Links
-
-These are the projects built and deployed using this Automated Deployment Tool.
-
-- **Portfolio**: [https://about.effectivewebapp.com/](https://about.effectivewebapp.com/)
-- **Structure Analysis Software**: [https://structure.effectivewebapp.com/](https://structure.effectivewebapp.com/)
-- **Travel Planner**: [https://travelplanner.effectivewebapp.com/](https://travelplanner.effectivewebapp.com/)
-- **Shoppingify Website**: [https://structure.effectivewebapp.com/](https://shop.effectivewebapp.com/)
 
 ## Environment Configuration
 
@@ -86,41 +88,3 @@ This project uses a `.env` file to configure its environment. You can create a `
 - `DOCKERHUB_PASSWORD`: The Docker Hub password.
 
 Make sure to update these values to match your specific environment configuration. You can check `.env.example` for reference.
-
-
-## Running the Project
-
-To run the project using Docker Compose, follow these steps:
-
-1. **Clone the Repository**: If you haven't already, clone the project repository to your local machine:
-
-    ```shell
-    git clone https://github.com/allania7med11/shop_back/
-    cd shop_back
-    ```
-
-2. **Environment Configuration**: Create a `.env` file with the necessary environment variables. You can use the provided `.env.example` as a template. Make sure to update the values to match your specific environment configuration.
-
-    ```shell
-    cp .env.example .env
-    ```
-
-3. **Build and Start Containers**: Run the following command to build and start the Docker containers using Docker Compose:
-
-    ```shell
-    docker-compose up -d
-    ```
-
-    The `-d` flag runs the containers in the background.
-
-4. **Access the Application**: Once the containers are up and running, you can access the application in your web browser or by making API requests, depending on your project.
-
-5. **Stopping the Containers**: To stop the containers when you're done, you can use the following command:
-
-    ```shell
-    docker-compose down
-    ```
-
-    This will stop and remove the containers.
-
-Please note that these instructions assume you have Docker and Docker Compose installed on your machine. If not, make sure to install them before running the project.
