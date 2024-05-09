@@ -8,7 +8,6 @@
     src: "{{ full_path }}"
     dest: "/var/www/"
     remote_src: yes
-    creates: "/var/www/{{ generated_folder_name }}"
 
 - name: Set permissions on extracted files
   become: true

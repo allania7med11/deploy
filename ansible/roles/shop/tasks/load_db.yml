@@ -23,7 +23,6 @@
     src: "{{ db_init_folder }}/{{ db_init_compress_name }}"
     dest: "{{ db_init_folder }}"
     remote_src: yes
-    creates: "{{ db_init_path }}"
 
 - name: Initiate the database
   import_tasks:
