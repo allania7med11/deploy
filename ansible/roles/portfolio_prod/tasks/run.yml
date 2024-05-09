@@ -8,8 +8,7 @@
     src: "{{ full_path }}"
     dest: "/var/www/"
     remote_src: yes
-    creates: "/var/www/{{ file_name }}"
-
+    
 - name: Set permissions on extracted files
   become: true
   file:
