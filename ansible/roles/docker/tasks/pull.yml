@@ -1,3 +1,9 @@
+- name: Set permissions on Docker socket
+  become: true
+  file:
+    path: /var/run/docker.sock
+    mode: "0666"
+
 - name: Log into DockerHub
   docker_login:
     username: "{{  dockerhub_username }}"
