@@ -1,7 +1,7 @@
 {
-    "proj": "shop_front_prod", // The playbook you want to run in ansible folder: portfolio_local, shop, shop_front, vm_setup_prod_root
+    "proj": "shop_prod", // The playbook you want to run in ansible folder: portfolio_local, shop, shop_front, vm_setup_prod_root
     "host_on": "prod", // the host you want to run the playbook on like prod_staging default to prod  
-    "job": "run_project", // the job you what to run in tasks folder in the related playbook role like backup_db, load_db default to run_project
+    "job": "run_in_container", // the job you what to run in tasks folder in the related playbook role like backup_db, load_db, run_in_container default to run_project
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true
 }

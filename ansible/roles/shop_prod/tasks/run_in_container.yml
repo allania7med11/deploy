@@ -1,0 +1,9 @@
+- name: Run command in container
+  community.docker.docker_container_exec:
+    container: "{{ project_name }}"
+    command: "echo 'Hello from container'"
+  register: output
+
+- name: Print command output
+  debug:
+    msg: "{{ output.stdout }}"
