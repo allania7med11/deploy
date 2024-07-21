@@ -28,3 +28,13 @@
   file:
     path: /var/run/docker.sock
     mode: "o+rw"
+
+- name: Test Docker works without sudo
+  command: docker run hello-world
+  register: docker_test
+  failed_when: "'Hello from Docker!' not in docker_test.stdout"
+  become: false
+
+- name: Display Docker test output
+  debug:
+    msg: "{{ docker_test.stdout }}"
