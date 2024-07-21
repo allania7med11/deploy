@@ -26,6 +26,11 @@
   register: download_response
   when: file_id is defined
 
+- name: Ensure destination folder exists
+  file:
+    path: "{{ dest | dirname }}"
+    state: directory
+    mode: "0755"
 
 - name: Save downloaded file
   copy:
