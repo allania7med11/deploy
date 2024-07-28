@@ -4,11 +4,25 @@
     method: GET
     headers:
       Authorization: "Bearer {{ access_token }}"
+    return_content: yes
   register: list_files_response
+  failed_when: false
+
+- name: Ensure the list_files_response contains the files key
+  set_fact:
+    files_list: "{{ list_files_response.json.files if 'files' in list_files_response.json else [] }}"
 
 - name: Extract file IDs with same name as {{ file_name }}
   set_fact:
-    file_ids: "{{ list_files_response.json.files | map(attribute='id') | list }}"
+    file_ids: "{{ files_list | map(attribute='id') | list }}"
+
+- name: Ensure file_ids is not undefined
+  set_fact:
+    file_ids: "{{ file_ids | default([]) }}"
+
+- name: Check if any files were found
+  debug:
+    msg: "Files found: {{ file_ids }}"
 
 - name: Delete files with same name as {{ file_name }}
   uri:
