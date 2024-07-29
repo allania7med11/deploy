@@ -14,4 +14,5 @@ Vagrant.configure("2") do |config|
     vb.cpus = 2
     vb.memory = 6000
   end
+  config.vm.network "public_network", ip: "192.168.1.100"
 end
