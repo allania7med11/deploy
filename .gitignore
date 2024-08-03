@@ -2,7 +2,9 @@
 .vscode
 data
 *.log
+*.sql
 .env*
 apps
 backups
 venv
+private_key
