@@ -3,6 +3,7 @@
 data
 *.log
 *.sql
+*.zip
 .env*
 apps
 backups
