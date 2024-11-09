@@ -2,8 +2,8 @@
   git:
     repo: "{{ repo }}"
     dest: "{{ dockerfile_directory }}"
-    version: "{{ branch }}" # Specify the branch/tag you want to clone
-    update: "{{ update_repos }}" # Use the variable to control update
+    version: "{{ branch }}"  # Specify the branch/tag you want to clone
+    update: "{{ update_repos | default(true) }}"  # Default to True if not defined
     force: yes
     recursive: yes
 
