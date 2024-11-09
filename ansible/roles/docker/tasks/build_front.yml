@@ -6,7 +6,10 @@
     restart_policy: always
     networks:
       - name: host
-    env_file: "{{ env_file_generate_static_path }}"
+    env_file: "{{ env_file_path }}"
+    env:
+      ENVIRONMENT: "debug"
+      COLLECTSTATIC: "True"
     detach: yes   # Detach from the container after starting it
 
 

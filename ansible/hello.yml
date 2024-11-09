@@ -1,6 +1,5 @@
----
 - name: Print Hello World
-  hosts: local
+  hosts: "{{ host_on | default('all') }}"
   tasks:
     - name: Print Hello World
       debug:
