@@ -23,4 +23,5 @@ db_init_path: "{{ project_directory }}/shop_db_init.sql"
 dockerhub_username: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}"
 dockerhub_password: "{{ lookup('env', 'DOCKERHUB_PASSWORD') }}"
 docker_image: "{{ dockerhub_username }}/shop_back:latest"
+update_repos: true
 rebuild_image: true

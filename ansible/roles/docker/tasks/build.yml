@@ -3,7 +3,7 @@
     repo: "{{ repo }}"
     dest: "{{ dockerfile_directory }}"
     version: "{{ branch }}" # Specify the branch/tag you want to clone
-    update: yes
+    update: "{{ update_repos }}" # Use the variable to control update
     force: yes
     recursive: yes
 
