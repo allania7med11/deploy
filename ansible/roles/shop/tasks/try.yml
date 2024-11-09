@@ -1,0 +1,4 @@
+- name: Build static folder
+  import_tasks:
+    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
+  when: env_file_path is defined

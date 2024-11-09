@@ -1,0 +1,47 @@
+- name: Set container_name for testing
+  set_fact:
+    container_name: "{{ project_name }}_test"
+
+- name: Remove existing {{ container_name }} container if it exists
+  docker_container:
+    name: "{{ container_name }}"
+    state: absent
+
+- name: Run {{ container_name }} container for testing
+  docker_container: 
+    name: "{{ container_name }}"
+    image: "{{ docker_image }}"
+    state: started
+    restart_policy: no
+    networks:
+      - name: host
+    env_file: "{{ env_file_path }}"
+    env:
+      ENVIRONMENT: "test"
+    detach: yes  # Detach to let the container run tests and exit
+
+- name: Wait for tests to complete and capture exit code
+  command: docker wait {{ container_name }}
+  register: tests_result
+  ignore_errors: true  # Capture the exit code even if tests fails
+
+
+- name: Fetch tests logs for debugging
+  command: docker logs {{ container_name }}
+  register: tests_logs
+
+- name: Print tests logs
+  debug:
+    var: tests_logs.stdout_lines
+
+- name: Remove {{ container_name }} container
+  docker_container:
+    name: "{{ container_name }}"
+    state: absent
+  ignore_errors: true
+
+- name: Check if tests succeeded
+  assert:
+    that:
+      - tests_result.rc == 0
+    msg: "Tests failed in the container {{ container_name }}. Check tests output for details."
