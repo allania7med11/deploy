@@ -20,11 +20,9 @@
       ENVIRONMENT: "test"
     detach: yes  # Detach to let the container run tests and exit
 
-- name: Wait for tests to complete and capture exit code
+- name: Wait for tests to complete
   command: docker wait {{ container_name }}
   register: tests_result
-  ignore_errors: true  # Capture the exit code even if tests fails
-
 
 - name: Fetch tests logs for debugging
   command: docker logs {{ container_name }}
@@ -40,8 +38,8 @@
     state: absent
   ignore_errors: true
 
-- name: Check if tests succeeded
+- name: Check if any tests failed by searching for 'failed' in summary
   assert:
     that:
-      - tests_result.rc == 0
-    msg: "Tests failed in the container {{ container_name }}. Check tests output for details."
+      - "'failed' not in tests_logs.stdout.lower()"
+    msg: "Some tests failed in the container {{ container_name }}. Check tests output for details."
