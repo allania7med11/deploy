@@ -5,7 +5,7 @@ VM_NAME="portfolio"
 UBUNTU_VERSION="jammy"
 CPUS="2"
 MEMORY="4000M"
-DISK="10G"
+DISK="20G"
 SSH_KEY="$HOME/.ssh/id_rsa.pub"  # Path to your SSH public key
 
 # Create a Multipass VM with the specified configuration
