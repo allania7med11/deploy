@@ -4,3 +4,4 @@
   become: true
   roles:
     - shop_front
+    - shop_e2e
