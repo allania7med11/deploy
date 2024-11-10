@@ -6,3 +6,28 @@
   import_tasks:
     file: "{{ ansible_directory }}/roles/docker/tasks/build_back.yml"
   when: env_file_path is defined
+
+
+- name: Wait for tests to complete
+  command: docker wait {{ project_name }}
+  register: tests_result
+
+- name: Fetch tests logs for debugging
+  command: docker logs {{ project_name }}
+  register: tests_logs
+
+- name: Print tests logs
+  debug:
+    var: tests_logs.stdout_lines
+
+- name: Remove {{ project_name }} container
+  docker_container:
+    name: "{{ project_name }}"
+    state: absent
+  ignore_errors: true
+
+- name: Check if any tests failed by searching for 'failed' in summary
+  assert:
+    that:
+      - "'failed' not in tests_logs.stdout.lower()"
+    msg: "Some tests failed in the container {{ project_name }}. Check tests output for details."
