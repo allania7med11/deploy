@@ -1,17 +1,30 @@
-- name: Run {{  project_name }} container for static folder generation
+
+- name: Set container_name for static folder generation
+  set_fact:
+    container_name: "{{ project_name }}_static"
+
+- name: Remove existing {{ container_name }} container if it exists
   docker_container:
-    name: "{{  project_name }}"
-    image: "{{  docker_image }}"
+    name: "{{ container_name }}"
+    state: absent
+
+- name: Run {{ container_name }} container for static folder generation
+  docker_container: 
+    name: "{{ container_name }}"
+    image: "{{ docker_image }}"
     state: started
     restart_policy: always
     networks:
       - name: host
-    env_file: "{{ env_file_generate_static_path }}"
+    env_file: "{{ env_file_path }}"
+    env:
+      ENVIRONMENT: "debug"
+      COLLECTSTATIC: "True"
     detach: yes   # Detach from the container after starting it
 
 
 - name: Get Docker container ID
-  command: docker ps -qf "name={{  project_name }}"
+  command: docker ps -qf "name={{ container_name }}"
   register: container_id_output
 
 - name: Extract container ID
@@ -26,18 +39,18 @@
   delay: 5
 
 - name: Copy files from container to host
-  shell: sudo docker cp  {{  project_name }}:/app/{{  generated_folder_name }} /var/www/
+  shell: sudo docker cp  {{ container_name }}:/app/{{ generated_folder_name }} /var/www/
 
 
-- name: Stop {{  project_name }} container
+- name: Stop {{ container_name }} container
   docker_container:
-    name: "{{  project_name }}"
+    name: "{{ container_name }}"
     state: stopped
   ignore_errors: true
 
-- name: Remove {{  project_name }} container
+- name: Remove {{ container_name }} container
   docker_container:
-    name: "{{  project_name }}"
+    name: "{{ container_name }}"
     state: absent
   ignore_errors: true
 
@@ -48,5 +61,5 @@
 
 - name: Compress generated front folder under Vagrant folder
   archive:
-    path: /var/www/{{  generated_folder_name }}
+    path: /var/www/{{ generated_folder_name }}
     dest: "{{ generated_compress_folder_path }}"
