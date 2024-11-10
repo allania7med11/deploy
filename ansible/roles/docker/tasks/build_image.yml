@@ -1,0 +1,40 @@
+- name: Clone project repository
+  git:
+    repo: "{{ repo }}"
+    dest: "{{ dockerfile_directory }}"
+    version: "{{ branch }}"  # Specify the branch/tag you want to clone
+    update: "{{ update_repos | default(true) }}"  # Default to True if not defined
+    force: yes
+    recursive: yes
+
+- name: Check if {{ docker_image }} exists
+  docker_image_info:
+    name: "{{ docker_image }}"
+  register: docker_image_info
+
+- name: Determine if image should be rebuilt
+  set_fact:
+    rebuild_image_value: not docker_image_info.images or (rebuild_image | default(true) | bool)
+
+- name: Remove the Docker container if it exists
+  community.general.docker_container:
+    name: "{{ project_name }}"
+    state: absent # This ensures the container is not only stopped but also removed
+  register: container_destroyed
+  failed_when: container_destroyed is failed
+  when: rebuild_image_value
+
+- name: Remove {{ docker_image }} if it exists
+  docker_image:
+    name: "{{ docker_image }}"
+    state: absent
+  when: rebuild_image_value
+
+- name: Build {{ project_name }} image if necessary
+  docker_image:
+    name: "{{ docker_image }}"
+    build:
+      path: "{{ dockerfile_directory }}"
+      pull: yes
+    state: present
+    source: build

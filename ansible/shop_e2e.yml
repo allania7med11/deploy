@@ -1,0 +1,6 @@
+---
+- name: Setup shop_e2e
+  hosts: local
+  become: true
+  roles:
+    - shop_e2e

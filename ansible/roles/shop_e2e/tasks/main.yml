@@ -2,11 +2,6 @@
   import_tasks:
     file: "{{ ansible_directory }}/roles/docker/tasks/build_image.yml"
 
-- name: Build static folder
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
-  when: env_file_path is defined
-
 - name: Run project
   import_tasks:
     file: "{{ ansible_directory }}/roles/docker/tasks/build_back.yml"
