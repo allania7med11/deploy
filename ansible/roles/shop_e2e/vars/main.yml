@@ -1,9 +1,0 @@
-project_name: "shop_e2e"
-ansible_directory: "{{ lookup('env','PWD') }}/ansible"
-repo: "https://github.com/allania7med11/shop_e2e"
-branch: "main"
-project_directory: "/home/ubuntu/deploy/apps/shop"
-dockerfile_directory: "{{ project_directory }}/shop_e2e"
-env_file_path: "/home/ubuntu/deploy/ansible/config/{{  project_name }}/.env"
-docker_image: "{{ project_name }}"
-update_repos: true

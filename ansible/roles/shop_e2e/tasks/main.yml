@@ -1,8 +1,0 @@
-- name: Build image
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_image.yml"
-
-- name: Run project
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_back.yml"
-  when: env_file_path is defined

@@ -1,11 +1,6 @@
-- name: Build image
+- name: Build project
   import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_image.yml"
-
-- name: Build static folder
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build_front.yml"
-  when: env_file_path is defined
+    file: "{{ ansible_directory }}/roles/docker/tasks/build.yml"
 
 - name: Push generated_compress_folder to Google Drive
   import_tasks:
