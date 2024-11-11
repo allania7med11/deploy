@@ -20,7 +20,7 @@
     file_name: "{{ generated_folder_name }}"
     file_path: "{{ generated_compress_folder_path }}"
     folder_id: "{{ drive_folder_id }}"
-  when: env_file_generate_static_path is defined
+  when: env_file_path is defined
 
 - name: Push env file to Google Drive
   import_tasks:

@@ -1,6 +1,6 @@
 ---
 - name: Setup shop
-  hosts: local
+  hosts: "{{ host_on| default('all') }}"
   become: true
   roles:
     - shop
