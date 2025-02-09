@@ -1,9 +1,10 @@
 ---
 - name: Setup Server
-  hosts: "{{ host_on | default('all') }}"
+  hosts: local
   vars:
     postgres_user: "{{ lookup('env', 'POSTGRES_USER') }}"
     postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+  become: true
   roles:
     - aptitude
     - postgres
