@@ -17,13 +17,13 @@ services:
     ports:
       - "5432:5432"
     network_mode: "host"
-    
+
   semaphore:
     container_name: semaphore
     restart: unless-stopped
     build:
-      context: ./semaphore
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: semaphore/Dockerfile
     environment:
       SEMAPHORE_PORT: 3001
       SEMAPHORE_DB_USER: semaphore
@@ -51,9 +51,6 @@ services:
     network_mode: "host"
     depends_on:
       - db
-    volumes:
-      - .:/app
-      - .vagrant/machines/default/virtualbox/private_key:/app/.vagrant/machines/default/virtualbox/private_key:ro
 
 volumes:
   semaphore-postgres:
