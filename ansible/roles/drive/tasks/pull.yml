@@ -16,24 +16,26 @@
     file_id: "{{ list_files_response.json.files[0].id }}"
   when: list_files_response.json.files | length > 0
 
-- name: Download file from Google Drive
-  uri:
-    url: "https://www.googleapis.com/drive/v3/files/{{ file_id }}?alt=media"
-    method: GET
-    headers:
-      Authorization: "Bearer {{ access_token }}"
-    return_content: yes
-  register: download_response
-  when: file_id is defined
-
 - name: Ensure destination folder exists
   file:
     path: "{{ dest | dirname }}"
     state: directory
     mode: "0755"
 
-- name: Save downloaded file
-  copy:
-    content: "{{ download_response.content }}"
-    dest: "{{ dest }}"
+- name: Download file from Google Drive
+  uri:
+    url: "https://www.googleapis.com/drive/v3/files/{{ file_id }}?alt=media"
+    method: GET
+    headers:
+      Authorization: "Bearer {{ access_token }}"
+    dest: "{{ dest }}"           # Directly save the file to disk
+    body_format: raw             # Ensure the response is treated as binary, not JSON
+    status_code: [200]           # Expect only HTTP 200 responses
+  register: download_response
+  when: file_id is defined
+  no_log: true                   # Hide logs to avoid exposing sensitive data
+
+- name: Log success message
+  debug:
+    msg: "File downloaded successfully to {{ dest }}"
   when: download_response.status == 200
