@@ -1,5 +1,5 @@
 - name: Update apt cache and install dependencies
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     name:
       - libpq-dev
@@ -7,14 +7,14 @@
     state: present
 
 - name: Install PostgreSQL and required packages
-  apt:
+  ansible.builtin.apt:
     name: 
       - postgresql
       - postgresql-contrib
     state: present
 
 - name: Ensure PostgreSQL service is running
-  service:
+  ansible.builtin.service:
     name: postgresql
     state: started
     enabled: yes
@@ -24,7 +24,7 @@
     sudo -u postgres psql -c "ALTER USER postgres PASSWORD '{{ postgres_password }}';"
 
 - name: Allow external connections in `pg_hba.conf`
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
     block: |
       host    all             all             172.16.0.0/12           md5
@@ -35,13 +35,13 @@
   notify: Restart PostgreSQL
 
 - name: Configure PostgreSQL to listen on all IPs
-  replace:
+  ansible.builtin.lineinfile:
     path: /etc/postgresql/14/main/postgresql.conf
     regexp: '^#?listen_addresses = .*'
-    replace: "listen_addresses = '*'"
-  notify: Restart PostgreSQL
+    line: "listen_addresses = '*'"
 
-- name: Restart PostgreSQL service
-  service:
+- name: Restart PostgreSQL Immediately
+  ansible.builtin.service:
     name: postgresql
     state: restarted
+
