@@ -16,6 +16,7 @@
 
 - name: Build project
   import_tasks:
-    file: "./run_compose.yml"
+    file: "{{ ansible_directory }}/roles/docker/tasks/build.yml"
+
 
 

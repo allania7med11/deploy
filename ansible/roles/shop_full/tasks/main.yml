@@ -13,6 +13,27 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '0755'
+  
+- name: Set Google Drive access Token
+  import_tasks:
+    file: "roles/drive/tasks/access_token.yml"
+
+- name: Set database_exists
+  import_tasks: "roles/postgres/tasks/check_db.yml" 
+
+- name: Load the database
+  import_tasks:
+    file: "./load_db.yml"
+  when: not database_exists
+
+- name: Ngnix configuration
+  import_tasks:
+    file: "roles/nginx/tasks/config.yml"
+
+- name: Template docker compose
+  template:
+    src: "{{ template_docker_compose }}"
+    dest: "{{ project_remote_path }}/docker-compose.yml"
 
 - name: Stop and remove existing containers
   command:

@@ -6,8 +6,6 @@ services:
     image: allania7med11/shop_back:latest
     restart: always
     env_file: ./shop_back/.env
-    ports:
-      - "8000:8000"
     networks:
       - shop_network
 
@@ -15,8 +13,6 @@ services:
     container_name: shop_redis
     image: redis:alpine
     restart: always
-    ports:
-      - "6379:6379"
     networks:
       - shop_network
 
@@ -25,8 +21,7 @@ services:
     image: allania7med11/shop_nginx_prod:latest
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "{{ backend_port }}:80"
     networks:
       - shop_network
     depends_on:

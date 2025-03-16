@@ -1,4 +1,18 @@
+project_name: "shop"
 ansible_user: "vagrant"
 project_local_path: "roles/shop_full/files/project"
 project_remote_path: "/home/{{ ansible_user }}/apps/shop"
+backend_port: "2031"
+backend: "http://localhost:{{ backend_port }}"
+template_docker_compose: "{{ project_local_path }}/docker-compose.j2"
+template_ngnix_file: "{{ project_local_path }}/ngnix/ngnix.j2"
+server: false
+listen_port: "2030"
+drive_folder_id: "{{ lookup('env', 'SHOP_FOLDER_ID') }}"
+postgres_user: "{{ lookup('env', 'POSTGRES_USER') }}"
+postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+db_name: "shop_db"
+db_init_folder: "{{ project_remote_path }}"
+db_init_compress_name: "shop_db_init.zip"
+db_init_path: "{{ db_init_folder }}/shop_db_init.sql"
 
