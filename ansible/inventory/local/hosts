@@ -1,0 +1,2 @@
+[local]
+deploy_local ansible_host=local

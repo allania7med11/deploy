@@ -24,7 +24,7 @@
         {
             "label": "Backup PostgreSQL Database",
             "type": "shell",
-            "command": "docker exec semaphore_db sh -c 'pg_dump -U semaphore -d semaphore -f /app/deploy_db_$(date +%Y_%m_%d_%H_%M).sql'",
+            "command": "docker exec semaphore_db sh -c 'pg_dump -U semaphore -d semaphore -f /app/semaphore_db_$(date +%Y_%m_%d_%H_%M).sql'",
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -35,6 +35,19 @@
                 "panel": "shared",
                 "clear": true
             }
-        }    
+        },
+        {
+            "label": "Load Database",
+            "type": "shell",
+            "command": "docker exec -i semaphore_db psql -U semaphore -d postgres -c 'DROP DATABASE IF EXISTS semaphore;' -c 'CREATE DATABASE semaphore;' && docker exec -i semaphore_db psql -U semaphore -d semaphore -f /app/semaphore_db.sql",
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Drops the existing semaphore database (if it exists) and reloads the schema from semaphore_db.sql"
+        }
     ]
 }

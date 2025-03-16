@@ -1,5 +1,5 @@
 [local]
-deploy ansible_host=local
+deploy_local ansible_host=local
 
 [prod_root_staging]
 deploy_prod_root_staging ansible_host=prod_root_staging
