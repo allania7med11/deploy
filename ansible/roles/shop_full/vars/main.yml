@@ -1,0 +1,4 @@
+ansible_user: "vagrant"
+project_local_path: "roles/shop_full/files/project"
+project_remote_path: "/home/{{ ansible_user }}/apps/shop"
+

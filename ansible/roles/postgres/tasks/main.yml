@@ -13,9 +13,33 @@
       - postgresql-contrib
     state: present
 
+- name: Ensure PostgreSQL service is running
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
 - name: Set password for PostgreSQL user
   command: >
-    sudo -u {{ postgres_user }} psql -c "ALTER USER postgres PASSWORD '{{ postgres_password }}';"
+    sudo -u postgres psql -c "ALTER USER postgres PASSWORD '{{ postgres_password }}';"
+
+- name: Allow external connections in `pg_hba.conf`
+  blockinfile:
+    path: /etc/postgresql/14/main/pg_hba.conf
+    block: |
+      host    all             all             172.16.0.0/12           md5
+      host    all             all             192.168.0.0/16          md5
+      host    all             all             10.0.0.0/8              md5
+      host    all             all             0.0.0.0/0               md5
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+  notify: Restart PostgreSQL
+
+- name: Configure PostgreSQL to listen on all IPs
+  replace:
+    path: /etc/postgresql/14/main/postgresql.conf
+    regexp: '^#?listen_addresses = .*'
+    replace: "listen_addresses = '*'"
+  notify: Restart PostgreSQL
 
 - name: Restart PostgreSQL service
   service:

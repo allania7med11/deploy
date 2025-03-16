@@ -1,0 +1,5 @@
+- name: Deploy Shop Full Docker Compose
+  hosts: "{{ host_on| default('all') }}"
+  become: true
+  roles:
+    - shop_full

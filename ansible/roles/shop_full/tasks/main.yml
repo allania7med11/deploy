@@ -1,0 +1,39 @@
+- name: Ensure destination directory exists
+  file:
+    path: "{{ project_remote_path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Copy project folder to remote server
+  copy:
+    src: "{{ project_local_path }}/"
+    dest: "{{ project_remote_path }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Stop and remove existing containers
+  command:
+    cmd: "docker compose down"
+    chdir: "{{ project_remote_path }}"
+  ignore_errors: true
+
+- name: Pull latest Docker images
+  command:
+    cmd: "docker compose pull"
+    chdir: "{{ project_remote_path }}"
+
+- name: Start Docker Compose services
+  command:
+    cmd: "docker compose up -d"
+    chdir: "{{ project_remote_path }}"
+
+- name: Show running containers
+  command: docker ps
+  register: docker_ps_output
+
+- name: Display running containers
+  debug:
+    msg: "{{ docker_ps_output.stdout_lines }}"

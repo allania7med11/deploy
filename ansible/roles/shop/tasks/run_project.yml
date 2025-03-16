@@ -16,12 +16,6 @@
 
 - name: Build project
   import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/build.yml"
+    file: "./run_compose.yml"
 
-- name: Test project
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/test_backend.yml"
 
-- name: Push generated_compress_folder to Google Drive and Docker image to Dockerhub
-  import_tasks:
-    file: "{{ ansible_directory }}/roles/docker/tasks/push.yml"
