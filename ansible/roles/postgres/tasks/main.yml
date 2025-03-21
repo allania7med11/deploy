@@ -1,5 +1,5 @@
 - name: Update apt cache and install dependencies
-  ansible.builtin.apt:
+  apt:
     update_cache: yes
     name:
       - libpq-dev
@@ -7,14 +7,14 @@
     state: present
 
 - name: Install PostgreSQL and required packages
-  ansible.builtin.apt:
+  apt:
     name: 
       - postgresql
       - postgresql-contrib
     state: present
 
 - name: Ensure PostgreSQL service is running
-  ansible.builtin.service:
+  service:
     name: postgresql
     state: started
     enabled: yes
@@ -22,5 +22,29 @@
 - name: Set password for PostgreSQL user
   command: >
     sudo -u postgres psql -c "ALTER USER postgres PASSWORD '{{ postgres_password }}';"
+
+- name: Allow local and Docker container access in `pg_hba.conf`
+  blockinfile:
+    path: /etc/postgresql/14/main/pg_hba.conf
+    block: |
+      # Local TCP access
+      host all all 127.0.0.1/32 md5
+
+      # All Docker containers on this host (172.16.0.0 – 172.31.255.255)
+      host all all 172.16.0.0/12 md5
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+  notify: Restart PostgreSQL
+
+- name: Set PostgreSQL to listen on all interfaces
+  replace:
+    path: /etc/postgresql/14/main/postgresql.conf
+    regexp: '^#?listen_addresses\s*=.*'
+    replace: "listen_addresses = '*'"
+  notify: Restart PostgreSQL
+
+- name: Restart PostgreSQL service
+  service:
+    name: postgresql
+    state: restarted
 
 
