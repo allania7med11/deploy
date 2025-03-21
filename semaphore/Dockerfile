@@ -37,6 +37,11 @@ RUN if [ -d "/app/ansible/.ssh/" ]; then \
     find /home/semaphore/.ssh/ -type f -exec chmod 600 {} \; && \
     find /home/semaphore/.ssh/ -type d -exec chmod 700 {} \;
 
+# Ensure /tmp/semaphore/.ansible/tmp exists and is writable by semaphore
+RUN mkdir -p /tmp/semaphore/.ansible/tmp && \
+    chown -R semaphore:semaphore /tmp/semaphore && \
+    chmod -R 700 /tmp/semaphore
+
 # Switch back to non-root user
 USER semaphore
 
