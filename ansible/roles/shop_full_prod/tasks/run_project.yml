@@ -1,0 +1,77 @@
+- name: Ensure destination directory exists
+  file:
+    path: "{{ project_remote_path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+
+- name: Copy project folder to remote server
+  copy:
+    src: "{{ project_local_path }}/"
+    dest: "{{ project_remote_path }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+  
+- name: Set Google Drive access Token
+  import_tasks:
+    file: "roles/drive/tasks/access_token.yml"
+
+- name: Set database_exists
+  import_tasks: "roles/postgres/tasks/check_db.yml" 
+
+- name: Load the database
+  import_tasks:
+    file: "./load_db.yml"
+  when: not database_exists
+
+- name: Nginx configuration
+  import_tasks:
+    file: "roles/nginx/tasks/config.yml"
+  # vars:
+  #   template_ngnix_file: "{{ template_ngnix_file }}"
+  #   project_name: "{{ project_name }}"
+
+- name: SSL configuration
+  become: true
+  import_tasks:
+    file: "roles/nginx/tasks/ssl.yml"
+  when: update_ngnix
+  # vars:
+  #   email: "{{ email }}"
+  #   server: "{{ server }}"
+
+- name: Log into DockerHub
+  docker_login:
+    username: "{{  dockerhub_username }}"
+    password: "{{  dockerhub_password }}"
+    
+- name: Template docker compose
+  template:
+    src: "{{ template_docker_compose }}"
+    dest: "{{ project_remote_path }}/docker-compose.yml"
+
+- name: Stop and remove existing containers
+  command:
+    cmd: "docker compose down"
+    chdir: "{{ project_remote_path }}"
+  ignore_errors: true
+
+- name: Pull latest Docker images
+  command:
+    cmd: "docker compose pull"
+    chdir: "{{ project_remote_path }}"
+
+- name: Start Docker Compose services
+  command:
+    cmd: "docker compose up -d"
+    chdir: "{{ project_remote_path }}"
+
+- name: Show running containers
+  command: docker ps
+  register: docker_ps_output
+
+- name: Display running containers
+  debug:
+    msg: "{{ docker_ps_output.stdout_lines }}"
