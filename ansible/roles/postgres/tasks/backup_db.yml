@@ -10,7 +10,7 @@
 
 - name: Set Google Drive access Token
   import_tasks:
-    file: "{{ ansible_directory }}/roles/drive/tasks/access_token.yml"
+    file: "roles/drive/tasks/access_token.yml"
   when: database_exists
 
 - name: Ensure backup_directory exists
@@ -41,7 +41,7 @@
 
 - name: Push {{ backup_name }}.zip to Google Drive
   import_tasks:
-    file: "{{ ansible_directory }}/roles/drive/tasks/push_file.yml"
+    file: "roles/drive/tasks/push_file.yml"
   vars:
     file_name: "{{ backup_name }}.zip"
     file_path: "{{ backup_directory }}/{{ backup_name }}.zip"

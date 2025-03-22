@@ -1,9 +1,9 @@
-- name: Template NGINX portfolio configuration
+- name: Template NGINX configuration
   template:
     src: "{{ template_ngnix_file }}"
     dest: /etc/nginx/sites-available/{{  project_name }}
 
-- name: Enable NGINX portfolio configuration
+- name: Enable NGINX configuration
   file:
     src: /etc/nginx/sites-available/{{  project_name }}
     dest: /etc/nginx/sites-enabled/{{  project_name }}

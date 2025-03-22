@@ -1,0 +1,8 @@
+- name: Backup the database
+  import_tasks:
+    file: "roles/postgres/tasks/backup_db.yml"
+  # vars:
+  #   db_name: "{{ db_name }}"
+  #   postgres_password: "{{ postgres_password }}"
+  #   backup_directory: "{{ backup_directory }}"
+  #   drive_backup_folder_id: "{{ drive_backup_folder_id }}"
