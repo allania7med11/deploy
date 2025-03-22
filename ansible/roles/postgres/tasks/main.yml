@@ -41,10 +41,12 @@
     regexp: '^#?listen_addresses\s*=.*'
     replace: "listen_addresses = '*'"
   notify: Restart PostgreSQL
+  become: true
 
 - name: Restart PostgreSQL service
   service:
     name: postgresql
     state: restarted
+  become: true
 
 
