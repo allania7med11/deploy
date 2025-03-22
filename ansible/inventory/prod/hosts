@@ -1,0 +1,2 @@
+[prod]
+deploy_local ansible_host=prod
