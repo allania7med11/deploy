@@ -8,9 +8,16 @@
   import_tasks:
     file: ssl.yml
 
-- name: Pull project
+- name: Set Google Drive access Token
   import_tasks:
-    file: pull.yml
+    file: "roles/drive/tasks/access_token.yml"
+
+- name: Pull front_static
+  import_tasks: "roles/drive/tasks/pull.yml" 
+  vars:
+    filename: "{{ deployed_file_name }}"
+    folder_id: "{{ drive_folder_id }}"
+    dest: "{{ front_directory }}/{{ deployed_file_name }}"
 
 - name: Run project
   import_tasks:
