@@ -15,3 +15,7 @@
   environment:
     PGPASSWORD: "{{ postgres_password }}"
   when: database_exists
+
+- name: Set database_exists to false
+  set_fact:
+    database_exists: false
