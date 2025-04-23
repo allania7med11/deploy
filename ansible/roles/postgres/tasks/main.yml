@@ -35,18 +35,13 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
   notify: Restart PostgreSQL
 
+- name: Include Vagrant access config
+  import_tasks: vagrant_access.yml
+  when: is_vagrant_machine | default(false)
+
 - name: Set PostgreSQL to listen on all interfaces
   replace:
     path: /etc/postgresql/14/main/postgresql.conf
     regexp: '^#?listen_addresses\s*=.*'
     replace: "listen_addresses = '*'"
   notify: Restart PostgreSQL
-  become: true
-
-- name: Restart PostgreSQL service
-  service:
-    name: postgresql
-    state: restarted
-  become: true
-
-

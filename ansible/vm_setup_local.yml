@@ -4,6 +4,7 @@
   vars:
     postgres_user: "{{ lookup('env', 'POSTGRES_USER') }}"
     postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+    is_vagrant_machine: true
   become: true
   roles:
     - aptitude

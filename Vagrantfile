@@ -6,11 +6,13 @@ Vagrant.configure("2") do |config|
 
   # Forwarded ports
   config.vm.network "forwarded_port", guest: 22, host: 2222, host_ip: "0.0.0.0"  # Allow external SSH access
-  config.vm.network "forwarded_port", guest: 1234, host: 5434
   config.vm.network "forwarded_port", guest: 2000, host: 2000 # portfolio
   config.vm.network "forwarded_port", guest: 2010, host: 2010 # structure
   config.vm.network "forwarded_port", guest: 2020, host: 2020 # travelplanner
   config.vm.network "forwarded_port", guest: 2030, host: 2030 # shop
+
+  # Private network for consistent host-VM communication
+  config.vm.network "private_network", ip: "192.168.56.10"
 
   # VM resources
   config.vm.provider "virtualbox" do |vb|

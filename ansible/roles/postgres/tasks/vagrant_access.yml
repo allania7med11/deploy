@@ -1,0 +1,8 @@
+- name: Allow Vagrant NAT host access (10.0.2.2)
+  blockinfile:
+    path: /etc/postgresql/14/main/pg_hba.conf
+    block: |
+      # Allow Vagrant NAT gateway (host seen as 10.0.2.2)
+      host all all 10.0.2.2/32 md5
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - VAGRANT NAT"
+  notify: Restart PostgreSQL
