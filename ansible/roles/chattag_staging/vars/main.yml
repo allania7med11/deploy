@@ -1,0 +1,16 @@
+project_name: "chattag"
+ansible_user: "vagrant"
+project_local_path: "roles/chattag_staging/files/project"
+project_remote_path: "/home/{{ ansible_user }}/apps/chattag"
+backend_port: "2041"
+backend: "http://localhost:{{ backend_port }}"
+template_docker_compose: "{{ project_local_path }}/docker-compose.j2"
+template_ngnix_file: "{{ project_local_path }}/ngnix/ngnix.j2"
+server: false
+listen_port: "2040"
+postgres_user: "{{ lookup('env', 'POSTGRES_USER') }}"
+postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+db_name: "chattag_db"
+# GitHub Container Registry authentication
+github_username: "{{ lookup('env', 'GITHUB_USERNAME') }}"
+github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"

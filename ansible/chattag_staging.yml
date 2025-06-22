@@ -1,0 +1,5 @@
+- name: Deploy ChatTag AI Staging
+  hosts: "{{ host_on| default('all') }}"
+  become: true
+  roles:
+    - chattag_staging

@@ -1,0 +1,47 @@
+diff --git a/.env.exemple b/.env.exemple
+index 21bd5cf..c4668e4 100644
+--- a/.env.exemple
++++ b/.env.exemple
+@@ -12,11 +12,13 @@ STRUCTURE_SERVER=
+ STRUCTURE_FOLDER_ID=
+ STRUCTURE_FRONT_FOLDER_ID=
+ STRUCTURE_BACKUP_FOLDER_ID=
+ SHOP_SERVER=
+ SHOP_FOLDER_ID=
+ SHOP_FRONT_FOLDER_ID=
+ SHOP_BACKUP_FOLDER_ID=
+ TRAVELPLANNER_SERVER=
+ TRAVELPLANNER_FOLDER_ID=
+ DOCKERHUB_USERNAME=
+-DOCKERHUB_PASSWORD=
+\ No newline at end of file
++DOCKERHUB_PASSWORD=
++GITHUB_USERNAME=
++GITHUB_TOKEN=
+\ No newline at end of file
+diff --git a/Vagrantfile b/Vagrantfile
+index 54859c8..66bcc65 100644
+--- a/Vagrantfile
++++ b/Vagrantfile
+@@ -3,20 +3,21 @@ Vagrant.configure("2") do |config|
+   
+   # VM hostname
+   config.vm.hostname = "deploy"
+ 
+   # Forwarded ports
+   config.vm.network "forwarded_port", guest: 22, host: 2222, host_ip: "0.0.0.0"  # Allow external SSH access
+   config.vm.network "forwarded_port", guest: 2000, host: 2000 # portfolio
+   config.vm.network "forwarded_port", guest: 2010, host: 2010 # structure
+   config.vm.network "forwarded_port", guest: 2020, host: 2020 # travelplanner
+   config.vm.network "forwarded_port", guest: 2030, host: 2030 # shop
++  config.vm.network "forwarded_port", guest: 2040, host: 2040 # chattag
+ 
+   # Private network for consistent host-VM communication
+   config.vm.network "private_network", ip: "192.168.56.10"
+ 
+   # VM resources
+   config.vm.provider "virtualbox" do |vb|
+     vb.cpus = 2
+     vb.memory = 16000
+   end
+ 

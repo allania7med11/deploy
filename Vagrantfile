@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 2010, host: 2010 # structure
   config.vm.network "forwarded_port", guest: 2020, host: 2020 # travelplanner
   config.vm.network "forwarded_port", guest: 2030, host: 2030 # shop
+  config.vm.network "forwarded_port", guest: 2040, host: 2040 # chattag
 
   # Private network for consistent host-VM communication
   config.vm.network "private_network", ip: "192.168.56.10"
