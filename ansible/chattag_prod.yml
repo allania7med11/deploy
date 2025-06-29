@@ -1,0 +1,5 @@
+- name: Deploy ChatTag AI Prod 
+  hosts: "{{ host_on| default('all') }}"
+  become: true
+  roles:
+    - chattag_prod
