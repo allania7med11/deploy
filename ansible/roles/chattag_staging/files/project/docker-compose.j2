@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  chattag_backend:
+    container_name: chattag_backend
+    image: ghcr.io/allania7med11/chattag_backend:latest
+    restart: always
+    env_file: ./backend/.env
+    environment:
+      - ENVIRONMENT=prod
+    volumes:
+      - vector_indexes:/vector_indexes
+    networks:
+      - chattag_network
+
+  chattag_nginx:
+    container_name: chattag_nginx
+    image: ghcr.io/allania7med11/chattag_nginx:latest
+    restart: always
+    ports:
+      - "{{ backend_port }}:80"
+    networks:
+      - chattag_network
+    depends_on:
+      - chattag_backend
+
+networks:
+  chattag_network:
+    driver: bridge
+
+volumes:
+  vector_indexes:
