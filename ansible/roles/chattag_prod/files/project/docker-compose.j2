@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   chattag_backend:
-    container_name: chattag_backend_staging
+    container_name: chattag_backend
     image: ghcr.io/allania7med11/chattag_backend:latest
     restart: always
     env_file: ./backend/.env
@@ -14,7 +14,7 @@ services:
       - chattag_network
 
   chattag_nginx:
-    container_name: chattag_nginx_staging
+    container_name: chattag_nginx
     image: ghcr.io/allania7med11/chattag_nginx:latest
     restart: always
     ports:
