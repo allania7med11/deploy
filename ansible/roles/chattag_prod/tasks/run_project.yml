@@ -18,6 +18,12 @@
   import_tasks:
     file: "roles/nginx/tasks/config.yml"
 
+- name: SSL configuration
+  become: true
+  import_tasks:
+    file: "roles/nginx/tasks/ssl.yml"
+  when: update_ngnix | default(true)
+
 - name: Log into GitHub Container Registry
   docker_login:
     registry: ghcr.io
