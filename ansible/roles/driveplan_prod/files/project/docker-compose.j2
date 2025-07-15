@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  driveplan_backend:
+    container_name: driveplan_backend
+    image: ghcr.io/allania7med11/driveplan_backend:latest
+    restart: always
+    env_file: ./backend/.env
+    volumes:
+      - driveplan_data:/app/data
+    networks:
+      - driveplan_network
+
+  driveplan_nginx:
+    container_name: driveplan_nginx
+    image: ghcr.io/allania7med11/driveplan_nginx:latest
+    restart: always
+    ports:
+      - "{{ backend_port }}:80"
+    networks:
+      - driveplan_network
+    depends_on:
+      - driveplan_backend
+
+networks:
+  driveplan_network:
+    driver: bridge
+
+volumes:
+  driveplan_data:

@@ -1,0 +1,5 @@
+- name: Deploy Driveplan Production
+  hosts: "{{ host_on| default('all') }}"
+  become: true
+  roles:
+    - driveplan_prod
