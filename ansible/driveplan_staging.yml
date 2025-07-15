@@ -1,0 +1,5 @@
+- name: Deploy Driveplan Staging
+  hosts: "{{ host_on| default('all') }}"
+  become: true
+  roles:
+    - driveplan_staging

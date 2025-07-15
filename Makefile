@@ -3,8 +3,11 @@ setup-ansible: ## Install Ansible dependencies from requirements.yml
 
 chattag_staging: ## Deploy ChatTag AI to staging
 	./run_ansible.sh chattag_staging local run_project
-	
-vm_setup_prod: ## Setup production VM infrastructure  
+
+driveplan_staging: ## Deploy Driveplan to staging
+	./run_ansible.sh driveplan_staging local run_project
+
+vm_setup_prod: ## Setup production VM infrastructure
 	./run_ansible.sh vm_setup_prod prod
 
 chattag_prod: ## Deploy ChatTag AI to prod
