@@ -84,6 +84,8 @@ This project uses a `.env` file to configure its environment. You can create a `
 - `SHOP_BACK_FOLDER_ID`: The backup folder ID in Google Drive used for the shop application.
 - `TRAVELPLANNER_SERVER`: The server URL for the travel planner application.
 - `TRAVELPLANNER_FOLDER_ID`: The folder ID in Google Drive used for the travel planner application.
+- `DRIVEPLAN_SERVER`: The server URL for the driveplan application.
+- `DRIVEPLAN_FOLDER_ID`: The folder ID in Google Drive used for the driveplan application.
 - `DOCKERHUB_USERNAME`: The Docker Hub username.
 - `DOCKERHUB_PASSWORD`: The Docker Hub password.
 

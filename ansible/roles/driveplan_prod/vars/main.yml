@@ -1,0 +1,20 @@
+project_name: "driveplan"
+ansible_user: "vagrant"
+project_local_path: "roles/driveplan_prod/files/project"
+project_remote_path: "/home/{{ ansible_user }}/apps/driveplan"
+backend_port: "2051"
+backend: "http://localhost:{{ backend_port }}"
+template_docker_compose: "{{ project_local_path }}/docker-compose.j2"
+template_ngnix_file: "{{ project_local_path }}/ngnix/ngnix.j2"
+server: "driveplan.effectivewebapp.com"
+listen_port: "80"
+postgres_user: "{{ lookup('env', 'POSTGRES_USER') }}"
+postgres_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+db_name: "driveplan_db"
+# GitHub Container Registry authentication
+github_username: "{{ lookup('env', 'GITHUB_USERNAME') }}"
+github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
+# Google Drive integration (if needed)
+drive_folder_id: "{{ lookup('env', 'DRIVEPLAN_FOLDER_ID') }}"
+update_ngnix: true
+email: "{{ lookup('env', 'EMAIL') }}"
