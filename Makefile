@@ -21,3 +21,9 @@ driveplan_prod: ## Deploy Driveplan to prod
 
 driveplan_prod_shell: ## Open shell in Driveplan prod container
 	ssh -t prod 'cd /home/vagrant/apps/driveplan && docker exec -it driveplan_backend /bin/bash'
+
+portfolio_staging: ## Deploy Portfolio to staging
+	./run_ansible.sh portfolio_local local run_project
+
+portfolio_prod: ## Deploy Portfolio to prod
+	./run_ansible.sh portfolio_prod prod run_project
